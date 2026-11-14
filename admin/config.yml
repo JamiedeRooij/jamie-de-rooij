@@ -1,0 +1,75 @@
+# Upload portal for jamiederooij.com  (opens at /admin)
+# Every save commits to the GitHub repo; Netlify then republishes the site (~1 min).
+
+backend:
+  name: github
+  repo: JamiedeRooij/jamiederooij-site
+  branch: main
+
+# For testing on your own computer: run `npx decap-server` in the site folder,
+# then open http://localhost:8080/admin — no login needed.
+local_backend: true
+
+publish_mode: simple
+media_folder: uploads
+public_folder: /uploads
+
+site_url: https://www.jamiederooij.com
+display_url: https://www.jamiederooij.com
+logo_url: ""
+
+collections:
+  - name: hero
+    label: "Hero · Poster trail"
+    description: "The posters that follow the cursor over your name. They appear in this order."
+    files:
+      - name: trail
+        label: "Trail posters"
+        file: content/trail.json
+        format: json
+        fields:
+          - name: posters
+            label: "Posters"
+            label_singular: "Poster"
+            widget: list
+            summary: "{{fields.image}}"
+            fields:
+              - { name: image, label: "Poster image", widget: image, choose_url: true }
+
+  - name: work
+    label: "Selected Works"
+    description: "Projects in the masonry grid. Add a video and it plays as the thumbnail instead of the image."
+    files:
+      - name: projects
+        label: "Projects"
+        file: content/projects.json
+        format: json
+        fields:
+          - name: projects
+            label: "Projects"
+            label_singular: "Project"
+            widget: list
+            summary: "{{fields.title}} — {{fields.subtitle}}"
+            fields:
+              - { name: title, label: "Title", widget: string }
+              - { name: subtitle, label: "Subtitle", widget: string, required: false, hint: "Shown in grey under the title, e.g. Poster, 2026" }
+              - { name: image, label: "Image", widget: image, required: false, choose_url: true, hint: "Thumbnail and lightbox image. Also used as the video's poster frame." }
+              - { name: video, label: "Video (mp4)", widget: file, required: false, choose_url: true, hint: "If set, the video is shown instead of the image. Keep it short and compressed." }
+              - { name: description, label: "Description", widget: text, required: false, hint: "Only shown in the lightbox when someone clicks the project." }
+
+  - name: wall
+    label: "Poster Wall"
+    description: "Posters in the scrolling wall."
+    files:
+      - name: wall
+        label: "Wall posters"
+        file: content/wall.json
+        format: json
+        fields:
+          - name: posters
+            label: "Posters"
+            label_singular: "Poster"
+            widget: list
+            summary: "{{fields.image}}"
+            fields:
+              - { name: image, label: "Poster image", widget: image, choose_url: true }
