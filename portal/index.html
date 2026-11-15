@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Portals · Jamie de Rooij</title>
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .portals { min-height: 100vh; justify-content: space-between; }
+  .portal-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .portal-list a { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 32px; padding: 20px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+  .portal-list .name { font-weight: 400; font-size: clamp(32px, 5vw, 64px); line-height: 1; letter-spacing: -0.04em; }
+  .portal-list .what { color: var(--muted); }
+  .portal-list a:hover .name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px; }
+  .back { color: var(--muted); }
+</style>
+</head>
+<body>
+<main class="section portals">
+  <h1 class="h2">Portals</h1>
+  <ul class="portal-list">
+    <li><a href="../admin/#/collections/hero/entries/trail"><span class="name">Poster trail</span><span class="what">Posters that follow the cursor in the hero</span></a></li>
+    <li><a href="../admin/#/collections/work/entries/projects"><span class="name">Selected Works</span><span class="what">Title, subtitle, description, image or video</span></a></li>
+    <li><a href="../admin/#/collections/wall/entries/wall"><span class="name">Poster Wall</span><span class="what">Posters in the scrolling wall</span></a></li>
+  </ul>
+  <p class="back"><a href="../">Back to the site</a></p>
+</main>
+</body>
+</html>

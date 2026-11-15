@@ -14,8 +14,8 @@ tools/fetch-media.mjs            copies your Framer-hosted media into uploads/
 
 ## Going live (one time, about 15 minutes)
 
-1. **GitHub.** Create a free account, then a new repository called `jamiederooij-site`. Upload all files in this folder to it (Add file → Upload files).
-2. **Portal settings.** Already set: `admin/config.yml` points at `JamiedeRooij/jamiederooij-site`.
+1. **GitHub.** Create a free account, then the repository `jamie-de-rooij`. Upload all files in this folder to it (Add file → Upload files).
+2. **Portal settings.** Already set: `admin/config.yml` points at `JamiedeRooij/jamie-de-rooij`.
 3. **Netlify.** Create a free account → Add new site → Import from Git → pick the repo. No build command; publish directory is `.`.
 4. **Portal login.** In GitHub: Settings → Developer settings → OAuth Apps → New OAuth App.
    - Homepage URL: your Netlify URL

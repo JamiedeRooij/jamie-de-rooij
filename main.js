@@ -1,10 +1,10 @@
-/* Jamie de Rooij — site script
-   Content comes from /content/*.json, which the upload portal (/admin) edits. */
+/* jamiederooij.com
+   Content comes from content/*.json, which the upload portals (/admin) edit. */
 
 const $ = (s) => document.querySelector(s);
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Smaller versions of Framer-hosted images; other URLs are used as-is.
+// Smaller versions of Framer-hosted images; other URLs are used as they are.
 function sized(url, px) {
   if (!url) return url;
   if (url.includes("framerusercontent.com/images/") && !url.includes("?")) {
@@ -19,13 +19,30 @@ async function getJSON(path) {
   return res.json();
 }
 
+/* ============ LIGHT / DARK MODE ============ */
+function initTheme() {
+  const btn = $("#themeToggle");
+  const root = document.documentElement;
+  const system = window.matchMedia("(prefers-color-scheme: dark)");
+  const current = () => root.getAttribute("data-theme") || (system.matches ? "dark" : "light");
+  const label = () => { btn.textContent = current() === "dark" ? "Light" : "Dark"; };
+  btn.addEventListener("click", () => {
+    const next = current() === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (e) {}
+    label();
+  });
+  system.addEventListener("change", label);
+  label();
+}
+
 /* ============ HERO: name fits the width ============ */
 function fitName() {
   const span = $("#heroName");
   const h1 = span.parentElement;
   h1.style.fontSize = "100px";
   const w = span.getBoundingClientRect().width;
-  const target = h1.clientWidth - 8; // tiny safety margin for overhang
+  const target = h1.clientWidth - 8;
   if (w > 0) h1.style.fontSize = `${(100 * target) / w}px`;
 }
 
@@ -35,7 +52,7 @@ function initTrail(images) {
   if (!images.length || reduceMotion) return;
 
   const urls = images.map((u) => sized(u, 512));
-  urls.forEach((u) => { const i = new Image(); i.src = u; }); // preload
+  urls.forEach((u) => { const i = new Image(); i.src = u; });
 
   const SPACING = 80;       // px of mouse travel between posters
   const VISIBLE_MS = 500;   // how long a poster stays before leaving
@@ -61,7 +78,6 @@ function initTrail(images) {
       ],
       { duration: 450, easing: EASE, fill: "forwards" }
     );
-
     setTimeout(() => {
       const out = img.animate(
         [
@@ -75,7 +91,6 @@ function initTrail(images) {
   }
 
   window.addEventListener("pointermove", (e) => {
-    // only while the hero is (mostly) on screen
     if (window.scrollY > window.innerHeight * 0.6) { last = null; return; }
     const p = { x: e.clientX, y: e.clientY };
     if (!last) { last = p; return; }
@@ -94,30 +109,30 @@ function columnsForWidth() {
   return 3;
 }
 
-// Resolve each project's media aspect ratio (width / height) before placing it.
+// Width / height of a project's image or video, so its space is reserved before it loads.
 function measure(project) {
   return new Promise((resolve) => {
-    const done = (r) => resolve(r && isFinite(r) && r > 0 ? r : 0.75);
-    const timer = setTimeout(() => done(0.75), 5000);
+    const done = (r) => { clearTimeout(timer); resolve(r && isFinite(r) && r > 0 ? r : 0.75); };
+    const timer = setTimeout(() => done(0), 6000);
     if (project.video) {
       const v = document.createElement("video");
       v.preload = "metadata";
       v.muted = true;
-      v.onloadedmetadata = () => { clearTimeout(timer); done(v.videoWidth / v.videoHeight); };
-      v.onerror = () => { clearTimeout(timer); done(0.75); };
+      v.onloadedmetadata = () => done(v.videoWidth / v.videoHeight);
+      v.onerror = () => done(0);
       v.src = project.video;
     } else if (project.image) {
       const i = new Image();
-      i.onload = () => { clearTimeout(timer); done(i.naturalWidth / i.naturalHeight); };
-      i.onerror = () => { clearTimeout(timer); done(0.75); };
+      i.onload = () => done(i.naturalWidth / i.naturalHeight);
+      i.onerror = () => done(0);
       i.src = sized(project.image, 1024);
     } else {
-      clearTimeout(timer); done(0.75);
+      done(0);
     }
   });
 }
 
-function buildCard(p, ratio) {
+function buildCard(p, ratio, videoObserver) {
   const card = document.createElement("button");
   card.type = "button";
   card.className = "card";
@@ -129,16 +144,17 @@ function buildCard(p, ratio) {
 
   if (p.video) {
     const v = document.createElement("video");
-    v.src = p.video;
     v.muted = true;
     v.loop = true;
     v.playsInline = true;
     v.autoplay = true;
     v.preload = "metadata";
-    if (p.image) v.poster = sized(p.image, 1024);
     v.setAttribute("muted", "");
+    if (p.image) v.poster = sized(p.image, 1024);
+    v.src = p.video;
     media.appendChild(v);
-  } else if (p.image) {
+    if (videoObserver) videoObserver.observe(v);
+  } else {
     const img = document.createElement("img");
     img.src = sized(p.image, 1024);
     img.alt = p.title || "";
@@ -149,12 +165,12 @@ function buildCard(p, ratio) {
 
   const caption = document.createElement("div");
   caption.className = "card-caption";
-  const t = document.createElement("p");
+  const t = document.createElement("span");
   t.className = "card-title";
   t.textContent = p.title || "";
   caption.appendChild(t);
   if (p.subtitle) {
-    const s = document.createElement("p");
+    const s = document.createElement("span");
     s.className = "card-sub";
     s.textContent = p.subtitle;
     caption.appendChild(s);
@@ -164,13 +180,12 @@ function buildCard(p, ratio) {
   return card;
 }
 
-async function initMasonry(projects) {
+function initMasonry(projects) {
   const root = $("#masonry");
-  const ratios = await Promise.all(projects.map(measure));
-  const cards = projects.map((p, i) => ({ el: buildCard(p, ratios[i]), ratio: ratios[i] }));
+  const CAPTION_PX = 86; // caption + gap under each image
 
-  // Play thumbnail videos only while visible.
-  const io = "IntersectionObserver" in window
+  // Thumbnail videos only play while they are on screen.
+  const videoObserver = "IntersectionObserver" in window
     ? new IntersectionObserver((entries) => {
         entries.forEach(({ target, isIntersecting }) => {
           if (isIntersecting) target.play().catch(() => {});
@@ -178,32 +193,51 @@ async function initMasonry(projects) {
         });
       }, { rootMargin: "200px" })
     : null;
-  cards.forEach(({ el }) => { const v = el.querySelector("video"); if (v && io) io.observe(v); });
 
-  let current = 0;
-  function layout() {
-    const n = columnsForWidth();
-    if (n === current) return;
-    current = n;
+  const items = projects.map((p) => ({ p, ratio: 0, el: null, placed: false }));
+  const pending = items.map((it) => measure(it.p).then((r) => { it.ratio = r; }));
+
+  let cols = [];
+  let heights = [];
+  let count = 0;
+
+  function build() {
+    count = columnsForWidth();
     root.innerHTML = "";
-    const cols = Array.from({ length: n }, () => {
+    cols = [];
+    heights = new Array(count).fill(0);
+    for (let i = 0; i < count; i++) {
       const c = document.createElement("div");
       c.className = "masonry-col";
       root.appendChild(c);
-      return c;
-    });
-    // Each card goes to the currently shortest column (heights in "column widths").
-    const heights = new Array(n).fill(0);
-    const CAPTION = 0.12; // caption + gap, relative to column width
-    cards.forEach(({ el, ratio }) => {
-      let k = 0;
-      for (let i = 1; i < n; i++) if (heights[i] < heights[k] - 0.001) k = i;
-      cols[k].appendChild(el);
-      heights[k] += 1 / ratio + CAPTION;
-    });
+      cols.push(c);
+    }
   }
-  layout();
-  window.addEventListener("resize", layout);
+
+  // Each card goes into whichever column is shortest at that moment.
+  function place(it) {
+    if (!it.el) it.el = buildCard(it.p, it.ratio, videoObserver);
+    let k = 0;
+    for (let i = 1; i < count; i++) if (heights[i] < heights[k] - 0.5) k = i;
+    cols[k].appendChild(it.el);
+    const w = cols[k].clientWidth || 400;
+    heights[k] += w / it.ratio + CAPTION_PX;
+    it.placed = true;
+  }
+
+  build();
+  (async () => {
+    for (let i = 0; i < items.length; i++) {
+      await pending[i];        // keeps the order of the list in the portal
+      place(items[i]);
+    }
+  })();
+
+  window.addEventListener("resize", () => {
+    if (columnsForWidth() === count) return;
+    build();
+    items.filter((it) => it.placed).forEach(place);
+  });
 }
 
 /* ============ LIGHTBOX ============ */
@@ -221,7 +255,7 @@ function openLightbox(p) {
     v.autoplay = true;
     v.loop = true;
     v.playsInline = true;
-    if (p.image) v.poster = p.image;
+    if (p.image) v.poster = sized(p.image, 2048);
     media.appendChild(v);
   } else if (p.image) {
     const img = document.createElement("img");
@@ -231,7 +265,7 @@ function openLightbox(p) {
   }
   $("#lbTitle").textContent = p.title || "";
   $("#lbSub").textContent = p.subtitle || "";
-  $("#lbDesc").textContent = p.description || "";
+  $("#lbDesc").textContent = (p.description || "").trim();
   lb.hidden = false;
   document.body.classList.add("locked");
   requestAnimationFrame(() => lb.classList.add("open"));
@@ -247,7 +281,10 @@ function closeLightbox() {
   if (lastFocus) lastFocus.focus();
 }
 
-lb.addEventListener("click", (e) => { if (!$("#lightboxInner").contains(e.target) || e.target === $("#lightboxInner")) closeLightbox(); });
+lb.addEventListener("click", (e) => {
+  const inner = $("#lightboxInner");
+  if (e.target === inner || !inner.contains(e.target)) closeLightbox();
+});
 $("#lightboxClose").addEventListener("click", (e) => { e.stopPropagation(); closeLightbox(); });
 window.addEventListener("keydown", (e) => { if (e.key === "Escape" && !lb.hidden) closeLightbox(); });
 
@@ -263,10 +300,9 @@ function initTicker(images) {
     img.draggable = false;
     return img;
   });
-  // two identical sets → seamless loop
-  [...make(), ...make()].forEach((el) => track.appendChild(el));
+  [...make(), ...make()].forEach((el) => track.appendChild(el)); // two sets = seamless loop
 
-  const SPEED = 100; // px per second, leftwards
+  const SPEED = 100; // px per second
   let x = 0;
   let prev = performance.now();
   let setWidth = 0;
@@ -275,7 +311,7 @@ function initTicker(images) {
   window.addEventListener("resize", measureSet);
   measureSet();
 
-  if (reduceMotion) return;
+  if (reduceMotion) { $("#ticker").style.overflowX = "auto"; return; }
   function tick(now) {
     const dt = Math.min(64, now - prev) / 1000;
     prev = now;
@@ -289,7 +325,23 @@ function initTicker(images) {
   requestAnimationFrame(tick);
 }
 
+/* ============ FOOTER: cycling services ============ */
+function initServices() {
+  const el = $("#service");
+  const words = ["Branding", "Webdesign", "Framer development", "Art direction", "Visual design", "Print design", "Presentations", "Social media"];
+  let i = 0;
+  setInterval(() => {
+    i = (i + 1) % words.length;
+    if (reduceMotion) { el.textContent = words[i]; return; }
+    el.classList.add("out");
+    setTimeout(() => { el.textContent = words[i]; el.classList.remove("out"); }, 400);
+  }, 2000);
+}
+
 /* ============ BOOT ============ */
+initTheme();
+initServices();
+$("#year").textContent = new Date().getFullYear();
 fitName();
 window.addEventListener("resize", fitName);
 if (document.fonts) document.fonts.ready.then(fitName);

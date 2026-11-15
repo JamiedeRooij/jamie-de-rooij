@@ -3,7 +3,7 @@
 
 backend:
   name: github
-  repo: JamiedeRooij/jamiederooij-site
+  repo: JamiedeRooij/jamie-de-rooij
   branch: main
 
 # For testing on your own computer: run `npx decap-server` in the site folder,

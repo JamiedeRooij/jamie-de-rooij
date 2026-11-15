@@ -4,15 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jamie de Rooij</title>
-<meta name="description" content="Jamie de Rooij — Dutch graphic designer working at the intersection of creativity, research and experimentation.">
+<meta name="description" content="Jamie de Rooij is a Dutch graphic designer working at the intersection of creativity, research and experimentation.">
+<script>
+  // Apply a saved light/dark choice before the first paint. No choice = follow the system.
+  try { var t = localStorage.getItem("theme"); if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+</script>
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch between light and dark mode">Dark</button>
 
 <!-- HERO: fixed behind the page; the sections below scroll over it -->
 <header class="hero" id="hero">
@@ -21,27 +24,79 @@
 </header>
 <div class="hero-spacer" aria-hidden="true"></div>
 
-<main class="page">
+<main class="page" id="top">
+  <section class="section intro">
+    <p class="lead">My work lives at the intersection of creativity, research, and experimentation, where curiosity leads and concept drives everything that follows.</p>
+  </section>
+
   <section class="section works" id="work">
-    <div class="section-head">
-      <h2 class="h2">Selected Works</h2>
-    </div>
-    <div class="masonry" id="masonry" aria-live="polite"></div>
+    <h2 class="h2">Selected Works</h2>
+    <div class="masonry" id="masonry"></div>
   </section>
 
   <section class="section wall" id="posters">
-    <div class="section-head">
-      <h2 class="h2">Poster Wall</h2>
-    </div>
+    <h2 class="h2">Poster Wall</h2>
     <div class="ticker" id="ticker">
       <div class="ticker-track" id="tickerTrack"></div>
     </div>
   </section>
+
+  <section class="section expertise" id="about">
+    <h2 class="h2">My expertise</h2>
+    <div class="columns">
+      <div>
+        <p>I’m Jamie de Rooij, a Dutch graphic designer with a love for bold ideas and thoughtful design. My work lives at the intersection of creativity, research, and experimentation, where curiosity leads and concept drives everything that follows.</p>
+        <p>After graduating from the Royal Academy of Art in The Hague, I worked for clients across commercial and editorial fields. Each project is a new exploration: a chance to question, experiment, and build something that not only looks strong but feels right.</p>
+      </div>
+      <div>
+        <p>Typography often forms the backbone of my process, a tool to balance precision with play. From the first spark of an idea to the finished piece, I believe in crafting design solutions that are clear in purpose, striking in form, and bold enough to stand apart.</p>
+        <p>From concept to final delivery, I aim to create work that communicates with precision, resonates with people, and dares to be bold.</p>
+      </div>
+    </div>
+  </section>
 </main>
+
+<footer class="footer" id="contact">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <p class="services" aria-label="Services"><span id="service">Branding</span></p>
+      <a class="cta" href="mailto:hello@jamiederooij.com">Let’s work together</a>
+    </div>
+
+    <dl class="facts">
+      <div class="fact">
+        <dt>Socials</dt>
+        <dd><a href="https://www.instagram.com/jamiederooij" target="_blank" rel="noopener">Instagram</a></dd>
+      </div>
+      <div class="fact">
+        <dt>Experience</dt>
+        <dd><span class="year">2017–now</span> Freelance</dd>
+        <dd><span class="year">2016</span> Remco van Bladel, internship</dd>
+        <dd><span class="year">2012</span> Zuiver, internship</dd>
+        <dd><span class="year">2011</span> Studio Jan de Boer, internship</dd>
+      </div>
+      <div class="fact">
+        <dt>Education</dt>
+        <dd>Royal Academy of Art, The Hague</dd>
+        <dd>Media College, Amsterdam</dd>
+      </div>
+      <div class="fact">
+        <dt>Features</dt>
+        <dd>Fontanel Dutch Design Talents 2017</dd>
+      </div>
+    </dl>
+
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Jamie de Rooij</span>
+      <a href="mailto:hello@jamiederooij.com">hello@jamiederooij.com</a>
+      <a href="#top">Back to top</a>
+    </div>
+  </div>
+</footer>
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project" hidden>
-  <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 5L19 19M19 5L5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
   </button>
   <div class="lightbox-inner" id="lightboxInner">
