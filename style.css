@@ -100,7 +100,7 @@ p, dd { text-wrap: pretty; }
   line-height: 1;
 }
 .topbar-left { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
-.topbar nav, .footer nav, .socials { display: flex; flex-direction: column; align-items: flex-start; }
+.topbar nav, .footer nav, .socials { display: flex; flex-direction: column; align-items: flex-start; gap: .35em; line-height: 1; }
 .clock { display: flex; gap: .35em; }
 .topbar-right { justify-self: end; }
 
