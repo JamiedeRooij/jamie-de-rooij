@@ -455,8 +455,7 @@ function initClock() {
   setInterval(tick, 15000);
 }
 
-// Text marked data-split is cut into words; each word gets the number of the line it
-// sits on, so the text comes in line by line. Lines are re-counted when the width changes.
+// Text marked data-split is cut into words that come in one after another (the live site's text effect).
 function splitText() {
   const blocks = $$("[data-split]");
   blocks.forEach((el) => {
@@ -466,20 +465,10 @@ function splitText() {
       const span = document.createElement("span");
       span.className = "w";
       span.textContent = word;
+      span.style.setProperty("--i", Math.min(i, 44));
       el.append(span, i < words.length - 1 ? " " : "");
     });
   });
-  const number = () => blocks.forEach((el) => {
-    if (el.classList.contains("in")) return;
-    let line = -1, top = null;
-    $$(".w", el).forEach((w) => {
-      if (w.offsetTop !== top) { top = w.offsetTop; line++; }
-      w.style.setProperty("--l", Math.min(line, 8));
-    });
-  });
-  number();
-  window.addEventListener("resize", number);
-  if (document.fonts) document.fonts.ready.then(number);
 }
 
 function initReveal() {
