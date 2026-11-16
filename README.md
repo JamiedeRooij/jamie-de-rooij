@@ -1,6 +1,6 @@
 # jamiederooij.com
 
-A plain HTML/CSS/JS site with an upload portal at `/admin`. Hosting is free on Netlify.
+A plain HTML/CSS/JS site with an upload portal at `/admin`. Hosting is free on Cloudflare Pages.
 
 ```
 index.html, style.css, main.js   the site
@@ -13,16 +13,15 @@ portal/                          one page linking to the three portals
 tools/fetch-media.mjs            copies your Framer-hosted media into uploads/
 ```
 
-## Going live (one time, about 15 minutes)
+## Going live on Cloudflare Pages
 
-1. **GitHub.** Create a free account, then the repository `jamie-de-rooij`. Upload all files in this folder to it (Add file → Upload files).
-2. **Portal settings.** Already set: `admin/config.yml` points at `JamiedeRooij/jamie-de-rooij`.
-3. **Netlify.** Create a free account → Add new site → Import from Git → pick the repo. No build command; publish directory is `.`.
-4. **Portal login.** In GitHub: Settings → Developer settings → OAuth Apps → New OAuth App.
-   - Homepage URL: your Netlify URL
-   - Callback URL: `https://api.netlify.com/auth/done`
-   Copy the Client ID and secret into Netlify: Site configuration → Access & security → OAuth → Install provider → GitHub.
-5. **Domain.** Netlify → Domain management → Add `jamiederooij.com` and follow the DNS steps at your domain registrar.
+1. **Cloudflare.** dash.cloudflare.com → Workers & Pages → Create → Pages → Connect to Git → pick `jamie-de-rooij`. No framework, no build command, output directory empty. Deploy.
+2. **Portal login.** On GitHub: Settings → Developer settings → OAuth Apps → New OAuth App.
+   - Homepage URL: your site address
+   - Callback URL: `https://YOUR-SITE/api/callback`
+   In Cloudflare: your Pages project → Settings → Variables and Secrets → add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` (as a secret), then redeploy.
+   The login itself is in `functions/api/auth.js` and `functions/api/callback.js`.
+3. **Domain.** Pages project → Custom domains → add `jamiederooij.com` and `www.jamiederooij.com`, and follow the DNS steps. Then change the OAuth App's two URLs to the real domain.
 
 Then open **jamiederooij.com/portal**, pick a portal and log in with GitHub: **Poster trail**, **Poster wall** or **Works**. Changes are live about a minute after you press Publish.
 

@@ -7,6 +7,22 @@
 <title>Upload portal · Jamie de Rooij</title>
 </head>
 <body>
+<script>window.CMS_MANUAL_INIT = true;</script>
 <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+<script>
+  // The login runs on this same site (functions/api/auth.js and callback.js), so the
+  // portals work on the Cloudflare address and on jamiederooij.com without changes.
+  CMS.init({
+    config: {
+      backend: {
+        name: "github",
+        repo: "JamiedeRooij/jamie-de-rooij",
+        branch: "main",
+        base_url: window.location.origin,
+        auth_endpoint: "api/auth",
+      },
+    },
+  });
+</script>
 </body>
 </html>
