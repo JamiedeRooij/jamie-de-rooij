@@ -270,8 +270,12 @@ a { transition: opacity .3s ease; }
   gap: clamp(48px, 4.6vw, 80px);
 }
 .footer nav { line-height: 1; }
-.footer-name { font-size: 34vw; }
-.footer-bottom { padding-top: clamp(24px, 8vw, 140px); line-height: 1; }
+.footer-name {
+  font-size: 34vw;
+  /* trim the line box to the letters themselves, so the space above and below is what you see */
+  text-box: trim-both cap alphabetic;
+}
+.footer-bottom { line-height: 1; }   /* same distance to the name as the links above it */
 .back { display: inline-flex; align-items: center; gap: 8px; }
 
 /* ---------- LIGHTBOX ---------- */
