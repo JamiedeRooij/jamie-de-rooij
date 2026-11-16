@@ -453,11 +453,39 @@ function initClock() {
   setInterval(tick, 15000);
 }
 
+// Text marked data-split is cut into words; each word gets the number of the line it
+// sits on, so the text comes in line by line. Lines are re-counted when the width changes.
+function splitText() {
+  const blocks = $$("[data-split]");
+  blocks.forEach((el) => {
+    const words = el.textContent.trim().split(/\s+/);
+    el.textContent = "";
+    words.forEach((word, i) => {
+      const span = document.createElement("span");
+      span.className = "w";
+      span.textContent = word;
+      el.append(span, i < words.length - 1 ? " " : "");
+    });
+  });
+  const number = () => blocks.forEach((el) => {
+    if (el.classList.contains("in")) return;
+    let line = -1, top = null;
+    $$(".w", el).forEach((w) => {
+      if (w.offsetTop !== top) { top = w.offsetTop; line++; }
+      w.style.setProperty("--l", Math.min(line, 8));
+    });
+  });
+  number();
+  window.addEventListener("resize", number);
+  if (document.fonts) document.fonts.ready.then(number);
+}
+
 function initReveal() {
+  if (!reduceMotion) splitText();
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-  }, { rootMargin: "0px 0px -8% 0px" });
-  $$("[data-reveal]").forEach((el) => io.observe(el));
+  }, { rootMargin: "0px 0px -24px 0px" });
+  $$("[data-reveal], [data-split]").forEach((el) => io.observe(el));
 }
 
 /* ============ BOOT ============ */

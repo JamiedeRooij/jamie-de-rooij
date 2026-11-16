@@ -14,7 +14,8 @@
   --gutter: clamp(16px, 2.9vw, 50px);
   --gap: clamp(10px, 1.16vw, 20px);
   --space: clamp(72px, 9.25vw, 160px);
-  --text: clamp(17px, 1.39vw, 24px);
+  /* body size follows gilhuybrecht.com: 1.7 x (0.6667vw root) = 1.133vw, medium weight */
+  --text: clamp(15px, 1.1333vw, 22px);
   --ease: cubic-bezier(.22, 1, .36, 1);
   color-scheme: dark;
 }
@@ -28,7 +29,7 @@ body {
   font-family: var(--font);
   font-weight: 500;
   font-size: var(--text);
-  line-height: 1.21;
+  line-height: 1.2;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -338,8 +339,29 @@ a { transition: opacity .3s ease; }
 body.locked { overflow: hidden; }
 
 /* ---------- SCROLL REVEAL (subtle) ---------- */
-[data-reveal] { opacity: 0; transform: translateY(14px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+[data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
 [data-reveal].in { opacity: 1; transform: none; }
+/* children of a revealed block follow one after another */
+[data-reveal] > .stagger { opacity: 0; transform: translateY(8px); transition: opacity 1s var(--ease), transform 1s var(--ease); transition-delay: calc(var(--i, 0) * 90ms + 80ms); }
+[data-reveal].in > .stagger { opacity: 1; transform: none; }
+
+/* headings and lead text come in line by line: each word rises a little and sharpens */
+[data-split] .w {
+  display: inline-block;
+  text-indent: 0;              /* the indent belongs to the paragraph, not to each word */
+  opacity: 0;
+  transform: translateY(.3em);
+  filter: blur(4px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease);
+  transition-delay: calc(var(--l, 0) * 80ms);
+}
+[data-split].in .w { opacity: 1; transform: none; filter: none; }
+
+/* top bar fades in when the page opens */
+.topbar > * { animation: bar-in 1.1s var(--ease) both; }
+.topbar > *:nth-child(2) { animation-delay: .08s; }
+.topbar > *:nth-child(3) { animation-delay: .16s; }
+@keyframes bar-in { from { opacity: 0; transform: translateY(-6px); } }
 
 /* ---------- TOUCH: no hover, so titles are always shown ---------- */
 @media (hover: none) {
@@ -383,6 +405,8 @@ body.locked { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .card, [data-reveal] { opacity: 1; transform: none; transition: none; }
+  [data-reveal] > .stagger, [data-split] .w { opacity: 1; transform: none; filter: none; transition: none; }
+  .topbar > * { animation: none; }
   .slide, .dot, .lightbox, .lb-stage, .button-roll span, .card-title, .card::after { transition: none; }
 }
 
