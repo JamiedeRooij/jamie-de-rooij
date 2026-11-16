@@ -423,7 +423,7 @@ function initWall(images) {
   });
   if (reduceMotion) { $("#wall").style.overflowX = "auto"; return; }
 
-  const HOLD = 3800, MOVE = 1800;
+  const HOLD = 700, MOVE = 1800;   // short pause between pushes, so it reads as one slow flow
   let timer = 0, moving = false;
   function push() {
     if (moving) return;

@@ -228,11 +228,11 @@ a { transition: opacity .3s ease; }
 .dot.on { width: 41px; background: var(--fg); }
 
 /* ---------- POSTER WALL ---------- */
-.wall { overflow: hidden; margin-right: calc(var(--gutter) * -1); }
+.wall { overflow: hidden; }
 .wall-track { display: flex; gap: var(--gap); will-change: transform; }
 .wall-track img {
   flex: none;
-  width: 40.6vw;
+  width: calc((100% - 2 * var(--gap)) / 3);   /* three posters fit in full */
   max-width: none;
   aspect-ratio: 662 / 937;
   object-fit: cover;
@@ -370,7 +370,6 @@ body.locked { overflow: hidden; }
 
 /* ---------- TABLET ---------- */
 @media (max-width: 1199.98px) {
-  .wall-track img { width: 46vw; }
   .facts { margin-left: 0; }
 }
 
@@ -381,7 +380,7 @@ body.locked { overflow: hidden; }
   .topbar-right { grid-column: 2; grid-row: 1; }
   .clock { grid-column: 1 / -1; grid-row: 2; flex-wrap: wrap; }
   .lead { text-indent: 12%; }
-  .wall-track img { width: 78vw; }
+  .wall-track img { width: calc((100% - var(--gap)) / 2); }   /* two on a phone */
   .row { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
   .row h3 { max-width: none; }
   .row-text { grid-column: auto; }
