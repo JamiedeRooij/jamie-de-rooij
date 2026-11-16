@@ -147,6 +147,13 @@ function measure(m) {
   });
 }
 
+// Marks an image or video once it has loaded, so CSS can fade it in.
+function loaded(el, event) {
+  const done = () => el.classList.add("is-loaded");
+  el.addEventListener(event, done, { once: true });
+  el.addEventListener("error", done, { once: true });
+}
+
 function mediaElement(m, size, opts = {}) {
   if (m.video) {
     const v = document.createElement("video");
@@ -158,14 +165,16 @@ function mediaElement(m, size, opts = {}) {
     if (!opts.sound) v.setAttribute("muted", "");
     if (opts.sound) v.controls = true;
     if (m.poster) v.poster = sized(m.poster, size);
+    loaded(v, "loadeddata");
     v.src = m.video;
     return v;
   }
   const img = document.createElement("img");
-  img.src = sized(m.image, size);
   img.alt = opts.alt || "";
   img.decoding = "async";
   if (opts.lazy) img.loading = "lazy";
+  loaded(img, "load");
+  img.src = sized(m.image, size);
   return img;
 }
 
@@ -221,12 +230,12 @@ function initWorks(raw) {
     });
   }, { rootMargin: "150px" });
 
-  // Cards fade in as they enter the screen, 0.05s apart (the Framer stagger).
+  // Cards fade in slowly as they enter the screen, one shortly after another.
   const revealObserver = new IntersectionObserver((entries) => {
     entries.filter((e) => e.isIntersecting).forEach((e, i) => {
-      e.target.style.transitionDelay = `${i * 0.05}s`;
+      e.target.style.transitionDelay = `${i * 0.12}s`;
       e.target.classList.add("in");
-      setTimeout(() => { e.target.style.transitionDelay = ""; }, 900 + i * 50);
+      setTimeout(() => { e.target.style.transitionDelay = ""; }, 2100 + i * 120);
       revealObserver.unobserve(e.target);
     });
   }, { rootMargin: "0px 0px -8% 0px" });
@@ -371,12 +380,14 @@ function openLightbox(works, index) {
   renderLightbox();
   lb.hidden = false;
   document.body.classList.add("locked");
+  if (lenis) lenis.stop();
   requestAnimationFrame(() => lb.classList.add("open"));
   $("#lbClose").focus({ preventScroll: true });
 }
 function closeLightbox() {
   lb.classList.remove("open");
   document.body.classList.remove("locked");
+  if (lenis) lenis.start();
   if (lbShow) lbShow.stop();
   const v = $("video", lb);
   if (v) v.pause();
@@ -416,11 +427,12 @@ function initWall(images) {
   while (list.length < 6) list = list.concat(images);   // enough posters to loop
   list.forEach((u) => {
     const img = document.createElement("img");
-    img.src = sized(u, 1024);
     img.alt = "";
     img.loading = "lazy";
     img.decoding = "async";
     img.draggable = false;
+    loaded(img, "load");
+    img.src = sized(u, 1024);
     track.appendChild(img);
   });
   if (reduceMotion) { $("#wall").style.overflowX = "auto"; return; }
@@ -495,6 +507,24 @@ function initReveal() {
   $$("[data-reveal], [data-split]").forEach((el) => io.observe(el));
 }
 
+/* ============ SMOOTH SCROLLING ============
+   Lenis eases the wheel/trackpad scroll (the live Framer site uses it too).
+   Touch screens keep their native scrolling. */
+let lenis = null;
+function initSmoothScroll() {
+  if (reduceMotion || typeof Lenis === "undefined") return;
+  lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9, anchors: false });
+  const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+  // menu links glide to their section
+  $$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
+    const target = document.querySelector(a.getAttribute("href"));
+    if (!target) return;
+    e.preventDefault();
+    lenis.scrollTo(target, { duration: 1.6 });
+  }));
+}
+
 /* ============ BOOT ============ */
 initClock();
 initReveal();
@@ -503,6 +533,7 @@ fitAll();
 window.addEventListener("resize", fitAll);
 if (document.fonts) document.fonts.ready.then(fitAll);
 initHeroScroll();
+initSmoothScroll();
 
 Promise.all([
   getJSON("content/trail.json").catch(() => ({ posters: [] })),

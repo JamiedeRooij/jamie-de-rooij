@@ -23,6 +23,11 @@
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+/* smooth scrolling (Lenis) */
+html.lenis, html.lenis body { height: auto; }
+html.lenis { scroll-behavior: auto; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
 body {
   background: var(--bg);
   color: var(--fg);
@@ -159,8 +164,9 @@ p, dd, .lead { text-wrap: pretty; }
   background: var(--tile);
   cursor: pointer;
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity .8s var(--ease), transform .8s var(--ease), filter .45s ease;
+  transform: translateY(28px);
+  /* cards come in slowly: a long fade and an even longer, soft rise */
+  transition: opacity 1.6s cubic-bezier(.33, 0, .2, 1), transform 2s var(--ease), filter .6s ease;
 }
 .card.in { opacity: 1; transform: none; }
 .card-media { position: relative; width: 100%; }
@@ -173,7 +179,10 @@ p, dd, .lead { text-wrap: pretty; }
   height: 100%;
   object-fit: cover;
 }
-.slide { opacity: 0; transition: opacity .7s ease; }
+.slide { opacity: 0; transition: opacity 1.2s ease; }
+/* media fades in once it has loaded, instead of popping in */
+.card-media > :not(.slide), .wall-track img { opacity: 0; transition: opacity 1.2s ease; }
+.card-media > .is-loaded:not(.slide), .wall-track img.is-loaded { opacity: 1; }
 .slide.on { opacity: 1; }
 
 /* title on hover: 24px, 12px from the left, 14px from the bottom */
@@ -184,7 +193,7 @@ p, dd, .lead { text-wrap: pretty; }
   height: 45%;
   background: linear-gradient(to top, rgba(19, 19, 19, .6), rgba(19, 19, 19, 0));
   opacity: 0;
-  transition: opacity .45s ease;
+  transition: opacity .6s ease;
   pointer-events: none;
 }
 .card-title {
@@ -196,7 +205,7 @@ p, dd, .lead { text-wrap: pretty; }
   line-height: 1;
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity .45s ease, transform .45s var(--ease);
+  transition: opacity .6s ease, transform .8s var(--ease);
   pointer-events: none;
 }
 .card.has-dots .card-title { right: 150px; }
@@ -431,6 +440,7 @@ body.locked { overflow: hidden; }
   .card, [data-reveal] { opacity: 1; transform: none; transition: none; }
   [data-reveal], [data-reveal] .stagger, [data-split] .w { opacity: 1 !important; transform: none !important; filter: none; transition: none; }
   .topbar-left > *, .clock, .topbar-right, .hero-name span { animation: none; }
+  .card-media > :not(.slide), .wall-track img { opacity: 1; transition: none; }
   .slide, .dot, .lightbox, .lb-stage, .button-roll span, .card-title, .card::after { transition: none; }
 }
 
