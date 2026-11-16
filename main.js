@@ -354,7 +354,7 @@ function renderLightbox() {
   }
 
   $("#lbTitle").textContent = w.title;
-  $("#lbDesc").textContent = w.description;
+  $("#lbDesc").textContent = noWidow(w.description);
   $("#lbProf").textContent = w.profession;
   const link = $("#lbUrl");
   link.hidden = !w.url;
@@ -461,17 +461,33 @@ function splitText() {
   blocks.forEach((el) => {
     const words = el.textContent.trim().split(/\s+/);
     el.textContent = "";
+    // the last two words stay together, so a line never ends on a single word
+    const tail = document.createElement("span");
+    tail.className = "nw";
     words.forEach((word, i) => {
       const span = document.createElement("span");
       span.className = "w";
       span.textContent = word;
       span.style.setProperty("--i", Math.min(i, 44));
-      el.append(span, i < words.length - 1 ? " " : "");
+      const last = i === words.length - 1;
+      if (words.length > 3 && i >= words.length - 2) {
+        tail.append(span, last ? "" : " ");
+        if (last) el.append(tail);
+      } else {
+        el.append(span, last ? "" : " ");
+      }
     });
   });
 }
 
+// Ties the last two words of a text together with a non-breaking space.
+const noWidow = (text) => (text.trim().split(/\s+/).length > 3 ? text.replace(/\s+(\S+)\s*$/, "\u00a0$1") : text);
+
 function initReveal() {
+  $$(".row-text p, .row h3, .fact dd").forEach((el) => {
+    const node = el.lastChild;
+    if (node && node.nodeType === 3) node.textContent = noWidow(node.textContent);
+  });
   if (!reduceMotion) splitText();
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });

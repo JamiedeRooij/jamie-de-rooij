@@ -49,6 +49,12 @@ a { transition: opacity .3s ease; }
 }
 .right { text-align: right; justify-self: end; }
 
+/* No single word alone on a line: the browser balances the breaks, and main.js also
+   ties the last two words of each text together for browsers that can't yet. */
+p, dd, .lead { text-wrap: pretty; }
+.h2, .row h3, .card-title, .lb-title { text-wrap: balance; }
+.nw { white-space: nowrap; }
+
 /* ---------- BUTTON (text rolls up on hover, like the Framer "slideUpBack") ---------- */
 .button {
   display: inline-block;
