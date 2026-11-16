@@ -5,10 +5,11 @@ A plain HTML/CSS/JS site with an upload portal at `/admin`. Hosting is free on N
 ```
 index.html, style.css, main.js   the site
 content/trail.json               hero poster trail
-content/projects.json            Selected Works (masonry + lightbox)
+content/works.json               Works (masonry + lightbox): images, videos, slideshows
 content/wall.json                Poster Wall
 uploads/                         images and videos you upload through the portal
-admin/                           the upload portal (Decap CMS)
+admin/                           the upload portals (Decap CMS)
+portal/                          one page linking to the three portals
 tools/fetch-media.mjs            copies your Framer-hosted media into uploads/
 ```
 
@@ -23,7 +24,7 @@ tools/fetch-media.mjs            copies your Framer-hosted media into uploads/
    Copy the Client ID and secret into Netlify: Site configuration → Access & security → OAuth → Install provider → GitHub.
 5. **Domain.** Netlify → Domain management → Add `jamiederooij.com` and follow the DNS steps at your domain registrar.
 
-Then open **jamiederooij.com/admin**, log in with GitHub, and you'll see three sections: **Hero · Poster trail**, **Selected Works** and **Poster Wall**. Changes are live about a minute after you press Publish.
+Then open **jamiederooij.com/portal**, pick a portal and log in with GitHub: **Poster trail**, **Poster wall** or **Works**. Changes are live about a minute after you press Publish.
 
 ## Before cancelling Framer
 

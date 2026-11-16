@@ -1,30 +1,30 @@
-# Upload portal for jamiederooij.com  (opens at /admin)
-# Every save commits to the GitHub repo; Netlify then republishes the site (~1 min).
+# Upload portals for jamiederooij.com (open /portal for the three links)
+# Every save commits to the GitHub repo; the host then republishes the site (about a minute).
 
 backend:
   name: github
   repo: JamiedeRooij/jamie-de-rooij
   branch: main
 
-# For testing on your own computer: run `npx decap-server` in the site folder,
+# Testing on your own computer: run `npx decap-server` in the site folder,
 # then open http://localhost:8080/admin — no login needed.
 local_backend: true
 
 publish_mode: simple
 media_folder: uploads
-public_folder: /uploads
+public_folder: uploads
 
 site_url: https://www.jamiederooij.com
 display_url: https://www.jamiederooij.com
-logo_url: ""
 
 collections:
-  - name: hero
-    label: "Hero · Poster trail"
-    description: "The posters that follow the cursor over your name. They appear in this order."
+  # ---------- Portal 1: poster trail ----------
+  - name: trail
+    label: "Poster trail"
+    description: "Posters that follow the cursor over your name in the hero. They appear in this order."
     files:
       - name: trail
-        label: "Trail posters"
+        label: "Poster trail"
         file: content/trail.json
         format: json
         fields:
@@ -34,35 +34,15 @@ collections:
             widget: list
             summary: "{{fields.image}}"
             fields:
-              - { name: image, label: "Poster image", widget: image, choose_url: true }
+              - { name: image, label: "Poster", widget: image, choose_url: true }
 
-  - name: work
-    label: "Selected Works"
-    description: "Projects in the masonry grid. Add a video and it plays as the thumbnail instead of the image."
-    files:
-      - name: projects
-        label: "Projects"
-        file: content/projects.json
-        format: json
-        fields:
-          - name: projects
-            label: "Projects"
-            label_singular: "Project"
-            widget: list
-            summary: "{{fields.title}} — {{fields.subtitle}}"
-            fields:
-              - { name: title, label: "Title", widget: string }
-              - { name: subtitle, label: "Subtitle", widget: string, required: false, hint: "Shown in grey under the title, e.g. Poster, 2026" }
-              - { name: image, label: "Image", widget: image, required: false, choose_url: true, hint: "Thumbnail and lightbox image. Also used as the video's poster frame." }
-              - { name: video, label: "Video (mp4)", widget: file, required: false, choose_url: true, hint: "If set, the video is shown instead of the image. Keep it short and compressed." }
-              - { name: description, label: "Description", widget: text, required: false, hint: "Only shown in the lightbox when someone clicks the project." }
-
+  # ---------- Portal 2: poster wall ----------
   - name: wall
-    label: "Poster Wall"
-    description: "Posters in the scrolling wall."
+    label: "Poster wall"
+    description: "Posters in the poster wall. New ones slide in from the right."
     files:
       - name: wall
-        label: "Wall posters"
+        label: "Poster wall"
         file: content/wall.json
         format: json
         fields:
@@ -72,4 +52,58 @@ collections:
             widget: list
             summary: "{{fields.image}}"
             fields:
-              - { name: image, label: "Poster image", widget: image, choose_url: true }
+              - { name: image, label: "Poster", widget: image, choose_url: true }
+
+  # ---------- Portal 3: works ----------
+  - name: works
+    label: "Works"
+    description: "The masonry grid. Press 'Add work' and choose Image, Video or Slideshow."
+    files:
+      - name: works
+        label: "Works"
+        file: content/works.json
+        format: json
+        fields:
+          - name: works
+            label: "Works"
+            label_singular: "work"
+            widget: list
+            typeKey: type
+            types:
+              - name: image
+                label: "Image"
+                widget: object
+                summary: "{{fields.title}} · image"
+                fields:
+                  - { name: title, label: "Title", widget: string, hint: "Shown on hover and in the lightbox." }
+                  - { name: image, label: "Image", widget: image, choose_url: true }
+                  - { name: description, label: "Description", widget: text, required: false, hint: "Shown in the lightbox, bottom middle." }
+                  - { name: url, label: "URL (optional)", widget: string, required: false, hint: "Adds a 'Visit project' link in the lightbox." }
+                  - { name: profession, label: "Profession", widget: string, required: false, hint: "e.g. Art direction, Poster, Branding. Shown bottom right in the lightbox." }
+              - name: video
+                label: "Video"
+                widget: object
+                summary: "{{fields.title}} · video"
+                fields:
+                  - { name: title, label: "Title", widget: string, hint: "Shown on hover and in the lightbox." }
+                  - { name: video, label: "Video (mp4)", widget: file, choose_url: true, hint: "Plays muted in the grid, with sound in the lightbox. Keep it short and compressed." }
+                  - { name: image, label: "Still image (optional)", widget: image, required: false, choose_url: true, hint: "Shown while the video loads." }
+                  - { name: description, label: "Description", widget: text, required: false, hint: "Shown in the lightbox, bottom middle." }
+                  - { name: url, label: "URL (optional)", widget: string, required: false, hint: "Adds a 'Visit project' link in the lightbox." }
+                  - { name: profession, label: "Profession", widget: string, required: false, hint: "e.g. Art direction, Poster, Branding. Shown bottom right in the lightbox." }
+              - name: slideshow
+                label: "Slideshow"
+                widget: object
+                summary: "{{fields.title}} · slideshow"
+                fields:
+                  - { name: title, label: "Title", widget: string, hint: "Shown on hover and in the lightbox." }
+                  - name: slides
+                    label: "Slides"
+                    label_singular: "slide"
+                    widget: list
+                    min: 2
+                    hint: "The first slide sets the size of the card."
+                    field: { name: image, label: "Image", widget: image, choose_url: true }
+                  - { name: description, label: "Description", widget: text, required: false, hint: "Shown in the lightbox, bottom middle." }
+                  - { name: url, label: "URL (optional)", widget: string, required: false, hint: "Adds a 'Visit project' link in the lightbox." }
+                  - { name: profession, label: "Profession", widget: string, required: false, hint: "e.g. Art direction, Poster, Branding. Shown bottom right in the lightbox." }

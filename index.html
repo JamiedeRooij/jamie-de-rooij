@@ -5,107 +5,134 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jamie de Rooij</title>
 <meta name="description" content="Jamie de Rooij is a Dutch graphic designer working at the intersection of creativity, research and experimentation.">
-<script>
-  // Apply a saved light/dark choice before the first paint. No choice = follow the system.
-  try { var t = localStorage.getItem("theme"); if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
-</script>
+<meta name="theme-color" content="#131313">
 <link rel="preconnect" href="https://api.fontshare.com">
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@500&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch between light and dark mode">Dark</button>
-
-<!-- HERO: fixed behind the page; the sections below scroll over it -->
+<!-- HERO: a fixed layer. The page below scrolls over it. -->
 <header class="hero" id="hero">
+  <div class="topbar">
+    <div class="topbar-left">
+      <a class="plain" href="#top">Jamie de Rooij</a>
+      <nav aria-label="Main">
+        <a href="#works">Projects</a>
+        <a href="#about">About</a>
+        <a href="#posters">Posters</a>
+      </nav>
+    </div>
+    <p class="clock"><span class="js-clock">12:59</span> <span>Amsterdam, The Netherlands</span></p>
+    <div class="topbar-right">
+      <a class="button" href="mailto:hello@jamiederooij.com"><span class="button-roll"><span>Let’s work together</span><span aria-hidden="true">Let’s work together</span></span></a>
+    </div>
+  </div>
   <div class="trail" id="trail" aria-hidden="true"></div>
-  <h1 class="hero-name"><span id="heroName">Jamie</span></h1>
+  <h1 class="fit hero-name" id="heroName"><span>Jamie</span></h1>
 </header>
-<div class="hero-spacer" aria-hidden="true"></div>
+<div class="hero-spacer" id="top" aria-hidden="true"></div>
 
-<main class="page" id="top">
-  <section class="section intro">
-    <p class="lead">My work lives at the intersection of creativity, research, and experimentation, where curiosity leads and concept drives everything that follows.</p>
-  </section>
+<main class="page">
+  <p class="lead" data-reveal>My work lives at the intersection of creativity, research, and experimentation, where curiosity leads and concept drives everything that follows.</p>
 
-  <section class="section works" id="work">
-    <h2 class="h2">Selected Works</h2>
+  <section class="block" id="works">
+    <h2 class="h2" data-reveal>Works</h2>
     <div class="masonry" id="masonry"></div>
   </section>
 
-  <section class="section wall" id="posters">
-    <h2 class="h2">Poster Wall</h2>
-    <div class="ticker" id="ticker">
-      <div class="ticker-track" id="tickerTrack"></div>
+  <section class="block" id="posters">
+    <h2 class="h2" data-reveal>Poster wall</h2>
+    <div class="wall" id="wall">
+      <div class="wall-track" id="wallTrack"></div>
     </div>
   </section>
 
-  <section class="section expertise" id="about">
-    <h2 class="h2">My expertise</h2>
-    <div class="columns">
-      <div>
-        <p>I’m Jamie de Rooij, a Dutch graphic designer with a love for bold ideas and thoughtful design. My work lives at the intersection of creativity, research, and experimentation, where curiosity leads and concept drives everything that follows.</p>
-        <p>After graduating from the Royal Academy of Art in The Hague, I worked for clients across commercial and editorial fields. Each project is a new exploration: a chance to question, experiment, and build something that not only looks strong but feels right.</p>
+  <section class="about" id="about">
+    <p class="lead" data-reveal>My work lives at the intersection of creativity, research, and experimentation, where curiosity leads and concept drives everything that follows. 10+ years of experience, but never done learning. Typography often forms the backbone of my process, a tool to balance precision with play. From the first spark of an idea to the finished piece, I believe in crafting design solutions that are clear in purpose, striking in form, and bold enough to stand apart.</p>
+
+    <div class="rows">
+      <div class="row" data-reveal>
+        <h3>Curiosity comes first.</h3>
+        <div class="row-text">
+          <p>The early stages of a project are often where I find the most excitement. It’s a moment when possibilities are still open, ideas can take unexpected directions and nothing is set in stone. But good ideas need a solid foundation. I take the time to understand the problem, explore different perspectives and identify opportunities before shaping a clear direction for what comes next.</p>
+        </div>
       </div>
-      <div>
-        <p>Typography often forms the backbone of my process, a tool to balance precision with play. From the first spark of an idea to the finished piece, I believe in crafting design solutions that are clear in purpose, striking in form, and bold enough to stand apart.</p>
-        <p>From concept to final delivery, I aim to create work that communicates with precision, resonates with people, and dares to be bold.</p>
+      <div class="row" data-reveal>
+        <h3>Ideas take shape through design.</h3>
+        <div class="row-text">
+          <p>I believe in bringing design into the process from an early stage. Research and strategy are essential, but ideas become truly interesting when you start giving them form. Rather than treating design as the final step, I use it as a way to explore, question and develop concepts. My strength lies in translating abstract ideas into tangible, creative and often unexpected design solutions.</p>
+        </div>
+      </div>
+      <div class="row" data-reveal>
+        <h3>From idea to execution.</h3>
+        <div class="row-text">
+          <p>Over the years, I’ve worked across a wide range of projects, industries and media. I’m comfortable adapting to an existing brand, collaborating with studios and working within established visual languages. But I’m equally at home setting a new direction and pushing things further with distinctive design choices.</p>
+          <p>Whether working in print or digital, I enjoy taking an idea through every stage of the process, from the initial concept to the smallest details of the final execution.</p>
+        </div>
       </div>
     </div>
-  </section>
-</main>
 
-<footer class="footer" id="contact">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <p class="services" aria-label="Services"><span id="service">Branding</span></p>
-      <a class="cta" href="mailto:hello@jamiederooij.com">Let’s work together</a>
-    </div>
-
-    <dl class="facts">
+    <dl class="facts" data-reveal>
       <div class="fact">
-        <dt>Socials</dt>
-        <dd><a href="https://www.instagram.com/jamiederooij" target="_blank" rel="noopener">Instagram</a></dd>
+        <dt>Services</dt>
+        <dd>Art Direction<br>Branding<br>Digital design<br>Editorial design<br>Framer Development<br>Print design<br>Webdesign</dd>
       </div>
       <div class="fact">
-        <dt>Experience</dt>
-        <dd><span class="year">2017–now</span> Freelance</dd>
-        <dd><span class="year">2016</span> Remco van Bladel, internship</dd>
-        <dd><span class="year">2012</span> Zuiver, internship</dd>
-        <dd><span class="year">2011</span> Studio Jan de Boer, internship</dd>
-      </div>
-      <div class="fact">
-        <dt>Education</dt>
-        <dd>Royal Academy of Art, The Hague</dd>
-        <dd>Media College, Amsterdam</dd>
-      </div>
-      <div class="fact">
-        <dt>Features</dt>
-        <dd>Fontanel Dutch Design Talents 2017</dd>
+        <dt>Recognition</dt>
+        <dd>Fontanel, Dutch Design Talents 2017</dd>
       </div>
     </dl>
+  </section>
 
-    <div class="footer-bottom">
-      <span>© <span id="year">2026</span> Jamie de Rooij</span>
-      <a href="mailto:hello@jamiederooij.com">hello@jamiederooij.com</a>
-      <a href="#top">Back to top</a>
+  <footer class="footer">
+    <div class="grid3">
+      <nav aria-label="Footer">
+        <a href="#top">Home</a>
+        <a href="#about">About</a>
+        <a href="#works">Projects</a>
+        <a href="#posters">Posters</a>
+      </nav>
+      <div class="socials">
+        <a href="https://www.instagram.com/jamiederooij" target="_blank" rel="noopener">Instagram</a>
+        <span>LinkedIn</span>
+        <span>X</span>
+      </div>
+      <div class="right">
+        <a class="button" href="mailto:hello@jamiederooij.com"><span class="button-roll"><span>Let’s work together</span><span aria-hidden="true">Let’s work together</span></span></a>
+      </div>
     </div>
-  </div>
-</footer>
 
-<!-- Lightbox -->
+    <p class="fit footer-name" aria-hidden="true"><span>Jamie</span></p>
+
+    <div class="grid3 footer-bottom">
+      <p>© <span id="year">2026</span> Jamie de Rooij</p>
+      <p>Last updated: <span id="updated">16/11/2026</span></p>
+      <p class="right"><a class="back" href="#top">Back to the top
+        <svg width="14" height="16" viewBox="0 0 14 16" fill="none" aria-hidden="true"><path d="M7 15V1M7 1L1 7M7 1l6 6" stroke="currentColor" stroke-width="1.6"/></svg></a></p>
+    </div>
+  </footer>
+</main>
+
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project" hidden>
-  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 5L19 19M19 5L5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  <button class="round lb-close" id="lbClose" type="button" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.6"/></svg>
   </button>
-  <div class="lightbox-inner" id="lightboxInner">
-    <div class="lightbox-media" id="lightboxMedia"></div>
-    <div class="lightbox-text">
-      <p class="lb-title" id="lbTitle"></p>
-      <p class="lb-sub" id="lbSub"></p>
-      <p class="lb-desc" id="lbDesc"></p>
+  <button class="round lb-prev" id="lbPrev" type="button" aria-label="Previous project">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 2L4 8l6 6" stroke="currentColor" stroke-width="1.6"/></svg>
+  </button>
+  <button class="round lb-next" id="lbNext" type="button" aria-label="Next project">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 2l6 6-6 6" stroke="currentColor" stroke-width="1.6"/></svg>
+  </button>
+  <div class="lb-stage" id="lbStage"></div>
+  <div class="lb-info grid3">
+    <p class="lb-title" id="lbTitle"></p>
+    <div class="lb-desc">
+      <p id="lbDesc"></p>
+      <a id="lbUrl" target="_blank" rel="noopener" hidden>Visit project</a>
     </div>
+    <p class="lb-prof right" id="lbProf"></p>
   </div>
 </div>
 
