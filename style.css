@@ -56,8 +56,12 @@ a { transition: opacity .3s ease; }
 
 /* No single word alone on a line: the browser balances the breaks, and main.js also
    ties the last two words of each text together for browsers that can't yet. */
-p, dd, .lead { text-wrap: pretty; }
-.h2, .row h3, .card-title, .lb-title { text-wrap: balance; }
+p, dd { text-wrap: pretty; }
+.row h3, .card-title, .lb-title { text-wrap: balance; }
+/* The large statements and titles are animated word by word. Browser balancing breaks
+   those lines far too early (seen in Safari), so they wrap normally and fill each line;
+   only their last two words are kept together. */
+.lead, .h2, [data-split] { text-wrap: wrap; }
 .nw { white-space: nowrap; }
 
 /* ---------- BUTTON (text rolls up on hover, like the Framer "slideUpBack") ---------- */
