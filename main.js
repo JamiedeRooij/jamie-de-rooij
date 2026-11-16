@@ -29,7 +29,9 @@ function fitAll() {
   $$(".fit").forEach((el) => {
     const span = el.firstElementChild;
     el.style.fontSize = "100px";
-    const w = span.getBoundingClientRect().width;
+    // offsetWidth ignores the scroll shrink on the hero name; measuring the shrunken
+    // name made it come back too big after scrolling down and up again.
+    const w = span.offsetWidth;
     if (w > 0) el.style.fontSize = `${(100 * (el.clientWidth - 4)) / w}px`;
   });
 }
