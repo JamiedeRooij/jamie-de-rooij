@@ -284,11 +284,16 @@ p, dd { text-wrap: pretty; }
 
 /* ---------- FOOTER ---------- */
 .footer {
-  padding-top: clamp(40px, 8vw, 140px);
+  /* a full screen, like the hero: links at the top, the name and last line at the bottom */
+  --edge: clamp(16px, 2.5vw, 43px);
+  min-height: calc(100vh - var(--edge));
+  min-height: calc(100dvh - var(--edge));
+  padding-top: var(--edge);
   display: flex;
   flex-direction: column;
   gap: clamp(48px, 4.6vw, 80px);
 }
+.footer-name { margin-top: auto; }
 .footer nav { line-height: 1; }
 .footer-name {
   font-size: 34vw;
