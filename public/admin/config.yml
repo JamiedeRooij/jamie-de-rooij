@@ -11,7 +11,7 @@ backend:
 local_backend: true
 
 publish_mode: simple
-media_folder: uploads
+media_folder: public/uploads
 public_folder: uploads
 
 site_url: https://www.jamiederooij.com
@@ -25,7 +25,7 @@ collections:
     files:
       - name: trail
         label: "Poster trail"
-        file: content/trail.json
+        file: public/content/trail.json
         format: json
         fields:
           - name: posters
@@ -43,7 +43,7 @@ collections:
     files:
       - name: wall
         label: "Poster wall"
-        file: content/wall.json
+        file: public/content/wall.json
         format: json
         fields:
           - name: posters
@@ -61,7 +61,7 @@ collections:
     files:
       - name: works
         label: "Works"
-        file: content/works.json
+        file: public/content/works.json
         format: json
         fields:
           - name: works

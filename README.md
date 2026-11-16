@@ -1,33 +1,35 @@
 # jamiederooij.com
 
-A plain HTML/CSS/JS site with an upload portal at `/admin`. Hosting is free on Cloudflare Pages.
+A plain HTML/CSS/JS site with an upload portal at `/admin`. Hosting is free on Cloudflare.
 
 ```
-index.html, style.css, main.js   the site
-content/trail.json               hero poster trail
-content/works.json               Works (masonry + lightbox): images, videos, slideshows
-content/wall.json                Poster Wall
-uploads/                         images and videos you upload through the portal
-admin/                           the upload portals (Decap CMS)
-portal/                          one page linking to the three portals
-tools/fetch-media.mjs            copies your Framer-hosted media into uploads/
+public/                          the website itself
+  index.html, style.css, main.js
+  content/trail.json             hero poster trail
+  content/works.json             Works (masonry + lightbox): images, videos, slideshows
+  content/wall.json              Poster wall
+  uploads/                       images and videos you upload through the portals
+  admin/                         the upload portals (Decap CMS)
+  portal/                        one page linking to the three portals
+worker.js, src/                  the portals' GitHub login (Cloudflare Worker)
+wrangler.jsonc                   Cloudflare settings
+tools/fetch-media.mjs            copies your Framer-hosted media into public/uploads/
 ```
 
-## Going live on Cloudflare Pages
+## Going live on Cloudflare
 
-1. **Cloudflare.** dash.cloudflare.com → Workers & Pages → Create → Pages → Connect to Git → pick `jamie-de-rooij`. No framework, no build command, output directory empty. Deploy.
+1. **Cloudflare.** dash.cloudflare.com → Workers & Pages → Create application → import the `jamie-de-rooij` repository. Keep the default deploy command (`npx wrangler deploy`).
 2. **Portal login.** On GitHub: Settings → Developer settings → OAuth Apps → New OAuth App.
    - Homepage URL: your site address
    - Callback URL: `https://YOUR-SITE/api/callback`
-   In Cloudflare: your Pages project → Settings → Variables and Secrets → add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` (as a secret), then redeploy.
-   The login itself is in `functions/api/auth.js` and `functions/api/callback.js`.
-3. **Domain.** Pages project → Custom domains → add `jamiederooij.com` and `www.jamiederooij.com`, and follow the DNS steps. Then change the OAuth App's two URLs to the real domain.
+   In Cloudflare: the Worker → Settings → Variables and Secrets → add `GITHUB_CLIENT_ID` (text) and `GITHUB_CLIENT_SECRET` (secret).
+3. **Domain.** The Worker → Settings → Domains & Routes → add `jamiederooij.com` and `www.jamiederooij.com`. Then change the OAuth App's two URLs to the real domain.
 
 Then open **jamiederooij.com/portal**, pick a portal and log in with GitHub: **Poster trail**, **Poster wall** or **Works**. Changes are live about a minute after you press Publish.
 
 ## Before cancelling Framer
 
-Your current images still load from Framer's servers. Run this once (needs Node 18+), then upload the new `uploads/` folder and `content/` files to GitHub:
+Your current images still load from Framer's servers. Run this once (needs Node 18+), then upload the new `public/uploads/` folder and `public/content/` files to GitHub:
 
 ```
 node tools/fetch-media.mjs

@@ -7,7 +7,7 @@
 import { readFile, writeFile, mkdir, access } from "node:fs/promises";
 import { basename, join } from "node:path";
 
-const ROOT = new URL("..", import.meta.url).pathname;
+const ROOT = new URL("../public/", import.meta.url).pathname;
 const FILES = ["content/trail.json", "content/works.json", "content/wall.json"];
 const UPLOADS = join(ROOT, "uploads");
 await mkdir(UPLOADS, { recursive: true });
