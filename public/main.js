@@ -520,7 +520,7 @@ function splitText() {
 const noWidow = (text) => (text.trim().split(/\s+/).length > 3 ? text.replace(/\s+(\S+)\s*$/, "\u00a0$1") : text);
 
 function initReveal() {
-  $$(".row-text p, .row h3, .fact dd").forEach((el) => {
+  $$(".row-text p, .row h3, .footer-list li").forEach((el) => {
     const node = el.lastChild;
     if (node && node.nodeType === 3) node.textContent = noWidow(node.textContent);
   });

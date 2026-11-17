@@ -100,7 +100,7 @@ p, dd { text-wrap: pretty; }
   line-height: 1;
 }
 .topbar-left { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
-.topbar nav, .footer nav, .socials { display: flex; flex-direction: column; align-items: flex-start; gap: .35em; line-height: 1; }
+.topbar nav, .socials, .footer-list { display: flex; flex-direction: column; align-items: flex-start; gap: .35em; line-height: 1; }
 .clock { display: flex; gap: .35em; }
 .topbar-right { justify-self: end; }
 
@@ -288,14 +288,6 @@ p, dd { text-wrap: pretty; }
 .row h3 { font-size: inherit; line-height: 1; max-width: 11em; }
 .row-text { grid-column: 2 / 4; display: flex; flex-direction: column; gap: 1.21em; }
 
-/* services and recognition sit in the same list, starting at the second column */
-.fact {
-  grid-column: 2 / 4;
-  margin: 0;
-  display: grid;
-  grid-template-columns: clamp(120px, 12.4vw, 214px) minmax(0, 1fr);
-  gap: var(--gap);
-}
 
 /* ---------- FOOTER ---------- */
 .footer {
@@ -309,7 +301,17 @@ p, dd { text-wrap: pretty; }
   gap: clamp(48px, 4.6vw, 80px);
 }
 .footer-name { margin-top: auto; }
-.footer nav { line-height: 1; }
+/* top row of the footer: services · recognition · socials · button */
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+  align-items: start;
+}
+.footer-col { display: flex; flex-direction: column; gap: 1.2em; }
+.footer-label { font-size: inherit; line-height: 1; }
+.footer-list { list-style: none; margin: 0; padding: 0; }
+.last-col { grid-column: 4; }   /* bottom line follows the same four columns */
 .footer-name {
   font-size: 34vw;
   /* trim the line box to the letters themselves, so the space above and below is what you see */
@@ -472,10 +474,10 @@ body.locked { overflow: hidden; }
   .row { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
   .row h3 { max-width: none; }
   .row-text { grid-column: auto; }
-  .fact { grid-column: auto; grid-template-columns: 1fr; gap: 10px; }
-  .footer .grid3 { grid-template-columns: 1fr 1fr; row-gap: 28px; }
-  .footer .grid3 > .right { grid-column: 1 / -1; justify-self: start; text-align: left; }
-  .footer-bottom.grid3 { grid-template-columns: 1fr; row-gap: 8px; }
+  .footer-top { grid-template-columns: 1fr 1fr; row-gap: 40px; }
+  .footer-top > .right { justify-self: start; text-align: left; }
+  .footer-bottom.grid4 { grid-template-columns: 1fr; row-gap: 8px; }
+  .last-col { grid-column: auto; }
   .card-title { left: 10px; bottom: 10px; }
   .dots { right: 8px; bottom: 8px; gap: 4px; padding: 4px; }
   .dot { width: 7px; height: 7px; }
