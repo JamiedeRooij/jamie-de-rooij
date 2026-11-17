@@ -4,6 +4,8 @@
   "name": "jamie-de-rooij",
   "main": "worker.js",
   "compatibility_date": "2026-01-01",
+  // keep values added in the Cloudflare dashboard when GitHub pushes a new version
+  "keep_vars": true,
   "assets": {
     "directory": "./public",
     "binding": "ASSETS"
