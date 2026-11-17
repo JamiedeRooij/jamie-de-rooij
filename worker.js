@@ -10,6 +10,12 @@ export default {
     const { pathname } = new URL(request.url);
     if (request.method === "GET" && pathname === "/api/auth") return auth({ request, env });
     if (request.method === "GET" && pathname === "/api/callback") return callback({ request, env });
+    if (request.method === "GET" && pathname === "/api/updated") {
+      // Every portal save or code change publishes a new version, so its upload time
+      // is when the site was last updated.
+      const updated = env.CF_VERSION_METADATA?.timestamp || null;
+      return Response.json({ updated }, { headers: { "Cache-Control": "public, max-age=60" } });
+    }
     return env.ASSETS.fetch(request);
   },
 };

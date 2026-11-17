@@ -15,12 +15,9 @@ function sized(url, px) {
   return url;
 }
 
-let lastModified = 0;
 async function getJSON(path) {
   const res = await fetch(path, { cache: "no-cache" });
   if (!res.ok) throw new Error(`${path}: ${res.status}`);
-  const lm = Date.parse(res.headers.get("last-modified") || "");
-  if (lm > lastModified) lastModified = lm;
   return res.json();
 }
 
@@ -484,6 +481,24 @@ function initWall(images) {
 }
 
 /* ============ SMALL THINGS ============ */
+// "Last updated": the moment the current version of the site went live, Amsterdam time.
+async function initUpdated() {
+  try {
+    const res = await fetch("api/updated", { cache: "no-cache" });
+    const { updated } = await res.json();
+    const when = new Date(updated);
+    if (!updated || isNaN(when)) return;
+    const parts = Object.fromEntries(new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Europe/Amsterdam", day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit", hour12: false,
+    }).formatToParts(when).map((p) => [p.type, p.value]));
+    const el = $("#updated");
+    el.textContent = `${parts.day}/${parts.month}/${parts.year}, ${parts.hour}:${parts.minute}`;
+    el.dateTime = when.toISOString();
+    $("#updatedLine").hidden = false;
+  } catch (e) { /* leave the line hidden */ }
+}
+
 function initClock() {
   const fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Amsterdam" });
   const tick = () => $$(".js-clock").forEach((el) => { el.textContent = fmt.format(new Date()); });
@@ -551,6 +566,7 @@ function initSmoothScroll() {
 
 /* ============ BOOT ============ */
 initClock();
+initUpdated();
 initReveal();
 $("#year").textContent = new Date().getFullYear();
 fitAll();
@@ -568,7 +584,4 @@ Promise.all([
   initTrail(images(trail));
   initWorks(works.works || []);
   initWall(images(wall));
-  if (lastModified) {
-    $("#updated").textContent = new Date(lastModified).toLocaleDateString("en-GB", { timeZone: "Europe/Amsterdam" });
-  }
 });
