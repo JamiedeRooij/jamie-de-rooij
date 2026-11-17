@@ -301,6 +301,12 @@ p, dd { text-wrap: pretty; }
   gap: clamp(48px, 4.6vw, 80px);
 }
 .footer-name { margin-top: auto; }
+/* poster trail: under the links, over the big name (same layering as the hero) */
+.footer { position: relative; }
+/* reaches a little above the footer so posters near its top edge aren't cut off */
+.footer-trail { inset: -300px 0 0 0; overflow: hidden; }
+.footer-name { position: relative; z-index: 1; }
+.footer-top, .footer-bottom { position: relative; z-index: 3; }
 /* top row of the footer: services · recognition · socials · button */
 .grid4 {
   display: grid;

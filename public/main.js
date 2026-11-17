@@ -53,9 +53,8 @@ function initHeroScroll() {
   update();
 }
 
-/* ============ HERO: poster trail on the cursor ============ */
+/* ============ POSTER TRAIL on the cursor: in the hero and in the footer ============ */
 function initTrail(images) {
-  const layer = $("#trail");
   if (!images.length || reduceMotion || !canHover) return;
 
   const urls = images.map((u) => sized(u, 512));
@@ -63,16 +62,32 @@ function initTrail(images) {
 
   const SPACING = 80;       // px of mouse travel between posters
   const VISIBLE_MS = 500;   // how long a poster stays before leaving
-  let last = null;
-  let index = 0;
+  let index = 0;            // one shared sequence, so both places continue the same series
 
-  function spawn(x, y) {
+  // Each place has its own layer. The hero layer is fixed to the screen; the footer
+  // layer scrolls with the footer, so posters are placed relative to it.
+  const hero = $("#trail");
+  const footer = $("#footerTrail");
+  const zones = [
+    hero && { layer: hero, active: () => window.scrollY < window.innerHeight * 0.6 },
+    footer && {
+      layer: footer,
+      active: (x, y) => {
+        const r = footer.parentElement.getBoundingClientRect();
+        return y >= r.top && y <= r.bottom && x >= r.left && x <= r.right;
+      },
+    },
+  ].filter(Boolean);
+  let zone = null, last = null;
+
+  function spawn(layer, x, y) {
+    const r = layer.getBoundingClientRect();
+    x -= r.left; y -= r.top;
     const img = document.createElement("img");
     img.className = "trail-item";
     img.src = urls[index++ % urls.length];
     img.alt = "";
-    const w = 200, h = 250;
-    const base = `translate(${x - w / 2}px, ${y - h / 2}px)`;
+    const base = `translate(calc(${x}px - 50%), calc(${y}px - 50%))`;
     layer.appendChild(img);
     const ease = "cubic-bezier(.22,1,.36,1)";
     const inAnim = img.animate(
@@ -95,10 +110,12 @@ function initTrail(images) {
   }
 
   window.addEventListener("pointermove", (e) => {
-    if (window.scrollY > window.innerHeight * 0.6) { last = null; return; }
     const p = { x: e.clientX, y: e.clientY };
+    const z = zones.find((z) => z.active(p.x, p.y)) || null;
+    if (z !== zone) { zone = z; last = null; }
+    if (!zone) return;
     if (!last) { last = p; return; }
-    if (Math.hypot(p.x - last.x, p.y - last.y) >= SPACING) { spawn(p.x, p.y); last = p; }
+    if (Math.hypot(p.x - last.x, p.y - last.y) >= SPACING) { spawn(zone.layer, p.x, p.y); last = p; }
   }, { passive: true });
 }
 
