@@ -29,6 +29,14 @@
     },
     {
       "type": "image",
+      "title": "The Silence Between, Robert Birnbach",
+      "description": "",
+      "url": "",
+      "profession": "Book cover",
+      "image": "https://framerusercontent.com/images/cT3JCU9V0ECmm00niqhprA1iGE.png"
+    },
+    {
+      "type": "image",
       "title": "World Cup 2026",
       "image": "uploads/worldcup.png",
       "profession": "Poster"
@@ -45,14 +53,6 @@
       "url": "",
       "profession": "Poster",
       "image": "https://framerusercontent.com/images/grcSg5xWgOSN24M7VRg6GhwYfs.png"
-    },
-    {
-      "type": "image",
-      "title": "The Silence Between, Robert Birnbach",
-      "description": "",
-      "url": "",
-      "profession": "Book cover",
-      "image": "https://framerusercontent.com/images/cT3JCU9V0ECmm00niqhprA1iGE.png"
     },
     {
       "type": "image",
