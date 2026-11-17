@@ -173,6 +173,14 @@
       "image": "uploads/poster_4.png",
       "title": "Zwolle - Ajax",
       "profession": "Poster"
+    },
+    {
+      "type": "video",
+      "title": "Copy Machine",
+      "video": "uploads/comp-1_7.mp4",
+      "description": "",
+      "url": "",
+      "profession": "Tool"
     }
   ]
 }
