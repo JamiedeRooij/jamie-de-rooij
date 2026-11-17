@@ -473,27 +473,79 @@ function initWall(images) {
     img.src = sized(u, 1024);
     track.appendChild(img);
   });
-  if (reduceMotion) { $("#wall").style.overflowX = "auto"; return; }
+  const stepSize = () => track.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0);
 
-  const HOLD = 700, MOVE = 1800;   // short pause between pushes, so it reads as one slow flow
-  let timer = 0, moving = false;
-  function push() {
-    if (moving) return;
-    const first = track.firstElementChild;
-    const step = first.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0);
-    moving = true;
-    track.style.transition = `transform ${MOVE}ms cubic-bezier(.65, 0, .35, 1)`;
-    track.style.transform = `translate3d(${-step}px, 0, 0)`;
-    setTimeout(() => {
+  if (reduceMotion) {
+    const wall = $("#wall");
+    wall.style.overflowX = "auto";
+    $("#wallPrev").addEventListener("click", () => wall.scrollBy({ left: -stepSize() }));
+    $("#wallNext").addEventListener("click", () => wall.scrollBy({ left: stepSize() }));
+    return;
+  }
+
+  const HOLD = 450, MOVE = 1300;   // short pause between pushes, so it reads as one slow flow
+  const CLICK = 650;                // the arrows move quicker than the automatic flow
+  const ease = "cubic-bezier(.65, 0, .35, 1)";
+  let timer = 0, moving = false, visible = false, phase = null, done = 0;
+  const currentX = () => new DOMMatrix(getComputedStyle(track).transform).m41 || 0;
+
+  // A click while the row is moving takes over from wherever it is right now.
+  function settle() {
+    if (!moving) return;
+    clearTimeout(done);
+    const x = currentX();
+    track.style.transition = "none";
+    if (phase === "next") { track.appendChild(track.firstElementChild); track.style.transform = `translate3d(${x + stepSize()}px, 0, 0)`; }
+    else track.style.transform = `translate3d(${x}px, 0, 0)`;
+    track.getBoundingClientRect();
+    moving = false;
+  }
+
+  // Forward: the whole row slides one poster to the left, then the first goes to the back.
+  function next(ms = MOVE) {
+    settle();
+    moving = true; phase = "next";
+    track.style.transition = `transform ${ms}ms ${ms === MOVE ? ease : "cubic-bezier(.22, 1, .36, 1)"}`;
+    track.style.transform = `translate3d(${-stepSize()}px, 0, 0)`;
+    done = setTimeout(() => {
       track.style.transition = "none";
-      track.appendChild(first);
+      track.appendChild(track.firstElementChild);
       track.style.transform = "translate3d(0, 0, 0)";
       moving = false;
-    }, MOVE + 40);
+    }, ms + 40);
   }
-  new IntersectionObserver(([entry]) => {
+  // Back: the last poster is put in front just out of view, then the row slides right.
+  function prev(ms = CLICK) {
+    settle();
+    const x = currentX();
+    moving = true; phase = "prev";
+    track.style.transition = "none";
+    track.insertBefore(track.lastElementChild, track.firstElementChild);
+    track.style.transform = `translate3d(${x - stepSize()}px, 0, 0)`;
+    track.getBoundingClientRect();   // apply that position before animating
+    track.style.transition = `transform ${ms}ms cubic-bezier(.22, 1, .36, 1)`;
+    track.style.transform = "translate3d(0, 0, 0)";
+    done = setTimeout(() => { moving = false; }, ms + 40);
+  }
+  function restart() {
     clearInterval(timer);
-    timer = entry.isIntersecting ? setInterval(push, HOLD + MOVE) : 0;
+    timer = visible ? setInterval(() => next(), HOLD + MOVE) : 0;
+  }
+  // After a click the automatic flow waits a moment before it carries on.
+  let resume = 0;
+  function manual(fn) {
+    clearInterval(timer); timer = 0;
+    clearTimeout(resume);
+    fn(CLICK);
+    resume = setTimeout(restart, 2500);
+  }
+  $("#wallPrev").addEventListener("click", () => manual(prev));
+  $("#wallNext").addEventListener("click", () => manual(next));
+
+  new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    clearTimeout(resume);
+    restart();
   }, { threshold: 0.25 }).observe($("#wall"));
 }
 
@@ -601,4 +653,7 @@ Promise.all([
   initTrail(images(trail));
   initWorks(works.works || []);
   initWall(images(wall));
+  // counts in the section index lines
+  $("#worksCount").textContent = (works.works || []).map(normalize).filter((w) => w.media.length).length;
+  $("#wallCount").textContent = images(wall).length;
 });

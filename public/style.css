@@ -61,7 +61,7 @@ p, dd { text-wrap: pretty; }
 /* The large statements and titles are animated word by word. Browser balancing breaks
    those lines far too early (seen in Safari), so they wrap normally and fill each line;
    only their last two words are kept together. */
-.lead, .h2, [data-split] { text-wrap: wrap; }
+.lead, [data-split] { text-wrap: wrap; }
 .nw { white-space: nowrap; }
 
 /* ---------- BUTTON (text rolls up on hover, like the Framer "slideUpBack") ---------- */
@@ -151,21 +151,16 @@ p, dd { text-wrap: pretty; }
   line-height: 1.07;
   text-indent: 21.5%;
 }
-/* Section labels: body size, pinned at the top left while you scroll through their
-   section, then pushed out by the end of it (the next section brings its own).
-   Difference blending keeps the label readable over light and dark work alike. */
-.h2 {
-  position: sticky;
-  top: clamp(16px, 2.5vw, 43px);
-  z-index: 5;
-  align-self: flex-start;
-  margin: 0;
-  font-size: inherit;
+/* Section index line: a thin rule with number · name · count · arrow,
+   on the same four columns as the footer, like a book's contents page. */
+.index-line {
+  align-items: baseline;
+  padding-top: clamp(12px, 1vw, 18px);
+  border-top: 1px solid var(--line);
   line-height: 1;
-  color: #fff;
-  mix-blend-mode: difference;
-  pointer-events: none;
 }
+.index-line h2 { margin: 0; font-size: inherit; line-height: inherit; }
+.index-line [id$="Count"] { font-variant-numeric: tabular-nums; }
 
 /* ---------- WORKS: masonry ---------- */
 .masonry { display: flex; align-items: flex-start; gap: var(--gap); }
@@ -283,6 +278,9 @@ p, dd { text-wrap: pretty; }
   background: var(--tile);
 }
 .wall-track img.is-loaded { background: transparent; }
+/* arrows under the wall: the same round buttons as the lightbox */
+.wall-nav { display: flex; justify-content: flex-end; gap: 10px; }
+.wall-nav .round { position: static; }
 
 /* ---------- ABOUT ---------- */
 .about { display: flex; flex-direction: column; gap: var(--space); }
@@ -451,7 +449,6 @@ body.locked { overflow: hidden; }
   transition-delay: calc(var(--i, 0) * 45ms);
   will-change: transform, filter;
 }
-.h2[data-split] .w { transform: translateY(6px); }
 [data-split].in .w { opacity: 1; transform: none; filter: none; }
 
 /* Hero entrance, with the live site's values:
@@ -494,6 +491,8 @@ body.locked { overflow: hidden; }
   .footer-top { grid-template-columns: 1fr 1fr; row-gap: 40px; }
   .footer-top > .right { justify-self: start; text-align: left; }
   .footer-bottom.grid4 { grid-template-columns: 1fr; row-gap: 8px; }
+  .index-line { grid-template-columns: 3em 1fr auto; }
+  .index-line > .right { display: none; }
   .last-col { grid-column: auto; }
   .card-title { left: 10px; bottom: 10px; }
   .dots { right: 8px; bottom: 8px; gap: 4px; padding: 4px; }

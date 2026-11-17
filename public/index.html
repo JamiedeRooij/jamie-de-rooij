@@ -37,14 +37,32 @@
   <p class="lead" data-split>My work lives at the intersection of creativity, research, and experimentation, where curiosity leads and concept drives everything that follows.</p>
 
   <section class="block" id="works">
-    <h2 class="h2" data-split>Works</h2>
+    <header class="index-line grid4" data-reveal>
+      <span class="stagger" style="--i:0">01</span>
+      <h2 class="stagger" style="--i:1">Works</h2>
+      <span class="stagger" style="--i:2">(<span id="worksCount">–</span>)</span>
+      <span class="right stagger" style="--i:3" aria-hidden="true">↓</span>
+    </header>
     <div class="masonry" id="masonry"></div>
   </section>
 
   <section class="block" id="posters">
-    <h2 class="h2" data-split>Poster wall</h2>
+    <header class="index-line grid4" data-reveal>
+      <span class="stagger" style="--i:0">02</span>
+      <h2 class="stagger" style="--i:1">Poster wall</h2>
+      <span class="stagger" style="--i:2">(<span id="wallCount">–</span>)</span>
+      <span class="right stagger" style="--i:3" aria-hidden="true">↓</span>
+    </header>
     <div class="wall" id="wall">
       <div class="wall-track" id="wallTrack"></div>
+    </div>
+    <div class="wall-nav">
+      <button class="round" id="wallPrev" type="button" aria-label="Previous poster">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 2L4 8l6 6" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
+      <button class="round" id="wallNext" type="button" aria-label="Next poster">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 2l6 6-6 6" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
     </div>
   </section>
 
