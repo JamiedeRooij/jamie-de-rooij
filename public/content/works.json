@@ -43,19 +43,19 @@
     },
     {
       "type": "image",
-      "title": "Anomaly Exploration",
-      "description": "",
-      "url": "",
-      "profession": "Poster",
-      "image": "https://framerusercontent.com/images/grcSg5xWgOSN24M7VRg6GhwYfs.png"
-    },
-    {
-      "type": "image",
       "title": "Anomaly Poster",
       "description": "",
       "url": "",
       "profession": "Poster",
       "image": "https://framerusercontent.com/images/XmbSJCApbFijsdKFC3xVuBflY.png"
+    },
+    {
+      "type": "image",
+      "title": "Anomaly Exploration",
+      "description": "",
+      "url": "",
+      "profession": "Poster",
+      "image": "https://framerusercontent.com/images/grcSg5xWgOSN24M7VRg6GhwYfs.png"
     },
     {
       "type": "image",
@@ -114,6 +114,19 @@
     },
     {
       "type": "slideshow",
+      "title": "Arkheion",
+      "profession": "Webdesign",
+      "slides": [
+        "uploads/thumbnail-1.png",
+        "uploads/thumbnail-2.png",
+        "uploads/thumbnail-3.png",
+        "uploads/thumbnail-4.png",
+        "uploads/thumbnail-5.png"
+      ],
+      "url": "https://www.framer.com/marketplace/templates/arkheion/"
+    },
+    {
+      "type": "slideshow",
       "title": "Photobook Kunsten i Bygdøy",
       "description": "Collection of photographs by several photographers. The photobook contains maps for the visitors of the (private) exhibition.",
       "slides": [
@@ -148,19 +161,6 @@
       "image": "https://framerusercontent.com/images/OxWwWuHBKDLuB6SeGT5l5eCBWU.png"
     },
     {
-      "type": "slideshow",
-      "title": "Arkheion",
-      "profession": "Webdesign",
-      "slides": [
-        "uploads/thumbnail-1.png",
-        "uploads/thumbnail-2.png",
-        "uploads/thumbnail-3.png",
-        "uploads/thumbnail-4.png",
-        "uploads/thumbnail-5.png"
-      ],
-      "url": "https://www.framer.com/marketplace/templates/arkheion/"
-    },
-    {
       "type": "image",
       "image": "uploads/ywl6okhclk9wmx0h5ynptwnfg1k.png.avif",
       "title": "Poster"
@@ -183,6 +183,12 @@
       "image": "uploads/bcz6urnf44sskgf0hchsquq8emm.png.avif",
       "title": "Intelligent Storage Solution",
       "profession": "Illustration"
+    },
+    {
+      "type": "image",
+      "image": "uploads/hsck7jsbwaabbyr.jpeg",
+      "title": "Fc Utrecht - Ajax",
+      "profession": "Poster"
     },
     {
       "type": "image",
@@ -231,12 +237,6 @@
       "title": "Editorial Layout",
       "profession": "Editorial",
       "image": "uploads/73.png"
-    },
-    {
-      "type": "image",
-      "image": "uploads/hsck7jsbwaabbyr.jpeg",
-      "title": "Fc Utrecht - Ajax",
-      "profession": "Poster"
     }
   ]
 }
