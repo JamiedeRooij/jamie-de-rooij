@@ -187,6 +187,13 @@
       "type": "image",
       "image": "uploads/8kpmwp2tsm0nx6ia1ks4rgw4jdi.png.avif",
       "title": "Editorial layout"
+    },
+    {
+      "type": "image",
+      "title": "Opencode Stickers",
+      "description": "Opencode stickers created by the sticker tool I created.",
+      "profession": "Stickers",
+      "image": "uploads/stickersheet.png"
     }
   ]
 }
