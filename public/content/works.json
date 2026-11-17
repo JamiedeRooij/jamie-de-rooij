@@ -2,6 +2,14 @@
   "works": [
     {
       "type": "image",
+      "title": "Ajax - Telstar",
+      "description": "",
+      "url": "",
+      "profession": "Poster",
+      "image": "https://framerusercontent.com/images/SZMuKYxOEfcvCEn2dDDrFGrL6qE.png"
+    },
+    {
+      "type": "image",
       "title": "World Cup 2026",
       "image": "uploads/worldcup.png",
       "profession": "Poster"
@@ -24,14 +32,6 @@
       "title": "Dutch Design Week",
       "description": "I was asked to design one of the 5 campaign posters for the Dutch Design Week 2018.   The theme of this edition was: If not us, then who? I looked at the butterfly effect. I developed a campaign concept centered on the \"stone in the water\" metaphor, the idea that one small act creates an infinite ripple. Using a raw, stencil-machine aesthetic, I gave the message the urgency and weight it deserved.",
       "profession": "Campaign"
-    },
-    {
-      "type": "image",
-      "title": "Ajax - Telstar",
-      "description": "",
-      "url": "",
-      "profession": "Poster",
-      "image": "https://framerusercontent.com/images/SZMuKYxOEfcvCEn2dDDrFGrL6qE.png"
     },
     {
       "type": "image",
@@ -200,6 +200,11 @@
       "title": "Editorial Layout",
       "profession": "Editorial",
       "image": "uploads/73.png"
+    },
+    {
+      "type": "image",
+      "title": "Netherlands - Morocco",
+      "image": "uploads/frame-618.png"
     }
   ]
 }
