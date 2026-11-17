@@ -51,14 +51,6 @@
     },
     {
       "type": "image",
-      "title": "The Gold Standard, Saifedean Ammous",
-      "description": "",
-      "url": "",
-      "profession": "Book cover",
-      "image": "https://framerusercontent.com/images/G9fzj624uBiMEfpLDclqtS7Yg.png"
-    },
-    {
-      "type": "image",
       "title": "Anomaly Poster",
       "description": "",
       "url": "",
@@ -90,6 +82,14 @@
       "url": "",
       "profession": "Exploration",
       "image": "https://framerusercontent.com/images/eEw0WE9ODfuvpmII3E4xxp22q8.png"
+    },
+    {
+      "type": "image",
+      "title": "The Gold Standard, Saifedean Ammous",
+      "description": "",
+      "url": "",
+      "profession": "Book cover",
+      "image": "https://framerusercontent.com/images/G9fzj624uBiMEfpLDclqtS7Yg.png"
     },
     {
       "type": "image",
