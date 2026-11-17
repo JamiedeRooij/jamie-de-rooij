@@ -86,7 +86,7 @@ collections:
                 summary: "{{fields.title}} · video"
                 fields:
                   - { name: title, label: "Title", widget: string, hint: "Shown on hover and in the lightbox." }
-                  - { name: video, label: "Video (mp4)", widget: file, choose_url: true, hint: "Plays muted in the grid, with sound in the lightbox. Keep it short and compressed." }
+                  - { name: video, label: "Video (mp4)", widget: file, choose_url: true, hint: "Plays muted in the grid, with sound in the lightbox. Must be under 25 MB, or the site cannot publish: export short and compressed (about 1440px wide is plenty)." }
                   - { name: image, label: "Still image (optional)", widget: image, required: false, choose_url: true, hint: "Shown while the video loads." }
                   - { name: description, label: "Description", widget: text, required: false, hint: "Shown in the lightbox, bottom middle." }
                   - { name: url, label: "URL (optional)", widget: string, required: false, hint: "Adds a 'Visit project' link in the lightbox." }
