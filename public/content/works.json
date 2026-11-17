@@ -19,6 +19,14 @@
     },
     {
       "type": "image",
+      "title": "Anomaly Exploration",
+      "description": "",
+      "url": "",
+      "profession": "Poster",
+      "image": "https://framerusercontent.com/images/grcSg5xWgOSN24M7VRg6GhwYfs.png"
+    },
+    {
+      "type": "image",
       "title": "The Silence Between, Robert Birnbach",
       "description": "",
       "url": "",
@@ -59,11 +67,9 @@
     },
     {
       "type": "image",
-      "title": "Anomaly Exploration",
-      "description": "",
-      "url": "",
-      "profession": "Poster",
-      "image": "https://framerusercontent.com/images/grcSg5xWgOSN24M7VRg6GhwYfs.png"
+      "image": "uploads/frame-617.png",
+      "title": "Anomaly",
+      "profession": "Poster"
     },
     {
       "type": "image",
@@ -175,12 +181,6 @@
       "type": "image",
       "image": "uploads/8kpmwp2tsm0nx6ia1ks4rgw4jdi.png.avif",
       "title": "Editorial layout"
-    },
-    {
-      "type": "image",
-      "image": "uploads/frame-617.png",
-      "title": "Anomaly",
-      "profession": "Poster"
     }
   ]
 }
