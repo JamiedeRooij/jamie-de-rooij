@@ -112,6 +112,11 @@
     },
     {
       "type": "image",
+      "image": "uploads/ywl6okhclk9wmx0h5ynptwnfg1k.png.avif",
+      "title": "Poster"
+    },
+    {
+      "type": "image",
       "title": "Banne",
       "profession": "Logo design",
       "image": "uploads/ittad7loqnyltmdqvhuehbatnlo.png.avif"
@@ -160,11 +165,6 @@
       "type": "image",
       "title": "Editorial Layout",
       "image": "uploads/h6og3jpcev1byrdy2bpypq2krk.png.avif"
-    },
-    {
-      "type": "image",
-      "image": "uploads/ywl6okhclk9wmx0h5ynptwnfg1k.png.avif",
-      "title": "Poster"
     }
   ]
 }
