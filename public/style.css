@@ -144,16 +144,27 @@ p, dd { text-wrap: pretty; }
   flex-direction: column;
   gap: var(--space);
 }
-.block { display: flex; flex-direction: column; gap: var(--space); }
+.block { display: flex; flex-direction: column; gap: clamp(16px, 1.6vw, 28px); }
 
 .lead {
   font-size: clamp(26px, 3.24vw, 56px);
   line-height: 1.07;
   text-indent: 21.5%;
 }
+/* Section labels: body size, pinned at the top left while you scroll through their
+   section, then pushed out by the end of it (the next section brings its own).
+   Difference blending keeps the label readable over light and dark work alike. */
 .h2 {
-  font-size: clamp(56px, 6.94vw, 120px);
+  position: sticky;
+  top: clamp(16px, 2.5vw, 43px);
+  z-index: 5;
+  align-self: flex-start;
+  margin: 0;
+  font-size: inherit;
   line-height: 1;
+  color: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none;
 }
 
 /* ---------- WORKS: masonry ---------- */
@@ -440,7 +451,7 @@ body.locked { overflow: hidden; }
   transition-delay: calc(var(--i, 0) * 45ms);
   will-change: transform, filter;
 }
-.h2[data-split] .w { transform: translateY(10px) scale(.95); }
+.h2[data-split] .w { transform: translateY(6px); }
 [data-split].in .w { opacity: 1; transform: none; filter: none; }
 
 /* Hero entrance, with the live site's values:
