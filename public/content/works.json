@@ -211,6 +211,19 @@
       "image": "uploads/hsck7jsbwaabbyr.jpeg",
       "title": "Fc Utrecht - Ajax",
       "profession": "Poster"
+    },
+    {
+      "type": "slideshow",
+      "title": "Photobook Kunsten i Bygdøy",
+      "description": "Collection of photographs by several photographers. The photobook contains maps for the visitors of the (private) exhibition.",
+      "slides": [
+        "uploads/01-cover.png",
+        "uploads/02-tom-sandberg.png",
+        "uploads/03-annie-leibovitz.png",
+        "uploads/04-christer-stromholm.png",
+        "uploads/06-dag-thorenfeldt-tom-martinsen.png",
+        "uploads/07-endpaper.png"
+      ]
     }
   ]
 }
