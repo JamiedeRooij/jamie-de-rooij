@@ -165,7 +165,6 @@ p, dd { text-wrap: pretty; }
   display: block;
   width: 100%;
   overflow: hidden;
-  background: var(--tile);
   cursor: pointer;
   opacity: 0;
   transform: translateY(28px);
@@ -174,8 +173,23 @@ p, dd { text-wrap: pretty; }
 }
 .card.in { opacity: 1; transform: none; }
 .card-media { position: relative; width: 100%; }
+/* Grey stand-in while an item loads; it is removed once the image is in, so it can
+   never show as a thin line along the edges. */
+.card-media { background: var(--tile); }
+.card-media:has(.is-loaded) { background: transparent; }
+
+/* Images bleed 1px past the card on every side (the card clips it), so rounding
+   and the scroll animation can't leave a hairline at the edge. */
 .card-media > img,
 .card-media > video,
+.card-media > .slide {
+  position: absolute;
+  inset: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  max-width: none;
+  object-fit: cover;
+}
 .slide {
   position: absolute;
   inset: 0;
@@ -257,6 +271,7 @@ p, dd { text-wrap: pretty; }
   object-fit: cover;
   background: var(--tile);
 }
+.wall-track img.is-loaded { background: transparent; }
 
 /* ---------- ABOUT ---------- */
 .about { display: flex; flex-direction: column; gap: var(--space); }
