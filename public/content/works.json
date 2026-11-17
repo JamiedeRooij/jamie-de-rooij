@@ -199,6 +199,19 @@
       "profession": "Tool"
     },
     {
+      "type": "slideshow",
+      "title": "Jazz Shadows, Robert Birnbach",
+      "slides": [
+        "uploads/01-home-photographs-by-robert-birnbach.png",
+        "uploads/02-jazz-and-photography-intro.png",
+        "uploads/03-veronica.png",
+        "uploads/04-pink-frame-band.png",
+        "uploads/05-two-photographs.png"
+      ],
+      "description": "I had the pleasure to design Robert Birnbach’s new website. We decided to continue the style from his book, and treat the website like a cover art for jazz back in the days. The outcome is bold, and rhythmic, just like the way he captures jazz artists.",
+      "url": "www.jazzshadows.com"
+    },
+    {
       "type": "image",
       "title": "Editorial Layout",
       "image": "uploads/h6og3jpcev1byrdy2bpypq2krk.png.avif"
@@ -224,19 +237,6 @@
       "image": "uploads/hsck7jsbwaabbyr.jpeg",
       "title": "Fc Utrecht - Ajax",
       "profession": "Poster"
-    },
-    {
-      "type": "slideshow",
-      "title": "Jazz Shadows, Robert Birnbach",
-      "slides": [
-        "uploads/01-home-photographs-by-robert-birnbach.png",
-        "uploads/02-jazz-and-photography-intro.png",
-        "uploads/03-veronica.png",
-        "uploads/04-pink-frame-band.png",
-        "uploads/05-two-photographs.png"
-      ],
-      "description": "I had the pleasure to design Robert Birnbach’s new website. We decided to continue the style from his book, and treat the website like a cover art for jazz back in the days. The outcome is bold, and rhythmic, just like the way he captures jazz artists.",
-      "url": "www.jazzshadows.com"
     }
   ]
 }
