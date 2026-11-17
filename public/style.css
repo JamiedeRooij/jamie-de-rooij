@@ -212,7 +212,7 @@ p, dd { text-wrap: pretty; }
   transition: opacity .6s ease, transform .8s var(--ease);
   pointer-events: none;
 }
-.card.has-dots .card-title { right: 150px; }
+.card.has-dots .card-title { right: 110px; }
 .card.is-hover::after, .card:focus-visible::after,
 .card.is-hover .card-title, .card:focus-visible .card-title { opacity: 1; transform: none; }
 
@@ -227,16 +227,16 @@ p, dd { text-wrap: pretty; }
   bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 8px;
+  gap: 6px;
+  padding: 6px;
   border-radius: 40px;
   background: var(--pill);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 .dot {
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   padding: 0;
   border: 0;
   border-radius: 1000px;
@@ -244,7 +244,7 @@ p, dd { text-wrap: pretty; }
   cursor: pointer;
   transition: width .5s var(--ease), background-color .3s ease;
 }
-.dot.on { width: 41px; background: var(--fg); }
+.dot.on { width: 28px; background: var(--fg); }
 
 /* ---------- POSTER WALL ---------- */
 .wall { overflow: hidden; }
@@ -432,10 +432,10 @@ body.locked { overflow: hidden; }
   .footer .grid3 > .right { grid-column: 1 / -1; justify-self: start; text-align: left; }
   .footer-bottom.grid3 { grid-template-columns: 1fr; row-gap: 8px; }
   .card-title { left: 10px; bottom: 10px; }
-  .dots { right: 8px; bottom: 8px; gap: 6px; padding: 6px; }
-  .dot { width: 10px; height: 10px; }
-  .dot.on { width: 28px; }
-  .card.has-dots .card-title { right: 110px; }
+  .dots { right: 8px; bottom: 8px; gap: 5px; padding: 5px; }
+  .dot { width: 8px; height: 8px; }
+  .dot.on { width: 22px; }
+  .card.has-dots .card-title { right: 90px; }
   .trail-item { width: 140px; height: 175px; }
 
   .lb-prev, .lb-next { display: none; }      /* swipe instead */
