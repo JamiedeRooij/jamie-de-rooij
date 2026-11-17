@@ -61,7 +61,7 @@ p, dd { text-wrap: pretty; }
 /* The large statements and titles are animated word by word. Browser balancing breaks
    those lines far too early (seen in Safari), so they wrap normally and fill each line;
    only their last two words are kept together. */
-.lead, [data-split] { text-wrap: wrap; }
+.lead, .h2, [data-split] { text-wrap: wrap; }
 .nw { white-space: nowrap; }
 
 /* ---------- BUTTON (text rolls up on hover, like the Framer "slideUpBack") ---------- */
@@ -144,23 +144,30 @@ p, dd { text-wrap: pretty; }
   flex-direction: column;
   gap: var(--space);
 }
-.block { display: flex; flex-direction: column; gap: clamp(16px, 1.6vw, 28px); }
+.block { display: flex; flex-direction: column; gap: clamp(24px, 2.6vw, 45px); }
 
 .lead {
   font-size: clamp(26px, 3.24vw, 56px);
   line-height: 1.07;
   text-indent: 21.5%;
 }
-/* Section index line: a thin rule with number · name · count · arrow,
-   on the same four columns as the footer, like a book's contents page. */
-.index-line {
-  align-items: baseline;
-  padding-top: clamp(12px, 1vw, 18px);
-  border-top: 1px solid var(--line);
-  line-height: 1;
+/* Section headings: the size of the intro text, with the number of items raised beside it */
+.h2 {
+  margin: 0;
+  font-size: clamp(26px, 3.24vw, 56px);
+  line-height: 1.07;
 }
-.index-line h2 { margin: 0; font-size: inherit; line-height: inherit; }
-.index-line [id$="Count"] { font-variant-numeric: tabular-nums; }
+.h2 .count {
+  font-size: max(11px, .3em);
+  vertical-align: top;
+  position: relative;
+  top: .25em;
+  margin-left: .2em;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transition: opacity .8s ease .5s;
+}
+.h2 [data-split].in + .count { opacity: 1; }
 
 /* ---------- WORKS: masonry ---------- */
 .masonry { display: flex; align-items: flex-start; gap: var(--gap); }
@@ -491,7 +498,6 @@ body.locked { overflow: hidden; }
   .footer-top { grid-template-columns: 1fr 1fr; row-gap: 40px; }
   .footer-top > .right { justify-self: start; text-align: left; }
   .footer-bottom.grid4 { grid-template-columns: 1fr; row-gap: 8px; }
-  .index-line { grid-template-columns: 3em 1fr auto; }
   .last-col { grid-column: auto; }
   .card-title { left: 10px; bottom: 10px; }
   .dots { right: 8px; bottom: 8px; gap: 4px; padding: 4px; }
@@ -509,6 +515,7 @@ body.locked { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .h2 .count { opacity: 1; transition: none; }
   .card, [data-reveal] { opacity: 1; transform: none; transition: none; }
   [data-reveal], [data-reveal] .stagger, [data-split] .w { opacity: 1 !important; transform: none !important; filter: none; transition: none; }
   .topbar-left > *, .clock, .topbar-right, .hero-name span { animation: none; }
