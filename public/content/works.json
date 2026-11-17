@@ -33,6 +33,17 @@
       "image": "https://framerusercontent.com/images/xLHJOt0KDOVhR9dQ0wn0IrkvLQ.png"
     },
     {
+      "type": "slideshow",
+      "slides": [
+        "uploads/ddw-1.png",
+        "uploads/2.jpg",
+        "uploads/3.jpg"
+      ],
+      "title": "Dutch Design Week",
+      "description": "I was asked to design one of the 5 campaign posters for the Dutch Design Week 2018.   The theme of this edition was: If not us, then who? I looked at the butterfly effect. I developed a campaign concept centered on the \"stone in the water\" metaphor, the idea that one small act creates an infinite ripple. Using a raw, stencil-machine aesthetic, I gave the message the urgency and weight it deserved.",
+      "profession": "Campaign"
+    },
+    {
       "type": "image",
       "title": "The Silence Between, Robert Birnbach",
       "description": "",
@@ -90,6 +101,11 @@
     },
     {
       "type": "image",
+      "image": "uploads/60.png",
+      "title": "Editorial Layout"
+    },
+    {
+      "type": "image",
       "title": "Arkheion",
       "description": "",
       "url": "",
@@ -129,20 +145,10 @@
       "image": "https://framerusercontent.com/images/OxWwWuHBKDLuB6SeGT5l5eCBWU.png"
     },
     {
-      "type": "slideshow",
-      "slides": [
-        "uploads/ddw-1.png",
-        "uploads/2.jpg",
-        "uploads/3.jpg"
-      ],
-      "title": "Dutch Design Week",
-      "description": "I was asked to design one of the 5 campaign posters for the Dutch Design Week 2018.   The theme of this edition was: If not us, then who? I looked at the butterfly effect. I developed a campaign concept centered on the \"stone in the water\" metaphor, the idea that one small act creates an infinite ripple. Using a raw, stencil-machine aesthetic, I gave the message the urgency and weight it deserved.",
-      "profession": "Campaign"
-    },
-    {
       "type": "image",
-      "image": "uploads/60.png",
-      "title": "Editorial Layout"
+      "title": "Banne",
+      "profession": "Logo design",
+      "image": "uploads/ittad7loqnyltmdqvhuehbatnlo.png.avif"
     }
   ]
 }
