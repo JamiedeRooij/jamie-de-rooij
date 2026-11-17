@@ -135,17 +135,6 @@
       "image": "https://framerusercontent.com/images/OxWwWuHBKDLuB6SeGT5l5eCBWU.png"
     },
     {
-      "type": "image",
-      "image": "uploads/ywl6okhclk9wmx0h5ynptwnfg1k.png.avif",
-      "title": "Poster"
-    },
-    {
-      "type": "image",
-      "title": "Banne",
-      "profession": "Logo design",
-      "image": "uploads/ittad7loqnyltmdqvhuehbatnlo.png.avif"
-    },
-    {
       "type": "slideshow",
       "title": "Arkheion",
       "profession": "Webdesign",
@@ -157,6 +146,17 @@
         "uploads/thumbnail-5.png"
       ],
       "url": "https://www.framer.com/marketplace/templates/arkheion/"
+    },
+    {
+      "type": "image",
+      "image": "uploads/ywl6okhclk9wmx0h5ynptwnfg1k.png.avif",
+      "title": "Poster"
+    },
+    {
+      "type": "image",
+      "title": "Banne",
+      "profession": "Logo design",
+      "image": "uploads/ittad7loqnyltmdqvhuehbatnlo.png.avif"
     },
     {
       "type": "video",
