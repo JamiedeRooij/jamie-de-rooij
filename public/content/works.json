@@ -113,6 +113,19 @@
       "video": "https://framerusercontent.com/assets/XDW0elbiJadZ72ngS623NNzi184.mp4"
     },
     {
+      "type": "slideshow",
+      "title": "Photobook Kunsten i Bygdøy",
+      "description": "Collection of photographs by several photographers. The photobook contains maps for the visitors of the (private) exhibition.",
+      "slides": [
+        "uploads/01-cover.png",
+        "uploads/02-tom-sandberg.png",
+        "uploads/03-annie-leibovitz.png",
+        "uploads/04-christer-stromholm.png",
+        "uploads/06-dag-thorenfeldt-tom-martinsen.png",
+        "uploads/07-endpaper.png"
+      ]
+    },
+    {
       "type": "image",
       "image": "uploads/u83emm9arefg47yvspphbvdpc3i.jpeg.avif",
       "title": "Real Estate Flyer",
@@ -214,16 +227,16 @@
     },
     {
       "type": "slideshow",
-      "title": "Photobook Kunsten i Bygdøy",
-      "description": "Collection of photographs by several photographers. The photobook contains maps for the visitors of the (private) exhibition.",
+      "title": "Jazz Shadows, Robert Birnbach",
       "slides": [
-        "uploads/01-cover.png",
-        "uploads/02-tom-sandberg.png",
-        "uploads/03-annie-leibovitz.png",
-        "uploads/04-christer-stromholm.png",
-        "uploads/06-dag-thorenfeldt-tom-martinsen.png",
-        "uploads/07-endpaper.png"
-      ]
+        "uploads/01-home-photographs-by-robert-birnbach.png",
+        "uploads/02-jazz-and-photography-intro.png",
+        "uploads/03-veronica.png",
+        "uploads/04-pink-frame-band.png",
+        "uploads/05-two-photographs.png"
+      ],
+      "description": "I had the pleasure to design Robert Birnbach’s new website. We decided to continue the style from his book, and treat the website like a cover art for jazz back in the days. The outcome is bold, and rhythmic, just like the way he captures jazz artists.",
+      "url": "www.jazzshadows.com"
     }
   ]
 }
