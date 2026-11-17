@@ -380,8 +380,20 @@ function renderLightbox() {
 function fitStage() {
   if (lb.hidden) return;
   const stage = $("#lbStage");
+  const desc = $("#lbTop");
+  lb.classList.toggle("no-desc", desc.hidden);
   stage.style.removeProperty("--stage-h");
-  requestAnimationFrame(() => stage.style.setProperty("--stage-h", `${stage.clientHeight}px`));
+  stage.style.removeProperty("--stage-y");
+  requestAnimationFrame(() => {
+    // On phones the description is above the image: keep the image centred by using
+    // the same margin at the top and the bottom, large enough to clear the text.
+    if (!desc.hidden && window.innerWidth < 810) {
+      const space = parseFloat(getComputedStyle(lb).getPropertyValue("--space")) || 16;
+      const needed = desc.offsetTop + desc.offsetHeight + space;
+      if (needed > stage.offsetTop) stage.style.setProperty("--stage-y", `${needed}px`);
+    }
+    requestAnimationFrame(() => stage.style.setProperty("--stage-h", `${stage.clientHeight}px`));
+  });
 }
 window.addEventListener("resize", fitStage);
 

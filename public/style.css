@@ -318,16 +318,19 @@ p, dd { text-wrap: pretty; }
 .footer-bottom { line-height: 1; }   /* same distance to the name as the links above it */
 .back { display: inline-flex; align-items: center; gap: 8px; }
 
-/* ---------- LIGHTBOX ---------- */
+/* ---------- LIGHTBOX ----------
+   The media is always centred on the screen. Equal margins on the left and right keep
+   room for the narrow description column (top left) and the arrows; equal margins at
+   the top and bottom keep room for the title row. Nothing ever sits on the image. */
 .lightbox {
+  --edge: clamp(16px, 2.5vw, 43px);                 /* distance to the screen edge */
+  --space: clamp(16px, 2vw, 32px);                  /* distance between text and image */
+  --desc-w: clamp(170px, 15vw, 260px);              /* description column */
+  --side: calc(var(--gutter) + var(--desc-w) + var(--space));
+  --vert: calc(var(--edge) + 1.25em + var(--space));
   position: fixed;
   inset: 0;
   z-index: 100;
-  display: grid;
-  /* description (top left) · media · title and profession */
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: clamp(16px, 2vw, 32px);
-  padding: clamp(16px, 2.5vw, 43px) var(--gutter);
   background: rgba(19, 19, 19, .78);
   -webkit-backdrop-filter: blur(40px);
   backdrop-filter: blur(40px);
@@ -336,13 +339,16 @@ p, dd { text-wrap: pretty; }
 }
 .lightbox[hidden] { display: none; }
 .lightbox.open { opacity: 1; }
+.lightbox.no-desc { --side: calc(var(--gutter) + 44px + var(--space)); }   /* room for the arrows only */
 .lb-stage {
-  position: relative;
-  min-height: 0;
+  position: absolute;
+  top: var(--stage-y, var(--vert));
+  bottom: var(--stage-y, var(--vert));
+  left: var(--side);
+  right: var(--side);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 clamp(0px, 5vw, 80px);
   transform: scale(.96);
   transition: transform .6s var(--ease);
 }
@@ -350,23 +356,36 @@ p, dd { text-wrap: pretty; }
 .lb-frame { position: relative; max-width: 100%; max-height: 100%; display: flex; }
 .lb-frame img, .lb-frame video {
   max-width: 100%;
-  max-height: var(--stage-h, calc(100dvh - 190px));   /* measured space between the text rows */
+  max-height: var(--stage-h, calc(100dvh - 190px));   /* measured height of the centred area */
   width: auto;
   height: auto;
   object-fit: contain;
 }
 .lb-frame .dots { left: 50%; right: auto; transform: translateX(-50%); }
-.lb-info { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--gap); }
+.lb-info {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--edge);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--gap);
+}
 .lb-title { line-height: 1; }
 .lb-desc {
-  width: calc((100% - 2 * var(--gap)) / 3);     /* one column of the page grid */
-  max-height: 30vh;
-  overflow-y: auto;                              /* long texts scroll instead of pushing into the image */
+  position: absolute;
+  top: var(--edge);
+  left: var(--gutter);
+  width: var(--desc-w);
+  max-height: calc(100% - 2 * var(--vert));
+  overflow-y: auto;                              /* long texts scroll inside their column */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: .6em;
   white-space: pre-wrap;
+  text-wrap: pretty;
 }
 .lb-desc[hidden] { display: none; }
 .lb-desc a { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
@@ -465,7 +484,10 @@ body.locked { overflow: hidden; }
   .trail-item { width: 140px; height: 175px; }
 
   .lb-prev, .lb-next { display: none; }      /* swipe instead */
-  .lb-desc { width: auto; margin-right: 56px; max-height: 26vh; }   /* clear of the close button */
+  /* phones: no room beside the image, so the description sits above it; main.js moves
+     the centred area down (and up from the bottom by the same amount) to stay clear */
+  .lightbox, .lightbox.no-desc { --side: var(--gutter); }
+  .lb-desc { right: calc(var(--gutter) + 56px); width: auto; max-height: 34vh; }
 }
 
 @media (prefers-reduced-motion: reduce) {
