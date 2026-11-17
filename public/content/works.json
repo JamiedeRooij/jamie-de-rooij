@@ -27,6 +27,14 @@
     },
     {
       "type": "image",
+      "title": "Ajax - Telstar",
+      "description": "",
+      "url": "",
+      "profession": "Poster",
+      "image": "https://framerusercontent.com/images/SZMuKYxOEfcvCEn2dDDrFGrL6qE.png"
+    },
+    {
+      "type": "image",
       "title": "Anomaly Exploration",
       "description": "",
       "url": "",
@@ -48,14 +56,6 @@
       "url": "",
       "profession": "Book cover",
       "image": "https://framerusercontent.com/images/G9fzj624uBiMEfpLDclqtS7Yg.png"
-    },
-    {
-      "type": "image",
-      "title": "Ajax - Telstar",
-      "description": "",
-      "url": "",
-      "profession": "Poster",
-      "image": "https://framerusercontent.com/images/SZMuKYxOEfcvCEn2dDDrFGrL6qE.png"
     },
     {
       "type": "image",
