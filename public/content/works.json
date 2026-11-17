@@ -7,6 +7,14 @@
       "profession": "Poster"
     },
     {
+      "type": "image",
+      "title": "Editorial Layout",
+      "description": "",
+      "url": "",
+      "profession": "Exploration",
+      "image": "https://framerusercontent.com/images/L0o2RrE5QVYR6OsBitq3CA5aXFA.png"
+    },
+    {
       "type": "slideshow",
       "slides": [
         "uploads/ddw-1.png",
@@ -48,14 +56,6 @@
       "url": "",
       "profession": "Poster",
       "image": "https://framerusercontent.com/images/SZMuKYxOEfcvCEn2dDDrFGrL6qE.png"
-    },
-    {
-      "type": "image",
-      "title": "Editorial Layout",
-      "description": "",
-      "url": "",
-      "profession": "Exploration",
-      "image": "https://framerusercontent.com/images/L0o2RrE5QVYR6OsBitq3CA5aXFA.png"
     },
     {
       "type": "image",
