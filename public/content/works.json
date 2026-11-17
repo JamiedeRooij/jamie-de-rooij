@@ -154,6 +154,13 @@
         "uploads/thumbnail-5.png"
       ],
       "url": "https://www.framer.com/marketplace/templates/arkheion/"
+    },
+    {
+      "type": "video",
+      "video": "uploads/export-1785760827028.mp4",
+      "title": "Rack Focus Scroll",
+      "profession": "Component",
+      "url": "https://www.framer.com/marketplace/components/rack-focus-scroll/"
     }
   ]
 }
