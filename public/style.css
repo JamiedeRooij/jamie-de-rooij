@@ -157,17 +157,9 @@ p, dd { text-wrap: pretty; }
   font-size: clamp(26px, 3.24vw, 56px);
   line-height: 1.07;
 }
-.h2 .count {
-  font-size: max(11px, .3em);
-  vertical-align: top;
-  position: relative;
-  top: .25em;
-  margin-left: .2em;
-  font-variant-numeric: tabular-nums;
-  opacity: 0;
-  transition: opacity .8s ease .5s;
-}
-.h2 [data-split].in + .count { opacity: 1; }
+/* heading on the left, "Last updated" on the far right, sharing the baseline */
+.section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px var(--gap); }
+.section-head > p { margin: 0; }
 
 /* ---------- WORKS: masonry ---------- */
 .masonry { display: flex; align-items: flex-start; gap: var(--gap); }
@@ -515,7 +507,6 @@ body.locked { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .h2 .count { opacity: 1; transition: none; }
   .card, [data-reveal] { opacity: 1; transform: none; transition: none; }
   [data-reveal], [data-reveal] .stagger, [data-split] .w { opacity: 1 !important; transform: none !important; filter: none; transition: none; }
   .topbar-left > *, .clock, .topbar-right, .hero-name span { animation: none; }

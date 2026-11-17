@@ -561,10 +561,11 @@ async function initUpdated() {
       timeZone: "Europe/Amsterdam", day: "2-digit", month: "2-digit", year: "numeric",
       hour: "2-digit", minute: "2-digit", hour12: false,
     }).formatToParts(when).map((p) => [p.type, p.value]));
-    const el = $("#updated");
-    el.textContent = `${parts.day}/${parts.month}/${parts.year}, ${parts.hour}:${parts.minute}`;
-    el.dateTime = when.toISOString();
-    $("#updatedLine").hidden = false;
+    $$(".js-updated").forEach((el) => {
+      el.textContent = `${parts.day}/${parts.month}/${parts.year}, ${parts.hour}:${parts.minute}`;
+      el.dateTime = when.toISOString();
+    });
+    $$(".js-updated-line").forEach((el) => { el.hidden = false; });
   } catch (e) { /* leave the line hidden */ }
 }
 
@@ -653,7 +654,4 @@ Promise.all([
   initTrail(images(trail));
   initWorks(works.works || []);
   initWall(images(wall));
-  // counts in the section index lines
-  $("#worksCount").textContent = (works.works || []).map(normalize).filter((w) => w.media.length).length;
-  $("#wallCount").textContent = images(wall).length;
 });
