@@ -1,38 +1,6 @@
 {
   "works": [
     {
-      "type": "image",
-      "title": "World Cup 2026",
-      "description": "",
-      "url": "",
-      "profession": "Poster",
-      "image": "https://framerusercontent.com/images/C8dikmrAECG9Atko3SXnOZqqaZ4.png"
-    },
-    {
-      "type": "image",
-      "title": "World Cup 2026",
-      "description": "",
-      "url": "",
-      "profession": "Poster",
-      "image": "https://framerusercontent.com/images/khg2GEdSkg72XYylrvHCK04jD5c.png"
-    },
-    {
-      "type": "image",
-      "title": "Dutch Design Week",
-      "description": "",
-      "url": "",
-      "profession": "Campaign",
-      "image": "https://framerusercontent.com/images/iiQ6OfTM2wsZxNGsztwqdmWbGo.png"
-    },
-    {
-      "type": "image",
-      "title": "Opencode Template",
-      "description": "",
-      "url": "",
-      "profession": "Social Media",
-      "image": "https://framerusercontent.com/images/xLHJOt0KDOVhR9dQ0wn0IrkvLQ.png"
-    },
-    {
       "type": "slideshow",
       "slides": [
         "uploads/ddw-1.png",
@@ -186,6 +154,12 @@
       "type": "image",
       "title": "Editorial Layout",
       "image": "uploads/h6og3jpcev1byrdy2bpypq2krk.png.avif"
+    },
+    {
+      "type": "image",
+      "title": "World Cup 2026",
+      "image": "uploads/worldcup.png",
+      "profession": "Poster"
     }
   ]
 }
