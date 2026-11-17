@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Arrange · Jamie de Rooij</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@500&display=swap">
+<link rel="stylesheet" href="../../style.css">
+<style>
+  body { overflow-x: hidden; }
+  .bar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px;
+    padding: 16px var(--gutter);
+    background: rgba(19, 19, 19, .92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar a.back { opacity: .6; }
+  .bar a.back:hover { opacity: 1; }
+  .seg { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--pill); }
+  .seg button { font: inherit; color: var(--fg); background: none; border: 0; padding: 7px 14px; border-radius: 999px; cursor: pointer; opacity: .6; }
+  .seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); opacity: 1; }
+  .seg button:hover { opacity: 1; }
+  .spacer { flex: 1 1 auto; }
+  .status { opacity: .6; }
+  .status.dirty { opacity: 1; }
+  .btn { font: inherit; color: var(--fg); background: var(--pill); border: 0; border-radius: 999px; padding: 10px 18px; cursor: pointer; }
+  .btn:hover:not(:disabled) { background: rgba(245, 245, 245, .18); }
+  .btn:disabled { opacity: .35; cursor: default; }
+  .btn.primary { background: var(--fg); color: var(--bg); }
+  .btn.primary:hover:not(:disabled) { background: #fff; }
+
+  .hint { padding: 20px var(--gutter) 0; opacity: .6; max-width: 70ch; }
+  .stage { padding: 24px var(--gutter) 120px; }
+  .frame { margin: 0 auto; transition: max-width .5s var(--ease); }
+  .frame[data-view="desktop"] { max-width: 1730px; }
+  .frame[data-view="tablet"] { max-width: 900px; }
+  .frame[data-view="mobile"] { max-width: 390px; }
+
+  .a-masonry { display: flex; align-items: flex-start; gap: var(--gap); }
+  .a-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--gap); }
+  .a-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--gap); }
+
+  .item { position: relative; cursor: grab; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; outline: none; }
+  .item .media { position: relative; overflow: hidden; background: var(--tile); }
+  .item .media img, .item .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+  .a-grid .item .media { aspect-ratio: 3 / 4; }
+  .num, .kind {
+    position: absolute; top: 10px; padding: 3px 9px; border-radius: 999px;
+    background: rgba(19, 19, 19, .75); color: var(--fg); font-size: 13px; line-height: 1.3;
+    font-variant-numeric: tabular-nums; pointer-events: none;
+  }
+  .num { left: 10px; }
+  .kind { right: 10px; }
+  .item .label { display: block; padding-top: 8px; font-size: 14px; opacity: .7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item:focus-visible .media, .item.selected .media { box-shadow: 0 0 0 2px var(--fg); }
+  .item.dragging { opacity: .25; }
+  .item.drop-before::before, .item.drop-after::after {
+    content: ""; position: absolute; z-index: 3; background: var(--fg); border-radius: 2px; pointer-events: none;
+  }
+  .a-masonry .item.drop-before::before { left: 0; right: 0; top: calc(var(--gap) / -2 - 2px); height: 4px; }
+  .a-masonry .item.drop-after::after { left: 0; right: 0; bottom: calc(var(--gap) / -2 - 2px); height: 4px; }
+  .a-grid .item.drop-before::before { top: 0; bottom: 0; left: calc(var(--gap) / -2 - 2px); width: 4px; }
+  .a-grid .item.drop-after::after { top: 0; bottom: 0; right: calc(var(--gap) / -2 - 2px); width: 4px; }
+
+  .ghost { position: fixed; z-index: 50; pointer-events: none; width: 160px; transform: translate(-50%, -50%) rotate(-2deg); box-shadow: 0 20px 50px rgba(0, 0, 0, .6); opacity: .95; }
+  .ghost .label { display: none; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; z-index: 60; transform: translate(-50%, 20px);
+    background: var(--fg); color: var(--bg); padding: 12px 20px; border-radius: 999px;
+    opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s var(--ease); max-width: calc(100vw - 32px);
+  }
+  .toast.on { opacity: 1; transform: translate(-50%, 0); }
+  .empty { opacity: .6; padding: 40px 0; }
+  @media (max-width: 809.98px) {
+    .seg button { padding: 6px 11px; }
+    .views { display: none; }
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="back" href="../">← Portals</a>
+  <div class="seg" role="group" aria-label="Content">
+    <button type="button" data-tab="works" aria-pressed="true">Works</button>
+    <button type="button" data-tab="wall" aria-pressed="false">Poster wall</button>
+    <button type="button" data-tab="trail" aria-pressed="false">Poster trail</button>
+  </div>
+  <div class="seg views" role="group" aria-label="Preview size">
+    <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
+    <button type="button" data-view="tablet" aria-pressed="false">Tablet</button>
+    <button type="button" data-view="mobile" aria-pressed="false">Mobile</button>
+  </div>
+  <span class="spacer"></span>
+  <span class="status" id="status">Loading…</span>
+  <button class="btn" id="undo" type="button" disabled>Undo</button>
+  <button class="btn" id="reset" type="button" disabled>Reset</button>
+  <button class="btn primary" id="publish" type="button" disabled>Publish order</button>
+</header>
+
+<p class="hint" id="hint">Drag an item to a new spot. On a phone, hold it for a moment first. Or click an item and use the arrow keys (Home / End to send it to the start or end). Nothing changes on the site until you press Publish order.</p>
+
+<main class="stage">
+  <div class="frame" id="frame" data-view="desktop"></div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const REPO = "JamiedeRooij/jamie-de-rooij";
+  const BRANCH = "main";
+  const FILES = {
+    works: { path: "public/content/works.json", key: "works", label: "works" },
+    wall: { path: "public/content/wall.json", key: "posters", label: "poster wall" },
+    trail: { path: "public/content/trail.json", key: "posters", label: "poster trail" },
+  };
+  const $ = (s) => document.querySelector(s);
+  const frame = $("#frame");
+
+  // One state per tab: the file as loaded, the order (indexes into it) and the undo history.
+  const state = {};
+  let tab = "works";
+  let view = "desktop";
+  let selected = null;
+
+  /* ---------- helpers ---------- */
+  function sized(url, px) {
+    if (url && url.includes("framerusercontent.com/images/") && !url.includes("?")) return `${url}?scale-down-to=${px}`;
+    return url;
+  }
+  // Site paths are relative to the site root; this page sits two folders deeper.
+  const abs = (u) => (!u ? u : /^(https?:|data:|blob:)/.test(u) ? u : "../../" + u.replace(/^\/+/, ""));
+  const pad = (n) => String(n).padStart(2, "0");
+  let toastTimer = 0;
+  function toast(msg, ms = 3200) {
+    const t = $("#toast");
+    t.textContent = msg;
+    t.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove("on"), ms);
+  }
+
+  function workMedia(w) {
+    const type = w.type || (w.slides && w.slides.length ? "slideshow" : w.video ? "video" : "image");
+    if (type === "slideshow") {
+      const slides = (w.slides || []).map((s) => (typeof s === "string" ? s : s && s.image)).filter(Boolean);
+      return { type, image: slides[0], count: slides.length };
+    }
+    if (type === "video" && w.video) return { type, video: w.video, poster: w.image || "" };
+    return { type: "image", image: w.image };
+  }
+
+  const ratios = new Map();
+  function measure(m) {
+    const key = m.video || m.image || "";
+    if (ratios.has(key)) return ratios.get(key);
+    const p = new Promise((resolve) => {
+      const done = (r) => { clearTimeout(timer); resolve(r && isFinite(r) && r > 0 ? r : 0.8); };
+      const timer = setTimeout(() => done(0), 6000);
+      if (m.video) {
+        const v = document.createElement("video");
+        v.preload = "metadata"; v.muted = true;
+        v.onloadedmetadata = () => done(v.videoWidth / v.videoHeight);
+        v.onerror = () => done(0);
+        v.src = abs(m.video);
+      } else if (m.image) {
+        const i = new Image();
+        i.onload = () => done(i.naturalWidth / i.naturalHeight);
+        i.onerror = () => done(0);
+        i.src = abs(sized(m.image, 1024));
+      } else done(0);
+    });
+    ratios.set(key, p);
+    return p;
+  }
+
+  /* ---------- GitHub ---------- */
+  function readToken() {
+    for (const k of ["decap-cms-user", "netlify-cms-user"]) {
+      try { const u = JSON.parse(localStorage.getItem(k) || "null"); if (u && u.token) return u.token; } catch (e) {}
+    }
+    return null;
+  }
+  let token = readToken();
+
+  // Same login as the portals: a popup to /api/auth, then the Decap handshake.
+  function login() {
+    return new Promise((resolve, reject) => {
+      const w = 600, h = 720;
+      const popup = window.open("../../api/auth", "portal-login",
+        `width=${w},height=${h},left=${(screen.width - w) / 2},top=${(screen.height - h) / 2}`);
+      if (!popup) { reject(new Error("The login window was blocked. Allow pop-ups for this site and try again.")); return; }
+      const onMsg = (e) => {
+        if (e.origin !== location.origin || typeof e.data !== "string") return;
+        if (e.data === "authorizing:github") { popup.postMessage(e.data, e.origin); return; }
+        const m = e.data.match(/^authorization:github:(success|error):(.*)$/s);
+        if (!m) return;
+        window.removeEventListener("message", onMsg);
+        clearInterval(closed);
+        const data = JSON.parse(m[2]);
+        if (m[1] === "success" && data.token) {
+          token = data.token;
+          try { localStorage.setItem("decap-cms-user", JSON.stringify({ token, backendName: "github" })); } catch (e) {}
+          resolve(token);
+        } else reject(new Error(data.message || "Login failed."));
+      };
+      window.addEventListener("message", onMsg);
+      const closed = setInterval(() => {
+        if (popup.closed) { clearInterval(closed); window.removeEventListener("message", onMsg); reject(new Error("Login window closed.")); }
+      }, 500);
+    });
+  }
+
+  async function gh(path, opts = {}) {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}${opts.method ? "" : `?ref=${BRANCH}&t=${Date.now()}`}`, {
+      ...opts,
+      headers: { Accept: "application/vnd.github+json", Authorization: `Bearer ${token}`, ...(opts.headers || {}) },
+    });
+    if (res.status === 401) { token = null; throw Object.assign(new Error("Your login has expired. Log in again."), { auth: true }); }
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) throw Object.assign(new Error(body.message || `GitHub error ${res.status}`), { status: res.status });
+    return body;
+  }
+  const b64decode = (s) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g, "")), (c) => c.charCodeAt(0)));
+  const b64encode = (s) => { let bin = ""; new TextEncoder().encode(s).forEach((b) => { bin += String.fromCharCode(b); }); return btoa(bin); };
+
+  async function load(name) {
+    const f = FILES[name];
+    let data, sha = null, live = false;
+    if (token) {
+      try {
+        const res = await gh(f.path);
+        data = JSON.parse(b64decode(res.content));
+        sha = res.sha; live = true;
+      } catch (e) { if (!e.auth) console.warn(e); }
+    }
+    if (!data) {
+      const res = await fetch(`../../content/${f.path.split("/").pop()}`, { cache: "no-cache" });
+      data = await res.json();
+    }
+    const list = data[f.key] || [];
+    state[name] = { data, sha, live, list, order: list.map((_, i) => i), saved: list.map((_, i) => i), history: [] };
+  }
+
+  /* ---------- rendering ---------- */
+  const cards = { works: new Map(), wall: new Map(), trail: new Map() };
+
+  function card(name, i) {
+    const cache = cards[name];
+    if (cache.has(i)) return cache.get(i);
+    const item = state[name].list[i];
+    const el = document.createElement("div");
+    el.className = "item";
+    el.tabIndex = 0;
+    el.dataset.i = i;
+    const media = document.createElement("div");
+    media.className = "media";
+    el.appendChild(media);
+    const num = document.createElement("span");
+    num.className = "num";
+    el.appendChild(num);
+
+    if (name === "works") {
+      const m = workMedia(item);
+      media.style.aspectRatio = "0.8";
+      if (m.video) {
+        const v = document.createElement("video");
+        v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = "metadata";
+        v.setAttribute("muted", "");
+        if (m.poster) v.poster = abs(sized(m.poster, 800));
+        v.src = abs(m.video);
+        media.appendChild(v);
+      } else if (m.image) {
+        const img = document.createElement("img");
+        img.alt = ""; img.decoding = "async"; img.loading = "lazy";
+        img.src = abs(sized(m.image, 800));
+        media.appendChild(img);
+      }
+      if (m.type !== "image") {
+        const k = document.createElement("span");
+        k.className = "kind";
+        k.textContent = m.type === "slideshow" ? `Slideshow · ${m.count}` : "Video";
+        el.appendChild(k);
+      }
+      const label = document.createElement("span");
+      label.className = "label";
+      label.textContent = item.title || "Untitled";
+      el.appendChild(label);
+      el.setAttribute("aria-label", item.title || "Untitled");
+    } else {
+      const img = document.createElement("img");
+      img.alt = ""; img.decoding = "async"; img.loading = "lazy";
+      img.src = abs(sized(item.image, 512));
+      media.appendChild(img);
+      el.setAttribute("aria-label", `Poster ${i + 1}`);
+    }
+    cache.set(i, el);
+    return el;
+  }
+
+  function columnsFor() { return view === "mobile" ? 1 : view === "tablet" ? 2 : 3; }
+
+  let renderToken = 0;
+  async function render() {
+    const s = state[tab];
+    const my = ++renderToken;
+    $(".views").style.visibility = tab === "works" ? "visible" : "hidden";
+    frame.dataset.view = tab === "works" ? view : "desktop";
+    frame.innerHTML = "";
+    if (!s.order.length) { frame.innerHTML = `<p class="empty">Nothing here yet.</p>`; updateBar(); return; }
+
+    s.order.forEach((i, pos) => {
+      const el = card(tab, i);
+      el.querySelector(".num").textContent = pad(pos + 1);
+      el.classList.toggle("selected", selected === i);
+    });
+
+    if (tab !== "works") {
+      const grid = document.createElement("div");
+      grid.className = "a-grid";
+      s.order.forEach((i) => grid.appendChild(card(tab, i)));
+      frame.appendChild(grid);
+      enableDrag(grid, "h");
+      updateBar();
+      return;
+    }
+
+    // Same placement as the site: each card goes into whichever column is shortest.
+    const items = s.order.map((i) => ({ i, m: workMedia(s.list[i]) })).filter((it) => it.m.image || it.m.video);
+    const rs = await Promise.all(items.map((it) => measure(it.m)));
+    if (my !== renderToken) return;
+    const n = columnsFor();
+    const root = document.createElement("div");
+    root.className = "a-masonry";
+    frame.appendChild(root);
+    const cols = Array.from({ length: n }, () => root.appendChild(Object.assign(document.createElement("div"), { className: "a-col" })));
+    const colW = cols[0].clientWidth || 400;
+    const heights = new Array(n).fill(0);
+    items.forEach((it, k) => {
+      const el = card(tab, it.i);
+      el.querySelector(".media").style.aspectRatio = String(rs[k]);
+      let c = 0;
+      for (let j = 1; j < n; j++) if (heights[j] < heights[c] - 0.5) c = j;
+      cols[c].appendChild(el);
+      heights[c] += colW / rs[k] + 20;
+    });
+    enableDrag(root, "v");
+    if (selected != null) { const el = cards[tab].get(selected); if (el && document.activeElement !== el) el.focus({ preventScroll: true }); }
+    updateBar();
+  }
+
+  function isDirty(name) { const s = state[name]; return s && s.order.some((v, k) => v !== s.saved[k]); }
+
+  function updateBar() {
+    const s = state[tab];
+    const dirty = isDirty(tab);
+    const st = $("#status");
+    st.classList.toggle("dirty", dirty);
+    st.textContent = dirty ? "Unsaved order" : s.live ? "Same as the site" : "Preview: log in to publish";
+    $("#undo").disabled = !s.history.length;
+    $("#reset").disabled = !dirty;
+    $("#publish").disabled = !dirty;
+    $("#publish").textContent = token ? "Publish order" : "Log in & publish";
+    document.querySelectorAll("[data-tab]").forEach((b) => {
+      b.textContent = b.textContent.replace(/ •$/, "") + (isDirty(b.dataset.tab) ? " •" : "");
+    });
+  }
+
+  /* ---------- moving ---------- */
+  function move(id, to) {
+    const s = state[tab];
+    const from = s.order.indexOf(id);
+    if (from < 0) return;
+    to = Math.max(0, Math.min(s.order.length - 1, to));
+    if (from === to) return;
+    s.history.push(s.order.slice());
+    s.order.splice(from, 1);
+    s.order.splice(to, 0, id);
+    render();
+  }
+  function dropOn(id, targetId, after) {
+    const s = state[tab];
+    const from = s.order.indexOf(id);
+    let to = s.order.indexOf(targetId) + (after ? 1 : 0);
+    if (from < to) to--;
+    move(id, to);
+  }
+
+  // Drag with mouse, pen or touch (touch: hold ~0.3 s first, so normal scrolling still works).
+  let drag = null;
+  function enableDrag(container, axis) {
+    container.onpointerdown = (e) => {
+      const el = e.target.closest(".item");
+      if (!el || e.button > 0) return;
+      const id = +el.dataset.i;
+      selected = id;
+      document.querySelectorAll(".item.selected").forEach((x) => x.classList.remove("selected"));
+      el.classList.add("selected");
+      drag = { id, el, axis, container, x: e.clientX, y: e.clientY, active: false, touch: e.pointerType === "touch", target: null, after: false };
+      if (drag.touch) drag.hold = setTimeout(() => begin(), 300);
+    };
+  }
+  function begin() {
+    if (!drag || drag.active) return;
+    drag.active = true;
+    drag.el.classList.add("dragging");
+    const g = drag.el.cloneNode(true);
+    g.className = "item ghost";
+    g.style.left = drag.x + "px"; g.style.top = drag.y + "px";
+    document.body.appendChild(g);
+    drag.ghost = g;
+    if (navigator.vibrate) try { navigator.vibrate(10); } catch (e) {}
+    autoScroll();
+  }
+  function track(x, y) {
+    if (!drag) return;
+    if (!drag.active) {
+      const d = Math.hypot(x - drag.x, y - drag.y);
+      if (drag.touch) { if (d > 8) { clearTimeout(drag.hold); drag = null; } return; }
+      if (d < 5) return;
+      begin();
+    }
+    drag.x = x; drag.y = y;
+    drag.ghost.style.left = x + "px"; drag.ghost.style.top = y + "px";
+    const hit = document.elementFromPoint(x, y);
+    const t = hit && hit.closest(".item");
+    clearMarks();
+    if (!t || t === drag.el || !drag.container.contains(t)) { drag.target = null; return; }
+    const r = t.getBoundingClientRect();
+    drag.after = drag.axis === "v" ? y > r.top + r.height / 2 : x > r.left + r.width / 2;
+    drag.target = +t.dataset.i;
+    t.classList.add(drag.after ? "drop-after" : "drop-before");
+  }
+  function clearMarks() { document.querySelectorAll(".drop-before, .drop-after").forEach((x) => x.classList.remove("drop-before", "drop-after")); }
+  function end(cancel) {
+    if (!drag) return;
+    clearTimeout(drag.hold);
+    const d = drag;
+    drag = null;
+    if (!d.active) return;
+    d.el.classList.remove("dragging");
+    d.ghost.remove();
+    clearMarks();
+    if (!cancel && d.target != null) dropOn(d.id, d.target, d.after);
+  }
+  function autoScroll() {
+    if (!drag || !drag.active) return;
+    const edge = 90, y = drag.y, h = innerHeight;
+    const v = y < edge ? -(edge - y) / 3 : y > h - edge ? (y - (h - edge)) / 3 : 0;
+    if (v) { scrollBy(0, v); track(drag.x, drag.y); }
+    requestAnimationFrame(autoScroll);
+  }
+  addEventListener("pointermove", (e) => { if (drag && !drag.touch) track(e.clientX, e.clientY); });
+  addEventListener("pointerup", () => { if (drag && !drag.touch) end(false); });
+  addEventListener("touchmove", (e) => {
+    if (!drag) return;
+    const t = e.touches[0];
+    if (drag.active) e.preventDefault();
+    track(t.clientX, t.clientY);
+  }, { passive: false });
+  addEventListener("touchend", () => { if (drag && drag.touch) end(false); });
+  addEventListener("touchcancel", () => end(true));
+  addEventListener("contextmenu", (e) => { if (drag && drag.active) e.preventDefault(); });
+
+  // Keyboard: arrows move the selected item one place, Home/End to the start or end.
+  addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "z") { e.preventDefault(); undo(); return; }
+    if (e.key === "Escape" && drag) { end(true); return; }
+    const el = document.activeElement;
+    if (!el || !el.classList.contains("item")) return;
+    const id = +el.dataset.i;
+    const pos = state[tab].order.indexOf(id);
+    const step = { ArrowLeft: -1, ArrowUp: -1, ArrowRight: 1, ArrowDown: 1 }[e.key];
+    let to = null;
+    if (step) to = pos + step;
+    else if (e.key === "Home") to = 0;
+    else if (e.key === "End") to = state[tab].order.length - 1;
+    if (to == null) return;
+    e.preventDefault();
+    selected = id;
+    move(id, to);
+  });
+  document.addEventListener("focusin", (e) => {
+    if (e.target.classList && e.target.classList.contains("item")) selected = +e.target.dataset.i;
+  });
+
+  function undo() {
+    const s = state[tab];
+    if (!s.history.length) return;
+    s.order = s.history.pop();
+    render();
+  }
+
+  /* ---------- publishing ---------- */
+  async function publish() {
+    const btn = $("#publish");
+    btn.disabled = true;
+    try {
+      if (!token) { await login(); }
+      const s = state[tab];
+      const f = FILES[tab];
+      // Always build on the newest version in GitHub, so nothing added meanwhile gets lost.
+      const res = await gh(f.path);
+      const latest = JSON.parse(b64decode(res.content));
+      const list = latest[f.key] || [];
+      const same = s.live && res.sha === s.sha;
+      if (!same && JSON.stringify(list) !== JSON.stringify(s.list)) {
+        toast("This list changed since you opened it (maybe a new upload). Reloading — please arrange once more.", 5200);
+        await reload(tab);
+        return;
+      }
+      latest[f.key] = s.order.map((i) => s.list[i]);
+      const out = await gh(f.path, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: `Rearrange ${f.label}`,
+          content: b64encode(JSON.stringify(latest, null, 2) + "\n"),
+          sha: res.sha,
+          branch: BRANCH,
+        }),
+      });
+      // The file now matches this order; start fresh from it.
+      s.data = latest; s.list = latest[f.key]; s.sha = out.content.sha; s.live = true;
+      const keep = s.order.slice();
+      const old = cards[tab]; cards[tab] = new Map();
+      keep.forEach((i, pos) => { const el = old.get(i); if (el) { el.dataset.i = pos; cards[tab].set(pos, el); } });
+      if (selected != null) selected = keep.indexOf(selected);
+      s.order = s.list.map((_, i) => i); s.saved = s.order.slice(); s.history = [];
+      toast("Published. The new order is live in about a minute.");
+      render();
+    } catch (e) {
+      toast(e.message || "Publishing failed.", 5200);
+      updateBar();
+    }
+  }
+  async function reload(name) {
+    cards[name] = new Map();
+    selected = null;
+    await load(name);
+    if (name === tab) render();
+  }
+
+  /* ---------- wiring ---------- */
+  document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", async () => {
+    tab = b.dataset.tab;
+    selected = null;
+    document.querySelectorAll("[data-tab]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    if (!state[tab]) { frame.innerHTML = ""; $("#status").textContent = "Loading…"; await load(tab); }
+    render();
+    scrollTo(0, 0);
+  }));
+  document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => {
+    view = b.dataset.view;
+    document.querySelectorAll("[data-view]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    render();
+  }));
+  $("#undo").addEventListener("click", undo);
+  $("#reset").addEventListener("click", () => {
+    const s = state[tab];
+    s.history.push(s.order.slice());
+    s.order = s.saved.slice();
+    render();
+  });
+  $("#publish").addEventListener("click", publish);
+  addEventListener("beforeunload", (e) => {
+    if (Object.keys(FILES).some(isDirty)) { e.preventDefault(); e.returnValue = ""; }
+  });
+  let lastW = innerWidth;
+  addEventListener("resize", () => { if (tab === "works" && Math.abs(innerWidth - lastW) > 40) { lastW = innerWidth; render(); } });
+
+  (async () => {
+    try { await load(tab); render(); }
+    catch (e) { $("#status").textContent = "Could not load the content."; console.error(e); }
+  })();
+})();
+</script>
+</body>
+</html>
