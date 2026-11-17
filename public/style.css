@@ -492,7 +492,6 @@ body.locked { overflow: hidden; }
   .footer-top > .right { justify-self: start; text-align: left; }
   .footer-bottom.grid4 { grid-template-columns: 1fr; row-gap: 8px; }
   .index-line { grid-template-columns: 3em 1fr auto; }
-  .index-line > .right { display: none; }
   .last-col { grid-column: auto; }
   .card-title { left: 10px; bottom: 10px; }
   .dots { right: 8px; bottom: 8px; gap: 4px; padding: 4px; }
