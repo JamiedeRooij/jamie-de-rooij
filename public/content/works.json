@@ -194,6 +194,12 @@
       "type": "image",
       "image": "uploads/8kpmwp2tsm0nx6ia1ks4rgw4jdi.png.avif",
       "title": "Editorial layout"
+    },
+    {
+      "type": "image",
+      "title": "Editorial Layout",
+      "profession": "Editorial",
+      "image": "uploads/73.png"
     }
   ]
 }
