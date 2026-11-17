@@ -1,0 +1,47 @@
+# After an upload through the portal, shrink any video that is too big for Cloudflare
+# and commit the smaller file. Cloudflare then publishes the site with it.
+name: Compress large videos
+
+on:
+  push:
+    branches: [main]
+    paths: ["public/uploads/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: compress-videos
+  cancel-in-progress: false
+
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find videos over 20 MB
+        id: check
+        run: |
+          big=$(find public/uploads -type f \( -iname '*.mp4' -o -iname '*.mov' -o -iname '*.m4v' -o -iname '*.webm' \) -size +20M | head -1)
+          echo "found=${big:+yes}" >> "$GITHUB_OUTPUT"
+
+      - name: Install ffmpeg
+        if: steps.check.outputs.found == 'yes'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Compress
+        id: compress
+        if: steps.check.outputs.found == 'yes'
+        run: bash tools/compress-videos.sh
+
+      - name: Commit the smaller videos
+        if: steps.compress.outputs.changed == '1'
+        run: |
+          git config user.name "Video compressor"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A public/uploads public/content
+          git commit -m "Compress large video upload for Cloudflare"
+          git pull --rebase origin main
+          git push

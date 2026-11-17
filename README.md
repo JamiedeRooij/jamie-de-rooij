@@ -14,6 +14,7 @@ public/                          the website itself
 worker.js, src/                  the portals' GitHub login (Cloudflare Worker)
 wrangler.jsonc                   Cloudflare settings
 tools/fetch-media.mjs            copies your Framer-hosted media into public/uploads/
+tools/compress-videos.sh         shrinks videos over 20 MB (runs on GitHub after each upload)
 ```
 
 ## Going live on Cloudflare
