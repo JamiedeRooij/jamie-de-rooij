@@ -106,14 +106,6 @@
     },
     {
       "type": "image",
-      "title": "Arkheion",
-      "description": "",
-      "url": "",
-      "profession": "Framer Template",
-      "image": "https://framerusercontent.com/images/7A784arzaM4qr7x6EDcxHxPh5I.png"
-    },
-    {
-      "type": "image",
       "title": "Opencode",
       "description": "",
       "url": "",
@@ -149,6 +141,19 @@
       "title": "Banne",
       "profession": "Logo design",
       "image": "uploads/ittad7loqnyltmdqvhuehbatnlo.png.avif"
+    },
+    {
+      "type": "slideshow",
+      "title": "Arkheion",
+      "profession": "Webdesign",
+      "slides": [
+        "uploads/thumbnail-1.png",
+        "uploads/thumbnail-2.png",
+        "uploads/thumbnail-3.png",
+        "uploads/thumbnail-4.png",
+        "uploads/thumbnail-5.png"
+      ],
+      "url": "https://www.framer.com/marketplace/templates/arkheion/"
     }
   ]
 }
