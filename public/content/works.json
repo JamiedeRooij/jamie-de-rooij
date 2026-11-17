@@ -1,6 +1,12 @@
 {
   "works": [
     {
+      "type": "image",
+      "title": "World Cup 2026",
+      "image": "uploads/worldcup.png",
+      "profession": "Poster"
+    },
+    {
       "type": "slideshow",
       "slides": [
         "uploads/ddw-1.png",
@@ -154,12 +160,6 @@
       "type": "image",
       "title": "Editorial Layout",
       "image": "uploads/h6og3jpcev1byrdy2bpypq2krk.png.avif"
-    },
-    {
-      "type": "image",
-      "title": "World Cup 2026",
-      "image": "uploads/worldcup.png",
-      "profession": "Poster"
     }
   ]
 }
