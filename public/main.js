@@ -368,17 +368,29 @@ function renderLightbox() {
   const link = $("#lbUrl");
   link.hidden = !w.url;
   if (w.url) link.href = /^https?:\/\//i.test(w.url) ? w.url : `https://${w.url}`;
+  $("#lbTop").hidden = !w.description && !w.url;
+  $("#lbTop").scrollTop = 0;
+  fitStage();
   const many = lbWorks.length > 1;
   $("#lbPrev").hidden = !many;
   $("#lbNext").hidden = !many;
 }
 
+// The image may only use the space between the description and the bottom row.
+function fitStage() {
+  if (lb.hidden) return;
+  const stage = $("#lbStage");
+  stage.style.removeProperty("--stage-h");
+  requestAnimationFrame(() => stage.style.setProperty("--stage-h", `${stage.clientHeight}px`));
+}
+window.addEventListener("resize", fitStage);
+
 function openLightbox(works, index) {
   lbWorks = works;
   lbIndex = index;
   lastFocus = document.activeElement;
-  renderLightbox();
   lb.hidden = false;
+  renderLightbox();
   document.body.classList.add("locked");
   if (lenis) lenis.stop();
   requestAnimationFrame(() => lb.classList.add("open"));

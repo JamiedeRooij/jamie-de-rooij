@@ -212,7 +212,7 @@ p, dd { text-wrap: pretty; }
   transition: opacity .6s ease, transform .8s var(--ease);
   pointer-events: none;
 }
-.card.has-dots .card-title { right: 110px; }
+.card.has-dots .card-title { right: 96px; }
 .card.is-hover::after, .card:focus-visible::after,
 .card.is-hover .card-title, .card:focus-visible .card-title { opacity: 1; transform: none; }
 
@@ -227,16 +227,16 @@ p, dd { text-wrap: pretty; }
   bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px;
+  gap: 5px;
+  padding: 5px;
   border-radius: 40px;
   background: var(--pill);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 .dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   padding: 0;
   border: 0;
   border-radius: 1000px;
@@ -244,7 +244,7 @@ p, dd { text-wrap: pretty; }
   cursor: pointer;
   transition: width .5s var(--ease), background-color .3s ease;
 }
-.dot.on { width: 28px; background: var(--fg); }
+.dot.on { width: 22px; background: var(--fg); }
 
 /* ---------- POSTER WALL ---------- */
 .wall { overflow: hidden; }
@@ -309,7 +309,8 @@ p, dd { text-wrap: pretty; }
   inset: 0;
   z-index: 100;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+  /* description (top left) · media · title and profession */
+  grid-template-rows: auto minmax(0, 1fr) auto;
   gap: clamp(16px, 2vw, 32px);
   padding: clamp(16px, 2.5vw, 43px) var(--gutter);
   background: rgba(19, 19, 19, .78);
@@ -334,15 +335,25 @@ p, dd { text-wrap: pretty; }
 .lb-frame { position: relative; max-width: 100%; max-height: 100%; display: flex; }
 .lb-frame img, .lb-frame video {
   max-width: 100%;
-  max-height: calc(100dvh - 190px);
+  max-height: var(--stage-h, calc(100dvh - 190px));   /* measured space between the text rows */
   width: auto;
   height: auto;
   object-fit: contain;
 }
 .lb-frame .dots { left: 50%; right: auto; transform: translateX(-50%); }
-.lb-info { align-items: end; }
+.lb-info { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--gap); }
 .lb-title { line-height: 1; }
-.lb-desc { display: flex; flex-direction: column; align-items: flex-start; gap: .6em; white-space: pre-wrap; }
+.lb-desc {
+  width: calc((100% - 2 * var(--gap)) / 3);     /* one column of the page grid */
+  max-height: 30vh;
+  overflow-y: auto;                              /* long texts scroll instead of pushing into the image */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .6em;
+  white-space: pre-wrap;
+}
+.lb-desc[hidden] { display: none; }
 .lb-desc a { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 .lb-prof { line-height: 1; }
 
@@ -432,16 +443,14 @@ body.locked { overflow: hidden; }
   .footer .grid3 > .right { grid-column: 1 / -1; justify-self: start; text-align: left; }
   .footer-bottom.grid3 { grid-template-columns: 1fr; row-gap: 8px; }
   .card-title { left: 10px; bottom: 10px; }
-  .dots { right: 8px; bottom: 8px; gap: 5px; padding: 5px; }
-  .dot { width: 8px; height: 8px; }
-  .dot.on { width: 22px; }
-  .card.has-dots .card-title { right: 90px; }
+  .dots { right: 8px; bottom: 8px; gap: 4px; padding: 4px; }
+  .dot { width: 7px; height: 7px; }
+  .dot.on { width: 18px; }
+  .card.has-dots .card-title { right: 76px; }
   .trail-item { width: 140px; height: 175px; }
 
   .lb-prev, .lb-next { display: none; }      /* swipe instead */
-  .lb-info.grid3 { grid-template-columns: 1fr auto; row-gap: 10px; }
-  .lb-desc { grid-column: 1 / -1; grid-row: 2; }
-  .lb-frame img, .lb-frame video { max-height: calc(100dvh - 260px); }
+  .lb-desc { width: auto; margin-right: 56px; max-height: 26vh; }   /* clear of the close button */
 }
 
 @media (prefers-reduced-motion: reduce) {
