@@ -317,12 +317,14 @@ p, dd { text-wrap: pretty; }
 }
 .footer-col { display: flex; flex-direction: column; gap: 1.2em; }
 .footer-label { font-size: inherit; line-height: 1; }
+.footer-time { margin: 0; line-height: 1; font-variant-numeric: tabular-nums; }
 .footer-list { list-style: none; margin: 0; padding: 0; }
 .last-col { grid-column: 4; }   /* bottom line follows the same four columns */
 .footer-name {
   font-size: 34vw;
   /* trim the line box to the letters themselves, so the space above and below is what you see */
   text-box: trim-both cap alphabetic;
+  padding-bottom: .2em;   /* room for the tail of the j in "de Rooij" */
 }
 .footer-bottom { line-height: 1; }   /* same distance to the name as the links above it */
 .back { display: inline-flex; align-items: center; gap: 8px; }
@@ -479,7 +481,6 @@ body.locked { overflow: hidden; }
   .row h3 { max-width: none; }
   .row-text { grid-column: auto; }
   .footer-top { grid-template-columns: 1fr 1fr; row-gap: 40px; }
-  .footer-top > .right { justify-self: start; text-align: left; }
   .footer-bottom.grid4 { grid-template-columns: 1fr; row-gap: 8px; }
   .last-col { grid-column: auto; }
   .card-title { left: 10px; bottom: 10px; }
