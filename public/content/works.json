@@ -300,6 +300,20 @@
         "uploads/conspiracy-9.jpg"
       ],
       "profession": "Editorial Design"
+    },
+    {
+      "type": "slideshow",
+      "title": "I want to fly in June",
+      "slides": [
+        "uploads/graduation-1.jpg",
+        "uploads/graduation-3.jpg",
+        "uploads/graduation-2.jpg",
+        "uploads/7.jpg",
+        "uploads/graduation-7.jpg",
+        "uploads/graduation-5.jpg"
+      ],
+      "description": "What do you want to know about typography, but were afraid to ask? In this project I researched the use of whitespace in typography by making different compositions with Jenny Holzer her quotes as inspiration. This stamp design was one of the outcomes.",
+      "profession": "Art"
     }
   ]
 }
