@@ -360,6 +360,12 @@
         "uploads/lookbook-1.jpg",
         "uploads/lookbook-3.jpg"
       ]
+    },
+    {
+      "type": "video",
+      "title": "Anomaly Grids and Exploration",
+      "profession": "Branding",
+      "video": "uploads/stop-motion-web.mp4"
     }
   ]
 }
