@@ -237,6 +237,12 @@
       "title": "Editorial Layout",
       "profession": "Editorial",
       "image": "uploads/73.png"
+    },
+    {
+      "type": "video",
+      "title": "Opencode T-Shirt",
+      "video": "uploads/opencode-video-x-web.mp4",
+      "profession": "Graphic Design"
     }
   ]
 }
