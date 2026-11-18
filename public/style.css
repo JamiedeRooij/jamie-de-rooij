@@ -76,6 +76,8 @@ p, dd { text-wrap: pretty; }
 .button-roll { display: block; height: 1.21em; overflow: hidden; }
 .button-roll span { display: block; transition: transform .5s var(--ease); }
 .button:hover .button-roll span { transform: translateY(-100%); }
+/* in the hero and footer, the button text sits on the same line as the column labels */
+.topbar .right .button, .footer-top .right .button { margin-top: -.56em; }
 
 /* ---------- HERO ---------- */
 .hero {
@@ -315,7 +317,8 @@ p, dd { text-wrap: pretty; }
   gap: var(--gap);
   align-items: start;
 }
-.footer-col { display: flex; flex-direction: column; gap: 1.2em; }
+/* every line sits on one grid: 1em text + .35em gap, and the list starts two lines under its label */
+.footer-col { display: flex; flex-direction: column; gap: 1.7em; }
 .footer-label { font-size: inherit; line-height: 1; }
 .footer-list { list-style: none; margin: 0; padding: 0; }
 .last-col { grid-column: 4; }   /* bottom line follows the same four columns */
