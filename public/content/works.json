@@ -34,13 +34,6 @@
       "profession": "Poster"
     },
     {
-      "type": "video",
-      "title": "Opencode Social Media Templates",
-      "video": "uploads/opencode-stopmotion.mp4",
-      "description": "Social media templates I designed for Opencode built upon the idea of TUI cells.",
-      "profession": "Branding"
-    },
-    {
       "type": "image",
       "title": "The Silence Between, Robert Birnbach",
       "description": "",
@@ -49,12 +42,11 @@
       "image": "https://framerusercontent.com/images/cT3JCU9V0ECmm00niqhprA1iGE.png"
     },
     {
-      "type": "image",
-      "title": "Anomaly Poster",
-      "description": "",
-      "url": "",
-      "profession": "Poster",
-      "image": "https://framerusercontent.com/images/XmbSJCApbFijsdKFC3xVuBflY.png"
+      "type": "video",
+      "title": "Opencode Social Media Templates",
+      "video": "uploads/opencode-stopmotion.mp4",
+      "description": "Social media templates I designed for Opencode built upon the idea of TUI cells.",
+      "profession": "Branding"
     },
     {
       "type": "image",
@@ -63,6 +55,14 @@
       "url": "",
       "profession": "Poster",
       "image": "https://framerusercontent.com/images/grcSg5xWgOSN24M7VRg6GhwYfs.png"
+    },
+    {
+      "type": "image",
+      "title": "Anomaly Poster",
+      "description": "",
+      "url": "",
+      "profession": "Poster",
+      "image": "https://framerusercontent.com/images/XmbSJCApbFijsdKFC3xVuBflY.png"
     },
     {
       "type": "image",
@@ -344,6 +344,13 @@
       "profession": "Art"
     },
     {
+      "type": "video",
+      "title": "Opencode",
+      "description": "Every AI tool is telling developers the same story: the agent will do it for you. OpenCode tells a different one, because it's built differently. The agents do the work, but nothing ships until a person says yes. So we built the identity on that relationship. Every grey cell is an agent at work. One blue cell is you. Grey fills the grid, decays and makes room, and every piece ends on the same blinking blue cursor: your turn. It's a brand that can't be finished without you, just like the software.",
+      "profession": "Branding",
+      "video": "uploads/cells-stopmotion.mp4"
+    },
+    {
       "type": "slideshow",
       "title": "Mount Lightning, Lookbook",
       "description": "Collection of photographs by several photographers. The photobook contains maps for the visitors of the (private) exhibition.",
@@ -353,13 +360,6 @@
         "uploads/lookbook-1.jpg",
         "uploads/lookbook-3.jpg"
       ]
-    },
-    {
-      "type": "video",
-      "title": "Opencode",
-      "description": "Every AI tool is telling developers the same story: the agent will do it for you. OpenCode tells a different one, because it's built differently. The agents do the work, but nothing ships until a person says yes. So we built the identity on that relationship. Every grey cell is an agent at work. One blue cell is you. Grey fills the grid, decays and makes room, and every piece ends on the same blinking blue cursor: your turn. It's a brand that can't be finished without you, just like the software.",
-      "profession": "Branding",
-      "video": "uploads/cells-stopmotion.mp4"
     }
   ]
 }
