@@ -72,13 +72,24 @@ function initTrail(images) {
     hero && { layer: hero, active: () => window.scrollY < window.innerHeight * 0.6 },
     footer && {
       layer: footer,
+      // only around the big "de Rooij", not over the columns of text above it
       active: (x, y) => {
-        const r = footer.parentElement.getBoundingClientRect();
-        return y >= r.top && y <= r.bottom && x >= r.left && x <= r.right;
+        const r = $(".footer-name").getBoundingClientRect();
+        return y >= r.top - 40 && y <= r.bottom && x >= r.left && x <= r.right;
       },
     },
   ].filter(Boolean);
   let zone = null, last = null;
+
+  // The footer layer starts just under the four columns, so posters are cut off there.
+  function placeFooterLayer() {
+    const top = $(".footer-top");
+    if (!footer || !top) return;
+    footer.style.top = `${top.offsetTop + top.offsetHeight + 24}px`;
+  }
+  placeFooterLayer();
+  window.addEventListener("resize", placeFooterLayer);
+  if (document.fonts) document.fonts.ready.then(placeFooterLayer);
 
   function spawn(layer, x, y) {
     const r = layer.getBoundingClientRect();
