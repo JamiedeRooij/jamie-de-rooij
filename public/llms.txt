@@ -1,0 +1,18 @@
+# Jamie de Rooij
+
+> Jamie de Rooij is an independent Dutch graphic designer based in Amsterdam, working at the intersection of creativity, research and experimentation: art direction, branding, digital and editorial design, print, webdesign and Framer development.
+
+The site is a single page with a selection of work (posters, books, campaigns, websites and tools), a wall of posters and a short about section.
+
+## Pages
+
+- [Home](https://www.jamiederooij.com/): selected works, poster wall and about
+- [Works](https://www.jamiederooij.com/#works): images, videos and slideshows of projects, each with title, description and discipline
+- [About](https://www.jamiederooij.com/#about): approach, services and recognition
+
+## Contact
+
+- [Email](mailto:hello@jamiederooij.com): hello@jamiederooij.com
+- [Instagram](https://www.instagram.com/jamiederooij)
+- [LinkedIn](https://www.linkedin.com/in/jamie-de-rooij-50973a29/)
+- [X](https://x.com/jmdsgn)

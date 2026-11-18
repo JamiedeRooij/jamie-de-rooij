@@ -8,11 +8,28 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const canHover = window.matchMedia("(hover: hover)").matches;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-// Smaller versions of Framer-hosted images; other URLs are used as they are.
+// Sizes and web copies of every upload (content/media.json, made by tools/optimize-media.py).
+let MEDIA = {};
+const DPR = Math.min(2, window.devicePixelRatio || 1);
+const webPath = (url, w, poster) => `uploads/_web/${url.slice(8)}${poster ? ".poster" : ""}-${w}.webp`;
+const pick = (list, px) => list.find((w) => w >= px * DPR) || list[list.length - 1];
+
+// The smallest web copy that is still sharp at `px` CSS pixels wide; other URLs are used as they are.
 function sized(url, px) {
   if (!url) return url;
+  const m = MEDIA[url];
+  if (m && m.v && m.v.length) return webPath(url, pick(m.v, px));
   if (url.includes("framerusercontent.com/images/") && !url.includes("?")) return `${url}?scale-down-to=${px}`;
   return url;
+}
+// All web copies of an image, for srcset, so each screen downloads only what it needs.
+function srcsetFor(url) {
+  const m = MEDIA[url];
+  return m && m.v && m.v.length > 1 ? m.v.map((w) => `${webPath(url, w)} ${w}w`).join(", ") : "";
+}
+function posterFor(url, px) {
+  const m = MEDIA[url];
+  return m && m.poster && m.poster.length ? webPath(url, pick(m.poster, px), true) : "";
 }
 
 async function getJSON(path) {
@@ -57,7 +74,7 @@ function initHeroScroll() {
 function initTrail(images) {
   if (!images.length || reduceMotion || !canHover) return;
 
-  const urls = images.map((u) => sized(u, 512));
+  const urls = images.map((u) => sized(u, 280));
   urls.forEach((u) => { const i = new Image(); i.src = u; });
 
   const SPACING = 80;       // px of mouse travel between posters
@@ -153,6 +170,8 @@ function normalize(w) {
 }
 
 function measure(m) {
+  const known = MEDIA[m.video || m.image];
+  if (known && known.w && known.h) return Promise.resolve(known.w / known.h);
   return new Promise((resolve) => {
     const done = (r) => { clearTimeout(timer); resolve(r && isFinite(r) && r > 0 ? r : 0.8); };
     const timer = setTimeout(() => done(0), 6000);
@@ -185,11 +204,18 @@ function mediaElement(m, size, opts = {}) {
     v.muted = !opts.sound;
     v.loop = true;
     v.playsInline = true;
-    v.autoplay = true;
-    v.preload = "metadata";
+    v.autoplay = !!opts.sound;
     if (!opts.sound) v.setAttribute("muted", "");
     if (opts.sound) v.controls = true;
-    if (m.poster) v.poster = sized(m.poster, size);
+    const still = m.poster ? sized(m.poster, size) : posterFor(m.video, size);
+    // with a still to show, the video itself only loads once it is about to play
+    v.preload = still && !opts.sound ? "none" : "metadata";
+    if (still) {
+      v.poster = still;
+      const i = new Image();
+      i.onload = i.onerror = () => v.classList.add("is-loaded");
+      i.src = still;
+    }
     loaded(v, "loadeddata");
     v.src = m.video;
     return v;
@@ -199,14 +225,16 @@ function mediaElement(m, size, opts = {}) {
   img.decoding = "async";
   if (opts.lazy) img.loading = "lazy";
   loaded(img, "load");
+  const set = opts.sizes && srcsetFor(m.image);
+  if (set) { img.sizes = opts.sizes; img.srcset = set; }
   img.src = sized(m.image, size);
   return img;
 }
 
 // Slideshow: stacked slides that cross-fade, plus the pill of toggles.
-function buildSlides(holder, media, size, alt) {
+function buildSlides(holder, media, size, alt, sizes) {
   const slides = media.map((m, i) => {
-    const el = mediaElement(m, size, { alt, lazy: i > 0 });
+    const el = mediaElement(m, size, { alt, lazy: i > 0, sizes });
     el.classList.add("slide");
     holder.appendChild(el);
     return el;
@@ -278,13 +306,13 @@ function initWorks(raw) {
     card.appendChild(media);
 
     if (w.type === "slideshow" && w.media.length > 1) {
-      const show = buildSlides(media, w.media, 1024, w.title);
+      const show = buildSlides(media, w.media, 640, w.title, "(max-width: 809.98px) 100vw, (max-width: 1199.98px) 50vw, 34vw");
       card.appendChild(show.dots);
       card.classList.add("has-dots");
       live.set(card, show);
       liveObserver.observe(card);
     } else {
-      const el = mediaElement(w.media[0], 1024, { alt: w.title, lazy: true });
+      const el = mediaElement(w.media[0], 640, { alt: w.title, lazy: true, sizes: "(max-width: 809.98px) 100vw, (max-width: 1199.98px) 50vw, 34vw" });
       media.appendChild(el);
       if (w.media[0].video) {
         live.set(card, { start: () => el.play().catch(() => {}), stop: () => el.pause() });
@@ -376,15 +404,15 @@ function renderLightbox() {
 
   if (w.type === "slideshow" && w.media.length > 1) {
     // the first slide sets the size; the others fade over it
-    const sizer = mediaElement(w.media[0], 2048, { alt: w.title });
+    const sizer = mediaElement(w.media[0], 1600, { alt: w.title });
     sizer.style.visibility = "hidden";
     frame.appendChild(sizer);
-    lbShow = buildSlides(frame, w.media, 2048, w.title);
+    lbShow = buildSlides(frame, w.media, 1600, w.title);
     frame.appendChild(lbShow.dots);
     frame.style.cursor = "pointer";
     frame.addEventListener("click", () => { lbShow.next(); });
   } else {
-    frame.appendChild(mediaElement(w.media[0], 2048, { alt: w.title, sound: true }));
+    frame.appendChild(mediaElement(w.media[0], 1600, { alt: w.title, sound: true }));
   }
 
   $("#lbTitle").textContent = w.title;
@@ -484,7 +512,9 @@ function initWall(images) {
     img.decoding = "async";
     img.draggable = false;
     loaded(img, "load");
-    img.src = sized(u, 1024);
+    const set = srcsetFor(u);
+    if (set) { img.sizes = "(max-width: 809.98px) 50vw, 33vw"; img.srcset = set; }
+    img.src = sized(u, 640);
     track.appendChild(img);
   });
   const stepSize = () => track.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0);
@@ -572,6 +602,9 @@ function initMenu() {
     menu.setAttribute("aria-hidden", String(!on));
     menu.inert = !on;
     open.setAttribute("aria-expanded", String(on));
+    // the page behind stays still while the menu is open
+    document.documentElement.style.overflow = on ? "hidden" : "";
+    if (lenis) on ? lenis.stop() : lenis.start();
     if (on) close.focus({ preventScroll: true }); else if (menu.contains(document.activeElement)) open.focus({ preventScroll: true });
   };
   open.addEventListener("click", () => set(true));
@@ -682,10 +715,11 @@ initHeroScroll();
 initSmoothScroll();
 
 Promise.all([
+  getJSON("content/media.json").then((m) => { MEDIA = m || {}; }).catch(() => {}),
   getJSON("content/trail.json").catch(() => ({ posters: [] })),
   getJSON("content/works.json").catch(() => ({ works: [] })),
   getJSON("content/wall.json").catch(() => ({ posters: [] })),
-]).then(([trail, works, wall]) => {
+]).then(([, trail, works, wall]) => {
   const images = (d) => (d.posters || []).map((p) => (typeof p === "string" ? p : p.image)).filter(Boolean);
   initTrail(images(trail));
   initWorks(works.works || []);
