@@ -178,6 +178,12 @@
       "image": "uploads/ittad7loqnyltmdqvhuehbatnlo.png.avif"
     },
     {
+      "type": "image",
+      "title": "Brighton - Ajax",
+      "profession": "Poster",
+      "image": "uploads/frame-619.png"
+    },
+    {
       "type": "video",
       "video": "uploads/export-1785760827028.mp4",
       "title": "Rack Focus Scroll",
@@ -209,6 +215,12 @@
       "description": "",
       "url": "",
       "profession": "Tool"
+    },
+    {
+      "type": "image",
+      "title": "Ajax - NEC",
+      "profession": "Poster",
+      "image": "uploads/frame-620.png"
     },
     {
       "type": "slideshow",
@@ -274,18 +286,6 @@
         "uploads/03-transformation.png",
         "uploads/06-performance-table.png"
       ]
-    },
-    {
-      "type": "image",
-      "title": "Brighton - Ajax",
-      "profession": "Poster",
-      "image": "uploads/frame-619.png"
-    },
-    {
-      "type": "image",
-      "title": "Ajax - NEC",
-      "profession": "Poster",
-      "image": "uploads/frame-620.png"
     }
   ]
 }
