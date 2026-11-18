@@ -403,6 +403,11 @@ p, dd { text-wrap: pretty; }
 .lb-desc[hidden] { display: none; }
 .lb-desc a { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 .lb-prof { line-height: 1; }
+/* bottom right: profession, then "Visit project" in the very corner */
+.lb-meta { display: flex; align-items: flex-end; gap: var(--gap); margin-left: auto; text-align: right; }
+.lb-meta p { margin: 0; }
+.lb-url { line-height: 1; white-space: nowrap; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.lb-url[hidden] { display: none; }
 
 .round {
   position: absolute;
@@ -464,9 +469,9 @@ body.locked { overflow: hidden; }
 @keyframes name-move { from { transform: translateY(-150px); } }
 @keyframes name-fade { from { opacity: 0; } }
 
-/* ---------- TOUCH: no hover, so titles are always shown ---------- */
+/* Touch screens: no titles on the cards; the title shows in the lightbox after a tap. */
 @media (hover: none) {
-  .card::after, .card-title { opacity: 1; transform: none; }
+  .card::after, .card-title { display: none; }
 }
 
 /* ---------- TABLET ---------- */
@@ -525,6 +530,10 @@ body.locked { overflow: hidden; }
      the centred area down (and up from the bottom by the same amount) to stay clear */
   .lightbox, .lightbox.no-desc { --side: var(--gutter); }
   .lb-desc { right: calc(var(--gutter) + 56px); width: auto; max-height: 34vh; }
+  /* title on its own line, then profession left and "Visit project" in the corner */
+  .lb-info { flex-wrap: wrap; row-gap: 12px; }
+  .lb-title { flex: 1 0 100%; }
+  .lb-meta { flex: 1 0 100%; justify-content: space-between; margin-left: 0; text-align: left; }
 }
 
 @media (prefers-reduced-motion: reduce) {

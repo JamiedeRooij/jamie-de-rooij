@@ -393,7 +393,7 @@ function renderLightbox() {
   const link = $("#lbUrl");
   link.hidden = !w.url;
   if (w.url) link.href = /^https?:\/\//i.test(w.url) ? w.url : `https://${w.url}`;
-  $("#lbTop").hidden = !w.description && !w.url;
+  $("#lbTop").hidden = !w.description;
   $("#lbTop").scrollTop = 0;
   fitStage();
   const many = lbWorks.length > 1;
@@ -412,9 +412,12 @@ function fitStage() {
   requestAnimationFrame(() => {
     // On phones the description is above the image: keep the image centred by using
     // the same margin at the top and the bottom, large enough to clear the text.
-    if (!desc.hidden && window.innerWidth < 810) {
+    if (window.innerWidth < 810) {
       const space = parseFloat(getComputedStyle(lb).getPropertyValue("--space")) || 16;
-      const needed = desc.offsetTop + desc.offsetHeight + space;
+      const info = lb.querySelector(".lb-info");
+      const top = desc.hidden ? 0 : desc.offsetTop + desc.offsetHeight + space;
+      const bottom = lb.clientHeight - info.offsetTop + space;   // the two-line bottom row
+      const needed = Math.max(top, bottom);
       if (needed > stage.offsetTop) stage.style.setProperty("--stage-y", `${needed}px`);
     }
     requestAnimationFrame(() => stage.style.setProperty("--stage-h", `${stage.clientHeight}px`));
