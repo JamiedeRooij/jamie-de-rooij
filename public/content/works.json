@@ -241,6 +241,12 @@
       "image": "uploads/h6og3jpcev1byrdy2bpypq2krk.png.avif"
     },
     {
+      "type": "video",
+      "title": "Opencode T-Shirt",
+      "video": "uploads/opencode-video-x-web.mp4",
+      "profession": "Graphic Design"
+    },
+    {
       "type": "slideshow",
       "title": "Miscellaneous",
       "profession": "UI design",
@@ -277,12 +283,6 @@
       "title": "Editorial Layout",
       "profession": "Editorial",
       "image": "uploads/73.png"
-    },
-    {
-      "type": "video",
-      "title": "Opencode T-Shirt",
-      "video": "uploads/opencode-video-x-web.mp4",
-      "profession": "Graphic Design"
     },
     {
       "type": "slideshow",
