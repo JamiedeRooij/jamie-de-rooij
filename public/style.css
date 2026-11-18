@@ -84,33 +84,30 @@ p, dd { text-wrap: pretty; }
   height: 100vh;
   height: 100dvh;
   z-index: 1;
-  padding: clamp(16px, 2.5vw, 43px) var(--gutter) 0;
+  --edge: clamp(16px, 2.5vw, 43px);
+  padding: var(--edge) var(--gutter);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: clamp(48px, 4.6vw, 80px);
   overflow: hidden;
   background: var(--bg);
 }
-.topbar {
-  position: relative;
-  z-index: 3;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--gap);
-  line-height: 1;
-}
-.topbar-left { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
-.topbar nav, .socials, .footer-list { display: flex; flex-direction: column; align-items: flex-start; gap: .35em; line-height: 1; }
-.clock { display: flex; gap: .35em; }
-.topbar-right { justify-self: end; }
+/* the hero uses the footer's four columns: name · services · socials · button */
+.topbar { position: relative; z-index: 3; line-height: 1; }
+.socials, .footer-list { display: flex; flex-direction: column; align-items: flex-start; gap: .35em; line-height: 1; }
+/* bottom line of the hero: last updated on the left, a link down to the work on the right */
+.hero-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: baseline; gap: var(--gap); line-height: 1; }
+.hero-bottom p { margin: 0; }
+.hero-works { margin-left: auto !important; }
 
 .fit { width: 100%; white-space: nowrap; text-align: center; line-height: .8; user-select: none; }
 .fit span { display: inline-block; }
 .hero-name {
   position: relative;
   z-index: 1;
+  margin-top: auto;
   font-size: 34vw;               /* replaced by the fit-to-width script */
-  margin-bottom: .03em;
+  text-box: trim-both cap alphabetic;   /* same spacing around the name as in the footer */
   pointer-events: none;
   transform-origin: 50% 50%;
   will-change: transform, filter;
@@ -453,10 +450,12 @@ body.locked { overflow: hidden; }
 /* Hero entrance, with the live site's values:
    top items drop in from 20px above, 0.6s each, 0.3s after one another;
    the big name comes down 150px over 2.3s, starting after 0.7s. */
-.topbar-left > *, .clock, .topbar-right { animation: bar-in .6s cubic-bezier(.44, 0, .56, 1) both; }
-.topbar-left > :nth-child(2) { animation-delay: .3s; }
-.clock { animation-delay: .6s; }
-.topbar-right { animation-delay: .9s; }
+.topbar > *, .hero-bottom > * { animation: bar-in .6s cubic-bezier(.44, 0, .56, 1) both; }
+.topbar > :nth-child(2) { animation-delay: .3s; }
+.topbar > :nth-child(3) { animation-delay: .6s; }
+.topbar > :nth-child(4) { animation-delay: .9s; }
+.hero-bottom > * { animation-name: bar-up; animation-delay: 1.2s; }
+@keyframes bar-up { from { opacity: 0; transform: translateY(20px); } }
 @keyframes bar-in { from { opacity: 0; transform: translateY(-20px); } }
 
 .hero-name span {
@@ -478,10 +477,8 @@ body.locked { overflow: hidden; }
 
 /* ---------- PHONE ---------- */
 @media (max-width: 809.98px) {
-  .topbar { grid-template-columns: 1fr auto; row-gap: 20px; }
-  .topbar-left { grid-column: 1; grid-row: 1; grid-template-columns: 1fr; gap: 14px; }
-  .topbar-right { grid-column: 2; grid-row: 1; }
-  .clock { grid-column: 1 / -1; grid-row: 2; flex-wrap: wrap; }
+  .topbar.grid4 { grid-template-columns: 1fr 1fr; row-gap: 32px; }
+  .topbar > .right { grid-column: 2; grid-row: 1; }
   .lead { text-indent: 12%; }
   .wall-track img { width: calc((100% - var(--gap)) / 2); }   /* two on a phone */
   .row { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
@@ -509,7 +506,7 @@ body.locked { overflow: hidden; }
   html { scroll-behavior: auto; }
   .card, [data-reveal] { opacity: 1; transform: none; transition: none; }
   [data-reveal], [data-reveal] .stagger, [data-split] .w { opacity: 1 !important; transform: none !important; filter: none; transition: none; }
-  .topbar-left > *, .clock, .topbar-right, .hero-name span { animation: none; }
+  .topbar > *, .hero-bottom > *, .hero-name span { animation: none; }
   .card-media > :not(.slide), .wall-track img { opacity: 1; transition: none; }
   .slide, .dot, .lightbox, .lb-stage, .button-roll span, .card-title, .card::after { transition: none; }
 }
