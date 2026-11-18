@@ -1,4 +1,4 @@
-// Portal login, step 1 (runs inside worker.js).
+// Portal login, step 1 (used by worker.js and by functions/api/auth.js on Pages).
 // The upload portals open this address in a popup; it sends you to GitHub to log in.
 // Needs two values set in Cloudflare (Settings → Variables and Secrets):
 //   GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET, from a GitHub OAuth App whose

@@ -1,4 +1,4 @@
-// Portal login, step 2 (runs inside worker.js).
+// Portal login, step 2 (used by worker.js and by functions/api/callback.js on Pages).
 // GitHub sends you back here after logging in. This swaps GitHub's one-time code for an
 // access token and hands it to the portal window that opened the popup.
 function page(status, payload) {
