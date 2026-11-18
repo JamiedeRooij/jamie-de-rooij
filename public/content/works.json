@@ -314,6 +314,16 @@
       ],
       "description": "What do you want to know about typography, but were afraid to ask? In this project I researched the use of whitespace in typography by making different compositions with Jenny Holzer her quotes as inspiration. This stamp design was one of the outcomes.",
       "profession": "Art"
+    },
+    {
+      "type": "slideshow",
+      "title": "Miscellaneous",
+      "profession": "UI design",
+      "slides": [
+        "uploads/7.png",
+        "uploads/5.png",
+        "uploads/1.png"
+      ]
     }
   ]
 }
