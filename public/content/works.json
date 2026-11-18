@@ -34,6 +34,13 @@
       "profession": "Poster"
     },
     {
+      "type": "video",
+      "title": "Opencode Social Media Templates",
+      "video": "uploads/opencode-stopmotion.mp4",
+      "description": "Social media templates I designed for Opencode built upon the idea of TUI cells.",
+      "profession": "Branding"
+    },
+    {
       "type": "image",
       "title": "The Silence Between, Robert Birnbach",
       "description": "",
@@ -346,13 +353,6 @@
         "uploads/lookbook-1.jpg",
         "uploads/lookbook-3.jpg"
       ]
-    },
-    {
-      "type": "video",
-      "title": "Opencode Social Media Templates",
-      "video": "uploads/opencode-stopmotion.mp4",
-      "description": "Social media templates I designed for Opencode built upon the idea of TUI cells.",
-      "profession": "Branding"
     }
   ]
 }
