@@ -210,24 +210,6 @@
       "profession": "Graphic Design"
     },
     {
-      "type": "image",
-      "image": "uploads/hsck7jsbwaabbyr.jpeg",
-      "title": "Fc Utrecht - Ajax",
-      "profession": "Poster"
-    },
-    {
-      "type": "image",
-      "image": "uploads/poster_4.png",
-      "title": "Zwolle - Ajax",
-      "profession": "Poster"
-    },
-    {
-      "type": "image",
-      "title": "Ajax - NEC",
-      "profession": "Poster",
-      "image": "uploads/frame-620.png"
-    },
-    {
       "type": "slideshow",
       "title": "Jazz Shadows, Robert Birnbach",
       "slides": [
@@ -239,6 +221,18 @@
       ],
       "description": "I had the pleasure to design Robert Birnbach’s new website. We decided to continue the style from his book, and treat the website like a cover art for jazz back in the days. The outcome is bold, and rhythmic, just like the way he captures jazz artists.",
       "url": "www.jazzshadows.com"
+    },
+    {
+      "type": "image",
+      "image": "uploads/hsck7jsbwaabbyr.jpeg",
+      "title": "Fc Utrecht - Ajax",
+      "profession": "Poster"
+    },
+    {
+      "type": "image",
+      "image": "uploads/poster_4.png",
+      "title": "Zwolle - Ajax",
+      "profession": "Poster"
     },
     {
       "type": "image",
@@ -262,6 +256,12 @@
         "uploads/5.png",
         "uploads/1.png"
       ]
+    },
+    {
+      "type": "image",
+      "title": "Ajax - NEC",
+      "profession": "Poster",
+      "image": "uploads/frame-620.png"
     },
     {
       "type": "image",
