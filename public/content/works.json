@@ -286,6 +286,20 @@
         "uploads/03-transformation.png",
         "uploads/06-performance-table.png"
       ]
+    },
+    {
+      "type": "slideshow",
+      "title": "Conspiracy Theories",
+      "description": "An editorial deep-dive into the linguistic subcultures of the internet. This publication catalogs and arranges the specific jargon and visual cues used by online communities to \"prove\" conspiracy theories. It’s an investigation into how language is weaponized to build alternative realities.",
+      "slides": [
+        "uploads/conspiracy-10.jpg",
+        "uploads/conspiracy-8.jpg",
+        "uploads/conspiracy-7.jpg",
+        "uploads/conspiracy-2.jpg",
+        "uploads/conspiracy-3.jpg",
+        "uploads/conspiracy-9.jpg"
+      ],
+      "profession": "Editorial Design"
     }
   ]
 }
