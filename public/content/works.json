@@ -335,6 +335,17 @@
       ],
       "description": "What do you want to know about typography, but were afraid to ask? In this project I researched the use of whitespace in typography by making different compositions with Jenny Holzer her quotes as inspiration. This stamp design was one of the outcomes.",
       "profession": "Art"
+    },
+    {
+      "type": "slideshow",
+      "title": "Mount Lightning, Lookbook",
+      "description": "Collection of photographs by several photographers. The photobook contains maps for the visitors of the (private) exhibition.",
+      "slides": [
+        "uploads/cover-lookbook.jpg",
+        "uploads/lookbook-2.jpg",
+        "uploads/lookbook-1.jpg",
+        "uploads/lookbook-3.jpg"
+      ]
     }
   ]
 }
