@@ -264,6 +264,13 @@
       ]
     },
     {
+      "type": "video",
+      "title": "Opencode",
+      "description": "Every AI tool is telling developers the same story: the agent will do it for you. OpenCode tells a different one, because it's built differently. The agents do the work, but nothing ships until a person says yes. So we built the identity on that relationship. Every grey cell is an agent at work. One blue cell is you. Grey fills the grid, decays and makes room, and every piece ends on the same blinking blue cursor: your turn. It's a brand that can't be finished without you, just like the software.",
+      "profession": "Branding",
+      "video": "uploads/cells-stopmotion.mp4"
+    },
+    {
       "type": "image",
       "title": "Dennis Koot",
       "image": "uploads/rntdyawy6dyy4u5jwi98z1zzaqm.png.avif"
@@ -342,13 +349,6 @@
       ],
       "description": "What do you want to know about typography, but were afraid to ask? In this project I researched the use of whitespace in typography by making different compositions with Jenny Holzer her quotes as inspiration. This stamp design was one of the outcomes.",
       "profession": "Art"
-    },
-    {
-      "type": "video",
-      "title": "Opencode",
-      "description": "Every AI tool is telling developers the same story: the agent will do it for you. OpenCode tells a different one, because it's built differently. The agents do the work, but nothing ships until a person says yes. So we built the identity on that relationship. Every grey cell is an agent at work. One blue cell is you. Grey fills the grid, decays and makes room, and every piece ends on the same blinking blue cursor: your turn. It's a brand that can't be finished without you, just like the software.",
-      "profession": "Branding",
-      "video": "uploads/cells-stopmotion.mp4"
     },
     {
       "type": "slideshow",
