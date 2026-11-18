@@ -42,6 +42,14 @@
       "image": "https://framerusercontent.com/images/cT3JCU9V0ECmm00niqhprA1iGE.png"
     },
     {
+      "type": "image",
+      "title": "Anomaly Poster",
+      "description": "",
+      "url": "",
+      "profession": "Poster",
+      "image": "https://framerusercontent.com/images/XmbSJCApbFijsdKFC3xVuBflY.png"
+    },
+    {
       "type": "video",
       "title": "Opencode Social Media Templates",
       "video": "uploads/opencode-stopmotion.mp4",
@@ -58,16 +66,14 @@
     },
     {
       "type": "image",
-      "title": "Anomaly Poster",
-      "description": "",
-      "url": "",
-      "profession": "Poster",
-      "image": "https://framerusercontent.com/images/XmbSJCApbFijsdKFC3xVuBflY.png"
+      "title": "Netherlands - Morocco",
+      "image": "uploads/frame-618.png"
     },
     {
       "type": "image",
-      "title": "Netherlands - Morocco",
-      "image": "uploads/frame-618.png"
+      "image": "uploads/frame-617.png",
+      "title": "Anomaly",
+      "profession": "Poster"
     },
     {
       "type": "image",
@@ -78,9 +84,8 @@
     },
     {
       "type": "image",
-      "image": "uploads/frame-617.png",
-      "title": "Anomaly",
-      "profession": "Poster"
+      "image": "uploads/60.png",
+      "title": "Editorial Layout"
     },
     {
       "type": "image",
@@ -97,11 +102,6 @@
       "url": "",
       "profession": "Book cover",
       "image": "https://framerusercontent.com/images/G9fzj624uBiMEfpLDclqtS7Yg.png"
-    },
-    {
-      "type": "image",
-      "image": "uploads/60.png",
-      "title": "Editorial Layout"
     },
     {
       "type": "image",
@@ -204,6 +204,12 @@
       "profession": "Illustration"
     },
     {
+      "type": "video",
+      "title": "Opencode T-Shirt",
+      "video": "uploads/opencode-video-x-web.mp4",
+      "profession": "Graphic Design"
+    },
+    {
       "type": "image",
       "image": "uploads/hsck7jsbwaabbyr.jpeg",
       "title": "Fc Utrecht - Ajax",
@@ -214,14 +220,6 @@
       "image": "uploads/poster_4.png",
       "title": "Zwolle - Ajax",
       "profession": "Poster"
-    },
-    {
-      "type": "video",
-      "title": "Copy Machine",
-      "video": "uploads/comp-1_7.mp4",
-      "description": "",
-      "url": "",
-      "profession": "Tool"
     },
     {
       "type": "image",
@@ -249,9 +247,11 @@
     },
     {
       "type": "video",
-      "title": "Opencode T-Shirt",
-      "video": "uploads/opencode-video-x-web.mp4",
-      "profession": "Graphic Design"
+      "title": "Copy Machine",
+      "video": "uploads/comp-1_7.mp4",
+      "description": "",
+      "url": "",
+      "profession": "Tool"
     },
     {
       "type": "slideshow",
@@ -264,16 +264,16 @@
       ]
     },
     {
+      "type": "image",
+      "title": "Dennis Koot",
+      "image": "uploads/rntdyawy6dyy4u5jwi98z1zzaqm.png.avif"
+    },
+    {
       "type": "video",
       "title": "Opencode",
       "description": "Every AI tool is telling developers the same story: the agent will do it for you. OpenCode tells a different one, because it's built differently. The agents do the work, but nothing ships until a person says yes. So we built the identity on that relationship. Every grey cell is an agent at work. One blue cell is you. Grey fills the grid, decays and makes room, and every piece ends on the same blinking blue cursor: your turn. It's a brand that can't be finished without you, just like the software.",
       "profession": "Branding",
       "video": "uploads/cells-stopmotion.mp4"
-    },
-    {
-      "type": "image",
-      "title": "Dennis Koot",
-      "image": "uploads/rntdyawy6dyy4u5jwi98z1zzaqm.png.avif"
     },
     {
       "type": "slideshow",
@@ -291,6 +291,12 @@
       "type": "image",
       "image": "uploads/8kpmwp2tsm0nx6ia1ks4rgw4jdi.png.avif",
       "title": "Editorial layout"
+    },
+    {
+      "type": "video",
+      "title": "Anomaly Grids and Exploration",
+      "profession": "Branding",
+      "video": "uploads/stop-motion-web.mp4"
     },
     {
       "type": "slideshow",
@@ -360,12 +366,6 @@
         "uploads/lookbook-1.jpg",
         "uploads/lookbook-3.jpg"
       ]
-    },
-    {
-      "type": "video",
-      "title": "Anomaly Grids and Exploration",
-      "profession": "Branding",
-      "video": "uploads/stop-motion-web.mp4"
     }
   ]
 }
