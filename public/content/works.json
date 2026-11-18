@@ -249,6 +249,18 @@
       "title": "Opencode T-Shirt",
       "video": "uploads/opencode-video-x-web.mp4",
       "profession": "Graphic Design"
+    },
+    {
+      "type": "slideshow",
+      "title": "Internship Report",
+      "description": "I had the pleasure to do my internship at Studio Remco van Bladel. In these months I learnt a lot about setting type, making magazines and campaigns.",
+      "profession": "Graphic Design",
+      "slides": [
+        "uploads/06-in-particular-order-posters.png",
+        "uploads/03-in-particular-order-newspaper.png",
+        "uploads/04-in-particular-order-exhibition.png",
+        "uploads/01-new-world-embassy-jonas-staal.png"
+      ]
     }
   ]
 }
