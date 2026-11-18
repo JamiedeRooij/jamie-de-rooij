@@ -243,6 +243,12 @@
       "title": "Opencode T-Shirt",
       "video": "uploads/opencode-video-x-web.mp4",
       "profession": "Graphic Design"
+    },
+    {
+      "type": "video",
+      "title": "Anomaly Explorations",
+      "video": "uploads/screenrecording_11-18-2026-10-03-17_1-web.mp4",
+      "profession": "Graphic Design"
     }
   ]
 }
