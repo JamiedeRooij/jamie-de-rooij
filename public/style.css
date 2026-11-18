@@ -94,11 +94,7 @@ p, dd { text-wrap: pretty; }
 }
 /* the hero uses the footer's four columns: name · services · socials · button */
 .topbar { position: relative; z-index: 3; line-height: 1; }
-.socials, .footer-list { display: flex; flex-direction: column; align-items: flex-start; gap: .35em; line-height: 1; }
-/* bottom line of the hero: last updated on the left, a link down to the work on the right */
-.hero-bottom { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: baseline; gap: var(--gap); line-height: 1; }
-.hero-bottom p { margin: 0; }
-.hero-works { margin-left: auto !important; }
+.hero-nav, .socials, .footer-list { display: flex; flex-direction: column; align-items: flex-start; gap: .35em; line-height: 1; }
 
 .fit { width: 100%; white-space: nowrap; text-align: center; line-height: .8; user-select: none; }
 .fit span { display: inline-block; }
@@ -450,12 +446,10 @@ body.locked { overflow: hidden; }
 /* Hero entrance, with the live site's values:
    top items drop in from 20px above, 0.6s each, 0.3s after one another;
    the big name comes down 150px over 2.3s, starting after 0.7s. */
-.topbar > *, .hero-bottom > * { animation: bar-in .6s cubic-bezier(.44, 0, .56, 1) both; }
+.topbar > * { animation: bar-in .6s cubic-bezier(.44, 0, .56, 1) both; }
 .topbar > :nth-child(2) { animation-delay: .3s; }
 .topbar > :nth-child(3) { animation-delay: .6s; }
 .topbar > :nth-child(4) { animation-delay: .9s; }
-.hero-bottom > * { animation-name: bar-up; animation-delay: 1.2s; }
-@keyframes bar-up { from { opacity: 0; transform: translateY(20px); } }
 @keyframes bar-in { from { opacity: 0; transform: translateY(-20px); } }
 
 .hero-name span {
@@ -506,7 +500,7 @@ body.locked { overflow: hidden; }
   html { scroll-behavior: auto; }
   .card, [data-reveal] { opacity: 1; transform: none; transition: none; }
   [data-reveal], [data-reveal] .stagger, [data-split] .w { opacity: 1 !important; transform: none !important; filter: none; transition: none; }
-  .topbar > *, .hero-bottom > *, .hero-name span { animation: none; }
+  .topbar > *, .hero-name span { animation: none; }
   .card-media > :not(.slide), .wall-track img { opacity: 1; transition: none; }
   .slide, .dot, .lightbox, .lb-stage, .button-roll span, .card-title, .card::after { transition: none; }
 }
