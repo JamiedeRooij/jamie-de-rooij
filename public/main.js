@@ -560,6 +560,27 @@ function initWall(images) {
   }, { threshold: 0.25 }).observe($("#wall"));
 }
 
+/* ============ PHONE MENU ============ */
+function initMenu() {
+  const menu = $("#mMenu"), open = $("#burger"), close = $("#mClose");
+  if (!menu || !open) return;
+  const set = (on) => {
+    menu.classList.toggle("open", on);
+    menu.setAttribute("aria-hidden", String(!on));
+    menu.inert = !on;
+    open.setAttribute("aria-expanded", String(on));
+    if (on) close.focus({ preventScroll: true }); else if (menu.contains(document.activeElement)) open.focus({ preventScroll: true });
+  };
+  open.addEventListener("click", () => set(true));
+  close.addEventListener("click", () => set(false));
+  // a link closes the menu and then goes where it points
+  menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => set(false)));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("open")) set(false); });
+  document.addEventListener("click", (e) => {
+    if (menu.classList.contains("open") && !menu.contains(e.target) && !open.contains(e.target)) set(false);
+  });
+}
+
 /* ============ SMALL THINGS ============ */
 // "Last updated": the moment the current version of the site went live, Amsterdam time.
 async function initUpdated() {
@@ -647,6 +668,7 @@ function initSmoothScroll() {
 
 /* ============ BOOT ============ */
 initClock();
+initMenu();
 initUpdated();
 initReveal();
 $("#year").textContent = new Date().getFullYear();

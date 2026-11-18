@@ -14,6 +14,11 @@
 
 <!-- HERO: a fixed layer. The page below scrolls over it. -->
 <header class="hero" id="hero">
+  <!-- phone: name and a hamburger instead of the four columns -->
+  <div class="m-bar">
+    <a class="plain" href="#top">Jamie de Rooij</a>
+    <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mMenu"><span></span><span></span></button>
+  </div>
   <div class="topbar grid4">
     <nav class="hero-nav" aria-label="Main">
       <a href="#top">Jamie de Rooij</a>
@@ -48,6 +53,27 @@
   <h1 class="fit hero-name" id="heroName"><span>Jamie</span></h1>
 </header>
 <div class="hero-spacer" id="top" aria-hidden="true"></div>
+
+<!-- PHONE MENU -->
+<div class="m-menu" id="mMenu" aria-hidden="true" inert>
+  <div class="m-bar">
+    <a class="plain" href="#top">Jamie de Rooij</a>
+    <button class="burger is-open" id="mClose" type="button" aria-label="Close menu"><span></span><span></span></button>
+  </div>
+  <nav class="m-links" aria-label="Menu">
+    <a href="#works">Works</a>
+    <a href="#about">About</a>
+    <a href="mailto:hello@jamiederooij.com">Let’s work together</a>
+  </nav>
+  <div class="m-meta">
+    <div class="socials">
+      <a href="https://www.instagram.com/jamiederooij" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.linkedin.com/in/jamie-de-rooij-50973a29/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://x.com/jmdsgn" target="_blank" rel="noopener">X</a>
+    </div>
+    <p><span class="js-clock">12:00</span> Amsterdam, The Netherlands</p>
+  </div>
+</div>
 
 <main class="page">
   <p class="lead" data-split>My work lives at the intersection of creativity, research, and experimentation, where curiosity leads and concept drives everything that follows.</p>
