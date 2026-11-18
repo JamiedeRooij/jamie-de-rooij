@@ -258,6 +258,18 @@
       ]
     },
     {
+      "type": "slideshow",
+      "title": "Pitch Deck",
+      "description": "Pitch deck design for a technology company with a focus on data storage. Due to protective reasons, this design is slightly altered from the original.",
+      "profession": "Pitch Deck",
+      "slides": [
+        "uploads/orange-1.png",
+        "uploads/orange-2.png",
+        "uploads/orangewhat.png",
+        "uploads/orange-5.png"
+      ]
+    },
+    {
       "type": "image",
       "title": "Ajax - NEC",
       "profession": "Poster",
@@ -297,18 +309,6 @@
       "title": "Anomaly Grids and Exploration",
       "profession": "Branding",
       "video": "uploads/stop-motion-web.mp4"
-    },
-    {
-      "type": "slideshow",
-      "title": "Pitch Deck",
-      "description": "Pitch deck design for a technology company with a focus on data storage. Due to protective reasons, this design is slightly altered from the original.",
-      "profession": "Pitch Deck",
-      "slides": [
-        "uploads/orange-1.png",
-        "uploads/orange-2.png",
-        "uploads/orangewhat.png",
-        "uploads/orange-5.png"
-      ]
     },
     {
       "type": "image",
