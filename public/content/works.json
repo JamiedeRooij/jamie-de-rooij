@@ -246,6 +246,18 @@
       "image": "uploads/rntdyawy6dyy4u5jwi98z1zzaqm.png.avif"
     },
     {
+      "type": "slideshow",
+      "title": "Annual Report",
+      "description": "I designed this annual report with the goal to make it vibrant, but professional. I played with big typography to achieve this.",
+      "profession": "Editorial Design",
+      "slides": [
+        "uploads/01-contents.png",
+        "uploads/02-executive-summary.png",
+        "uploads/03-transformation.png",
+        "uploads/06-performance-table.png"
+      ]
+    },
+    {
       "type": "image",
       "image": "uploads/8kpmwp2tsm0nx6ia1ks4rgw4jdi.png.avif",
       "title": "Editorial layout"
@@ -273,18 +285,6 @@
         "uploads/04-in-particular-order-exhibition.png",
         "uploads/01-new-world-embassy-jonas-staal.png",
         "uploads/07-key-figures.png"
-      ]
-    },
-    {
-      "type": "slideshow",
-      "title": "Annual Report",
-      "description": "I designed this annual report with the goal to make it vibrant, but professional. I played with big typography to achieve this.",
-      "profession": "Editorial Design",
-      "slides": [
-        "uploads/01-contents.png",
-        "uploads/02-executive-summary.png",
-        "uploads/03-transformation.png",
-        "uploads/06-performance-table.png"
       ]
     },
     {
